@@ -1,0 +1,1822 @@
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccc433ET.s 			page 1
+
+
+   1              		.cpu cortex-m0plus
+   2              		.eabi_attribute 20, 1
+   3              		.eabi_attribute 21, 1
+   4              		.eabi_attribute 23, 3
+   5              		.eabi_attribute 24, 1
+   6              		.eabi_attribute 25, 1
+   7              		.eabi_attribute 26, 1
+   8              		.eabi_attribute 30, 1
+   9              		.eabi_attribute 34, 0
+  10              		.eabi_attribute 18, 4
+  11              		.file	"mlm32l0xx_hw.c"
+  12              		.text
+  13              	.Ltext0:
+  14              		.cfi_sections	.debug_frame
+  15              		.section	.text.HW_DeInit,"ax",%progbits
+  16              		.align	1
+  17              		.global	HW_DeInit
+  18              		.syntax unified
+  19              		.code	16
+  20              		.thumb_func
+  21              		.fpu softvfp
+  23              	HW_DeInit:
+  24              	.LFB41:
+  25              		.file 1 "Src/mlm32l0xx_hw.c"
+   1:Src/mlm32l0xx_hw.c **** /*
+   2:Src/mlm32l0xx_hw.c ****  / _____)             _              | |
+   3:Src/mlm32l0xx_hw.c **** ( (____  _____ ____ _| |_ _____  ____| |__
+   4:Src/mlm32l0xx_hw.c ****  \____ \| ___ |    (_   _) ___ |/ ___)  _ \
+   5:Src/mlm32l0xx_hw.c ****  _____) ) ____| | | || |_| ____( (___| | | |
+   6:Src/mlm32l0xx_hw.c **** (______/|_____)_|_|_| \__)_____)\____)_| |_|
+   7:Src/mlm32l0xx_hw.c ****     (C)2013 Semtech
+   8:Src/mlm32l0xx_hw.c **** 
+   9:Src/mlm32l0xx_hw.c **** Description: Target board general functions implementation
+  10:Src/mlm32l0xx_hw.c **** 
+  11:Src/mlm32l0xx_hw.c **** License: Revised BSD License, see LICENSE.TXT file include in the project
+  12:Src/mlm32l0xx_hw.c **** 
+  13:Src/mlm32l0xx_hw.c **** Maintainer: Miguel Luis and Gregory Cristian
+  14:Src/mlm32l0xx_hw.c **** */
+  15:Src/mlm32l0xx_hw.c ****  /*******************************************************************************
+  16:Src/mlm32l0xx_hw.c ****   * @file    mlm32l0xx_hw.c
+  17:Src/mlm32l0xx_hw.c ****   * @author  MCD Application Team
+  18:Src/mlm32l0xx_hw.c ****   * @version V1.1.5
+  19:Src/mlm32l0xx_hw.c ****   * @date    30-March-2018
+  20:Src/mlm32l0xx_hw.c ****   * @brief   system hardware driver
+  21:Src/mlm32l0xx_hw.c ****   ******************************************************************************
+  22:Src/mlm32l0xx_hw.c ****   * @attention
+  23:Src/mlm32l0xx_hw.c ****   *
+  24:Src/mlm32l0xx_hw.c ****   * <h2><center>&copy; Copyright (c) 2017 STMicroelectronics International N.V. 
+  25:Src/mlm32l0xx_hw.c ****   * All rights reserved.</center></h2>
+  26:Src/mlm32l0xx_hw.c ****   *
+  27:Src/mlm32l0xx_hw.c ****   * Redistribution and use in source and binary forms, with or without 
+  28:Src/mlm32l0xx_hw.c ****   * modification, are permitted, provided that the following conditions are met:
+  29:Src/mlm32l0xx_hw.c ****   *
+  30:Src/mlm32l0xx_hw.c ****   * 1. Redistribution of source code must retain the above copyright notice, 
+  31:Src/mlm32l0xx_hw.c ****   *    this list of conditions and the following disclaimer.
+  32:Src/mlm32l0xx_hw.c ****   * 2. Redistributions in binary form must reproduce the above copyright notice,
+  33:Src/mlm32l0xx_hw.c ****   *    this list of conditions and the following disclaimer in the documentation
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccc433ET.s 			page 2
+
+
+  34:Src/mlm32l0xx_hw.c ****   *    and/or other materials provided with the distribution.
+  35:Src/mlm32l0xx_hw.c ****   * 3. Neither the name of STMicroelectronics nor the names of other 
+  36:Src/mlm32l0xx_hw.c ****   *    contributors to this software may be used to endorse or promote products 
+  37:Src/mlm32l0xx_hw.c ****   *    derived from this software without specific written permission.
+  38:Src/mlm32l0xx_hw.c ****   * 4. This software, including modifications and/or derivative works of this 
+  39:Src/mlm32l0xx_hw.c ****   *    software, must execute solely and exclusively on microcontroller or
+  40:Src/mlm32l0xx_hw.c ****   *    microprocessor devices manufactured by or for STMicroelectronics.
+  41:Src/mlm32l0xx_hw.c ****   * 5. Redistribution and use of this software other than as permitted under 
+  42:Src/mlm32l0xx_hw.c ****   *    this license is void and will automatically terminate your rights under 
+  43:Src/mlm32l0xx_hw.c ****   *    this license. 
+  44:Src/mlm32l0xx_hw.c ****   *
+  45:Src/mlm32l0xx_hw.c ****   * THIS SOFTWARE IS PROVIDED BY STMICROELECTRONICS AND CONTRIBUTORS "AS IS" 
+  46:Src/mlm32l0xx_hw.c ****   * AND ANY EXPRESS, IMPLIED OR STATUTORY WARRANTIES, INCLUDING, BUT NOT 
+  47:Src/mlm32l0xx_hw.c ****   * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A 
+  48:Src/mlm32l0xx_hw.c ****   * PARTICULAR PURPOSE AND NON-INFRINGEMENT OF THIRD PARTY INTELLECTUAL PROPERTY
+  49:Src/mlm32l0xx_hw.c ****   * RIGHTS ARE DISCLAIMED TO THE FULLEST EXTENT PERMITTED BY LAW. IN NO EVENT 
+  50:Src/mlm32l0xx_hw.c ****   * SHALL STMICROELECTRONICS OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+  51:Src/mlm32l0xx_hw.c ****   * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+  52:Src/mlm32l0xx_hw.c ****   * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, 
+  53:Src/mlm32l0xx_hw.c ****   * OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF 
+  54:Src/mlm32l0xx_hw.c ****   * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING 
+  55:Src/mlm32l0xx_hw.c ****   * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+  56:Src/mlm32l0xx_hw.c ****   * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+  57:Src/mlm32l0xx_hw.c ****   *
+  58:Src/mlm32l0xx_hw.c ****   ******************************************************************************
+  59:Src/mlm32l0xx_hw.c ****   */
+  60:Src/mlm32l0xx_hw.c **** #include "hw.h"
+  61:Src/mlm32l0xx_hw.c **** #include "radio.h"
+  62:Src/mlm32l0xx_hw.c **** #include "debug.h"
+  63:Src/mlm32l0xx_hw.c **** #include "vcom.h"
+  64:Src/mlm32l0xx_hw.c **** 
+  65:Src/mlm32l0xx_hw.c **** /*!
+  66:Src/mlm32l0xx_hw.c ****  *  \brief Unique Devices IDs register set ( STM32L0xxx )
+  67:Src/mlm32l0xx_hw.c ****  */
+  68:Src/mlm32l0xx_hw.c **** #define         ID1                                 ( 0x1FF80050 )
+  69:Src/mlm32l0xx_hw.c **** #define         ID2                                 ( 0x1FF80054 )
+  70:Src/mlm32l0xx_hw.c **** #define         ID3                                 ( 0x1FF80064 )
+  71:Src/mlm32l0xx_hw.c **** 
+  72:Src/mlm32l0xx_hw.c **** /*!
+  73:Src/mlm32l0xx_hw.c ****  * \brief ADC Vbat measurement constants
+  74:Src/mlm32l0xx_hw.c ****  */
+  75:Src/mlm32l0xx_hw.c **** 
+  76:Src/mlm32l0xx_hw.c ****  /* Internal voltage reference, parameter VREFINT_CAL*/
+  77:Src/mlm32l0xx_hw.c **** #define VREFINT_CAL       ((uint16_t*) ((uint32_t) 0x1FF80078))
+  78:Src/mlm32l0xx_hw.c **** #define LORAWAN_MAX_BAT   254
+  79:Src/mlm32l0xx_hw.c **** 
+  80:Src/mlm32l0xx_hw.c **** static ADC_HandleTypeDef hadc;
+  81:Src/mlm32l0xx_hw.c **** /*!
+  82:Src/mlm32l0xx_hw.c ****  * Flag to indicate if the ADC is Initialized
+  83:Src/mlm32l0xx_hw.c ****  */
+  84:Src/mlm32l0xx_hw.c **** static bool AdcInitialized = false;
+  85:Src/mlm32l0xx_hw.c **** 
+  86:Src/mlm32l0xx_hw.c **** /*!
+  87:Src/mlm32l0xx_hw.c ****  * Flag to indicate if the MCU is Initialized
+  88:Src/mlm32l0xx_hw.c ****  */
+  89:Src/mlm32l0xx_hw.c **** static bool McuInitialized = false;
+  90:Src/mlm32l0xx_hw.c **** 
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccc433ET.s 			page 3
+
+
+  91:Src/mlm32l0xx_hw.c **** /**
+  92:Src/mlm32l0xx_hw.c ****   * @brief This function initializes the hardware
+  93:Src/mlm32l0xx_hw.c ****   * @param None
+  94:Src/mlm32l0xx_hw.c ****   * @retval None
+  95:Src/mlm32l0xx_hw.c ****   */
+  96:Src/mlm32l0xx_hw.c **** void HW_Init( void )
+  97:Src/mlm32l0xx_hw.c **** {
+  98:Src/mlm32l0xx_hw.c ****   if( McuInitialized == false )
+  99:Src/mlm32l0xx_hw.c ****   {
+ 100:Src/mlm32l0xx_hw.c **** #if defined( USE_BOOTLOADER )
+ 101:Src/mlm32l0xx_hw.c ****     /* Set the Vector Table base location at 0x3000 */
+ 102:Src/mlm32l0xx_hw.c ****     NVIC_SetVectorTable( NVIC_VectTab_FLASH, 0x3000 );
+ 103:Src/mlm32l0xx_hw.c **** #endif
+ 104:Src/mlm32l0xx_hw.c **** 
+ 105:Src/mlm32l0xx_hw.c ****     HW_AdcInit( );
+ 106:Src/mlm32l0xx_hw.c **** 
+ 107:Src/mlm32l0xx_hw.c ****     Radio.IoInit( );
+ 108:Src/mlm32l0xx_hw.c ****     
+ 109:Src/mlm32l0xx_hw.c ****     HW_SPI_Init( );
+ 110:Src/mlm32l0xx_hw.c **** 
+ 111:Src/mlm32l0xx_hw.c ****     HW_RTC_Init( );
+ 112:Src/mlm32l0xx_hw.c ****     
+ 113:Src/mlm32l0xx_hw.c ****     vcom_Init( );
+ 114:Src/mlm32l0xx_hw.c ****     
+ 115:Src/mlm32l0xx_hw.c ****     BSP_LED_Init( LED1 );
+ 116:Src/mlm32l0xx_hw.c ****     
+ 117:Src/mlm32l0xx_hw.c ****     BSP_LED_Init( LED2 );
+ 118:Src/mlm32l0xx_hw.c ****     
+ 119:Src/mlm32l0xx_hw.c ****     BSP_LED_Init( LED3 );
+ 120:Src/mlm32l0xx_hw.c ****     
+ 121:Src/mlm32l0xx_hw.c ****     BSP_LED_Init( LED4 );
+ 122:Src/mlm32l0xx_hw.c **** 
+ 123:Src/mlm32l0xx_hw.c ****     McuInitialized = true;
+ 124:Src/mlm32l0xx_hw.c ****   }
+ 125:Src/mlm32l0xx_hw.c **** }
+ 126:Src/mlm32l0xx_hw.c **** 
+ 127:Src/mlm32l0xx_hw.c **** /**
+ 128:Src/mlm32l0xx_hw.c ****   * @brief This function Deinitializes the hardware
+ 129:Src/mlm32l0xx_hw.c ****   * @param None
+ 130:Src/mlm32l0xx_hw.c ****   * @retval None
+ 131:Src/mlm32l0xx_hw.c ****   */
+ 132:Src/mlm32l0xx_hw.c **** void HW_DeInit( void )
+ 133:Src/mlm32l0xx_hw.c **** {
+  26              		.loc 1 133 0
+  27              		.cfi_startproc
+  28              		@ args = 0, pretend = 0, frame = 0
+  29              		@ frame_needed = 0, uses_anonymous_args = 0
+  30 0000 10B5     		push	{r4, lr}
+  31              	.LCFI0:
+  32              		.cfi_def_cfa_offset 8
+  33              		.cfi_offset 4, -8
+  34              		.cfi_offset 14, -4
+ 134:Src/mlm32l0xx_hw.c ****   HW_SPI_DeInit( );
+  35              		.loc 1 134 0
+  36 0002 FFF7FEFF 		bl	HW_SPI_DeInit
+  37              	.LVL0:
+ 135:Src/mlm32l0xx_hw.c ****   
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccc433ET.s 			page 4
+
+
+ 136:Src/mlm32l0xx_hw.c ****   Radio.IoDeInit( );
+  38              		.loc 1 136 0
+  39 0006 044B     		ldr	r3, .L2
+  40 0008 5B68     		ldr	r3, [r3, #4]
+  41 000a 9847     		blx	r3
+  42              	.LVL1:
+ 137:Src/mlm32l0xx_hw.c ****   
+ 138:Src/mlm32l0xx_hw.c ****   vcom_DeInit( );
+  43              		.loc 1 138 0
+  44 000c FFF7FEFF 		bl	vcom_DeInit
+  45              	.LVL2:
+ 139:Src/mlm32l0xx_hw.c ****  
+ 140:Src/mlm32l0xx_hw.c ****   McuInitialized = false;
+  46              		.loc 1 140 0
+  47 0010 024B     		ldr	r3, .L2+4
+  48 0012 0022     		movs	r2, #0
+  49 0014 1A70     		strb	r2, [r3]
+ 141:Src/mlm32l0xx_hw.c **** }
+  50              		.loc 1 141 0
+  51              		@ sp needed
+  52 0016 10BD     		pop	{r4, pc}
+  53              	.L3:
+  54              		.align	2
+  55              	.L2:
+  56 0018 00000000 		.word	Radio
+  57 001c 00000000 		.word	.LANCHOR0
+  58              		.cfi_endproc
+  59              	.LFE41:
+  61              		.section	.text.SystemClock_Config,"ax",%progbits
+  62              		.align	1
+  63              		.global	SystemClock_Config
+  64              		.syntax unified
+  65              		.code	16
+  66              		.thumb_func
+  67              		.fpu softvfp
+  69              	SystemClock_Config:
+  70              	.LFB42:
+ 142:Src/mlm32l0xx_hw.c **** 
+ 143:Src/mlm32l0xx_hw.c **** /**
+ 144:Src/mlm32l0xx_hw.c ****   * @brief  System Clock Configuration
+ 145:Src/mlm32l0xx_hw.c ****   *         The system Clock is configured as follow :
+ 146:Src/mlm32l0xx_hw.c ****   *            System Clock source            = PLL (HSI)
+ 147:Src/mlm32l0xx_hw.c ****   *            SYSCLK(Hz)                     = 32000000
+ 148:Src/mlm32l0xx_hw.c ****   *            HCLK(Hz)                       = 32000000
+ 149:Src/mlm32l0xx_hw.c ****   *            AHB Prescaler                  = 1
+ 150:Src/mlm32l0xx_hw.c ****   *            APB1 Prescaler                 = 1
+ 151:Src/mlm32l0xx_hw.c ****   *            APB2 Prescaler                 = 1
+ 152:Src/mlm32l0xx_hw.c ****   *            HSI Frequency(Hz)              = 16000000
+ 153:Src/mlm32l0xx_hw.c ****   *            PLLMUL                         = 6
+ 154:Src/mlm32l0xx_hw.c ****   *            PLLDIV                         = 3
+ 155:Src/mlm32l0xx_hw.c ****   *            Flash Latency(WS)              = 1
+ 156:Src/mlm32l0xx_hw.c ****   * @retval None
+ 157:Src/mlm32l0xx_hw.c ****   */
+ 158:Src/mlm32l0xx_hw.c **** 
+ 159:Src/mlm32l0xx_hw.c **** void SystemClock_Config( void )
+ 160:Src/mlm32l0xx_hw.c **** {
+  71              		.loc 1 160 0
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccc433ET.s 			page 5
+
+
+  72              		.cfi_startproc
+  73              		@ args = 0, pretend = 0, frame = 80
+  74              		@ frame_needed = 0, uses_anonymous_args = 0
+  75 0000 00B5     		push	{lr}
+  76              	.LCFI1:
+  77              		.cfi_def_cfa_offset 4
+  78              		.cfi_offset 14, -4
+  79 0002 95B0     		sub	sp, sp, #84
+  80              	.LCFI2:
+  81              		.cfi_def_cfa_offset 88
+ 161:Src/mlm32l0xx_hw.c ****   RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
+  82              		.loc 1 161 0
+  83 0004 1422     		movs	r2, #20
+  84 0006 0021     		movs	r1, #0
+  85 0008 0FA8     		add	r0, sp, #60
+  86 000a FFF7FEFF 		bl	memset
+  87              	.LVL3:
+ 162:Src/mlm32l0xx_hw.c ****   RCC_OscInitTypeDef RCC_OscInitStruct = {0};
+  88              		.loc 1 162 0
+  89 000e 2C22     		movs	r2, #44
+  90 0010 0021     		movs	r1, #0
+  91 0012 02A8     		add	r0, sp, #8
+  92 0014 FFF7FEFF 		bl	memset
+  93              	.LVL4:
+ 163:Src/mlm32l0xx_hw.c **** 
+ 164:Src/mlm32l0xx_hw.c ****   /* Enable HSE Oscillator and Activate PLL with HSE as source */
+ 165:Src/mlm32l0xx_hw.c ****   RCC_OscInitStruct.OscillatorType      = RCC_OSCILLATORTYPE_HSI;
+  94              		.loc 1 165 0
+  95 0018 0223     		movs	r3, #2
+  96 001a 0193     		str	r3, [sp, #4]
+ 166:Src/mlm32l0xx_hw.c ****   RCC_OscInitStruct.HSEState            = RCC_HSE_OFF;
+ 167:Src/mlm32l0xx_hw.c ****   RCC_OscInitStruct.HSIState            = RCC_HSI_ON;
+  97              		.loc 1 167 0
+  98 001c 0122     		movs	r2, #1
+  99 001e 0492     		str	r2, [sp, #16]
+ 168:Src/mlm32l0xx_hw.c ****   RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
+ 100              		.loc 1 168 0
+ 101 0020 0F32     		adds	r2, r2, #15
+ 102 0022 0592     		str	r2, [sp, #20]
+ 169:Src/mlm32l0xx_hw.c ****   RCC_OscInitStruct.PLL.PLLState        = RCC_PLL_ON;
+ 103              		.loc 1 169 0
+ 104 0024 0B93     		str	r3, [sp, #44]
+ 170:Src/mlm32l0xx_hw.c ****   RCC_OscInitStruct.PLL.PLLSource       = RCC_PLLSOURCE_HSI;
+ 171:Src/mlm32l0xx_hw.c ****   RCC_OscInitStruct.PLL.PLLMUL          = RCC_PLLMUL_6;
+ 105              		.loc 1 171 0
+ 106 0026 8023     		movs	r3, #128
+ 107 0028 1B03     		lsls	r3, r3, #12
+ 108 002a 0D93     		str	r3, [sp, #52]
+ 172:Src/mlm32l0xx_hw.c ****   RCC_OscInitStruct.PLL.PLLDIV          = RCC_PLLDIV_3;
+ 109              		.loc 1 172 0
+ 110 002c 8023     		movs	r3, #128
+ 111 002e 1B04     		lsls	r3, r3, #16
+ 112 0030 0E93     		str	r3, [sp, #56]
+ 173:Src/mlm32l0xx_hw.c **** 
+ 174:Src/mlm32l0xx_hw.c ****   if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
+ 113              		.loc 1 174 0
+ 114 0032 01A8     		add	r0, sp, #4
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccc433ET.s 			page 6
+
+
+ 115 0034 FFF7FEFF 		bl	HAL_RCC_OscConfig
+ 116              	.LVL5:
+ 117 0038 0028     		cmp	r0, #0
+ 118 003a 21D1     		bne	.L8
+ 119              	.L5:
+ 175:Src/mlm32l0xx_hw.c ****   {
+ 176:Src/mlm32l0xx_hw.c ****     Error_Handler();
+ 177:Src/mlm32l0xx_hw.c ****   }
+ 178:Src/mlm32l0xx_hw.c **** 
+ 179:Src/mlm32l0xx_hw.c ****   /* Set Voltage scale1 as MCU will run at 32MHz */
+ 180:Src/mlm32l0xx_hw.c ****   __HAL_RCC_PWR_CLK_ENABLE();
+ 120              		.loc 1 180 0
+ 121 003c 134A     		ldr	r2, .L10
+ 122 003e 916B     		ldr	r1, [r2, #56]
+ 123 0040 8023     		movs	r3, #128
+ 124 0042 5B05     		lsls	r3, r3, #21
+ 125 0044 0B43     		orrs	r3, r1
+ 126 0046 9363     		str	r3, [r2, #56]
+ 181:Src/mlm32l0xx_hw.c ****   __HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE1);
+ 127              		.loc 1 181 0
+ 128 0048 1149     		ldr	r1, .L10+4
+ 129 004a 0B68     		ldr	r3, [r1]
+ 130 004c 114A     		ldr	r2, .L10+8
+ 131 004e 1A40     		ands	r2, r3
+ 132 0050 8023     		movs	r3, #128
+ 133 0052 1B01     		lsls	r3, r3, #4
+ 134 0054 1343     		orrs	r3, r2
+ 135 0056 0B60     		str	r3, [r1]
+ 136              	.L6:
+ 182:Src/mlm32l0xx_hw.c ****   
+ 183:Src/mlm32l0xx_hw.c ****   /* Poll VOSF bit of in PWR_CSR. Wait until it is reset to 0 */
+ 184:Src/mlm32l0xx_hw.c ****   while (__HAL_PWR_GET_FLAG(PWR_FLAG_VOS) != RESET) {};
+ 137              		.loc 1 184 0 discriminator 1
+ 138 0058 0D4B     		ldr	r3, .L10+4
+ 139 005a 5B68     		ldr	r3, [r3, #4]
+ 140 005c DB06     		lsls	r3, r3, #27
+ 141 005e FBD4     		bmi	.L6
+ 185:Src/mlm32l0xx_hw.c **** 
+ 186:Src/mlm32l0xx_hw.c ****   /* Select PLL as system clock source and configure the HCLK, PCLK1 and PCLK2
+ 187:Src/mlm32l0xx_hw.c ****   clocks dividers */
+ 188:Src/mlm32l0xx_hw.c ****   RCC_ClkInitStruct.ClockType = (RCC_CLOCKTYPE_SYSCLK | RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_PCLK1 | 
+ 142              		.loc 1 188 0
+ 143 0060 0F23     		movs	r3, #15
+ 144 0062 0F93     		str	r3, [sp, #60]
+ 189:Src/mlm32l0xx_hw.c ****   RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
+ 145              		.loc 1 189 0
+ 146 0064 0C3B     		subs	r3, r3, #12
+ 147 0066 1093     		str	r3, [sp, #64]
+ 190:Src/mlm32l0xx_hw.c ****   RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
+ 148              		.loc 1 190 0
+ 149 0068 0023     		movs	r3, #0
+ 150 006a 1193     		str	r3, [sp, #68]
+ 191:Src/mlm32l0xx_hw.c ****   RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV1;
+ 151              		.loc 1 191 0
+ 152 006c 1293     		str	r3, [sp, #72]
+ 192:Src/mlm32l0xx_hw.c ****   RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;
+ 153              		.loc 1 192 0
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccc433ET.s 			page 7
+
+
+ 154 006e 1393     		str	r3, [sp, #76]
+ 193:Src/mlm32l0xx_hw.c ****   if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_1) != HAL_OK)
+ 155              		.loc 1 193 0
+ 156 0070 0121     		movs	r1, #1
+ 157 0072 0FA8     		add	r0, sp, #60
+ 158 0074 FFF7FEFF 		bl	HAL_RCC_ClockConfig
+ 159              	.LVL6:
+ 160 0078 0028     		cmp	r0, #0
+ 161 007a 04D1     		bne	.L9
+ 162              	.L4:
+ 194:Src/mlm32l0xx_hw.c ****   {
+ 195:Src/mlm32l0xx_hw.c ****     Error_Handler();
+ 196:Src/mlm32l0xx_hw.c ****   }
+ 197:Src/mlm32l0xx_hw.c **** }
+ 163              		.loc 1 197 0
+ 164 007c 15B0     		add	sp, sp, #84
+ 165              		@ sp needed
+ 166 007e 00BD     		pop	{pc}
+ 167              	.L8:
+ 176:Src/mlm32l0xx_hw.c ****   }
+ 168              		.loc 1 176 0
+ 169 0080 FFF7FEFF 		bl	Error_Handler
+ 170              	.LVL7:
+ 171 0084 DAE7     		b	.L5
+ 172              	.L9:
+ 195:Src/mlm32l0xx_hw.c ****   }
+ 173              		.loc 1 195 0
+ 174 0086 FFF7FEFF 		bl	Error_Handler
+ 175              	.LVL8:
+ 176              		.loc 1 197 0
+ 177 008a F7E7     		b	.L4
+ 178              	.L11:
+ 179              		.align	2
+ 180              	.L10:
+ 181 008c 00100240 		.word	1073876992
+ 182 0090 00700040 		.word	1073770496
+ 183 0094 FFE7FFFF 		.word	-6145
+ 184              		.cfi_endproc
+ 185              	.LFE42:
+ 187              		.section	.text.HW_GetRandomSeed,"ax",%progbits
+ 188              		.align	1
+ 189              		.global	HW_GetRandomSeed
+ 190              		.syntax unified
+ 191              		.code	16
+ 192              		.thumb_func
+ 193              		.fpu softvfp
+ 195              	HW_GetRandomSeed:
+ 196              	.LFB43:
+ 198:Src/mlm32l0xx_hw.c **** /**
+ 199:Src/mlm32l0xx_hw.c ****   * @brief This function return a random seed
+ 200:Src/mlm32l0xx_hw.c ****   * @note based on the device unique ID
+ 201:Src/mlm32l0xx_hw.c ****   * @param None
+ 202:Src/mlm32l0xx_hw.c ****   * @retval see
+ 203:Src/mlm32l0xx_hw.c ****   */
+ 204:Src/mlm32l0xx_hw.c **** uint32_t HW_GetRandomSeed( void )
+ 205:Src/mlm32l0xx_hw.c **** {
+ 197              		.loc 1 205 0
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccc433ET.s 			page 8
+
+
+ 198              		.cfi_startproc
+ 199              		@ args = 0, pretend = 0, frame = 0
+ 200              		@ frame_needed = 0, uses_anonymous_args = 0
+ 201              		@ link register save eliminated.
+ 206:Src/mlm32l0xx_hw.c ****   return ( ( *( uint32_t* )ID1 ) ^ ( *( uint32_t* )ID2 ) ^ ( *( uint32_t* )ID3 ) );
+ 202              		.loc 1 206 0
+ 203 0000 044B     		ldr	r3, .L13
+ 204 0002 1868     		ldr	r0, [r3]
+ 205 0004 044B     		ldr	r3, .L13+4
+ 206 0006 1B68     		ldr	r3, [r3]
+ 207 0008 5840     		eors	r0, r3
+ 208 000a 044B     		ldr	r3, .L13+8
+ 209 000c 1B68     		ldr	r3, [r3]
+ 210 000e 5840     		eors	r0, r3
+ 207:Src/mlm32l0xx_hw.c **** }
+ 211              		.loc 1 207 0
+ 212              		@ sp needed
+ 213 0010 7047     		bx	lr
+ 214              	.L14:
+ 215 0012 C046     		.align	2
+ 216              	.L13:
+ 217 0014 5000F81F 		.word	536346704
+ 218 0018 5400F81F 		.word	536346708
+ 219 001c 6400F81F 		.word	536346724
+ 220              		.cfi_endproc
+ 221              	.LFE43:
+ 223              		.section	.text.HW_GetUniqueId,"ax",%progbits
+ 224              		.align	1
+ 225              		.global	HW_GetUniqueId
+ 226              		.syntax unified
+ 227              		.code	16
+ 228              		.thumb_func
+ 229              		.fpu softvfp
+ 231              	HW_GetUniqueId:
+ 232              	.LFB44:
+ 208:Src/mlm32l0xx_hw.c **** 
+ 209:Src/mlm32l0xx_hw.c **** /**
+ 210:Src/mlm32l0xx_hw.c ****   * @brief This function return a unique ID
+ 211:Src/mlm32l0xx_hw.c ****   * @param unique ID
+ 212:Src/mlm32l0xx_hw.c ****   * @retval none
+ 213:Src/mlm32l0xx_hw.c ****   */
+ 214:Src/mlm32l0xx_hw.c **** void HW_GetUniqueId( uint8_t *id )
+ 215:Src/mlm32l0xx_hw.c **** {
+ 233              		.loc 1 215 0
+ 234              		.cfi_startproc
+ 235              		@ args = 0, pretend = 0, frame = 0
+ 236              		@ frame_needed = 0, uses_anonymous_args = 0
+ 237              	.LVL9:
+ 238 0000 10B5     		push	{r4, lr}
+ 239              	.LCFI3:
+ 240              		.cfi_def_cfa_offset 8
+ 241              		.cfi_offset 4, -8
+ 242              		.cfi_offset 14, -4
+ 216:Src/mlm32l0xx_hw.c ****     id[7] = ( ( *( uint32_t* )ID1 )+ ( *( uint32_t* )ID3 ) ) >> 24;
+ 243              		.loc 1 216 0
+ 244 0002 1349     		ldr	r1, .L16
+ 245 0004 134A     		ldr	r2, .L16+4
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccc433ET.s 			page 9
+
+
+ 246 0006 0B68     		ldr	r3, [r1]
+ 247 0008 1C00     		movs	r4, r3
+ 248 000a 1368     		ldr	r3, [r2]
+ 249 000c 9C46     		mov	ip, r3
+ 250 000e 6444     		add	r4, r4, ip
+ 251 0010 230E     		lsrs	r3, r4, #24
+ 252 0012 C371     		strb	r3, [r0, #7]
+ 217:Src/mlm32l0xx_hw.c ****     id[6] = ( ( *( uint32_t* )ID1 )+ ( *( uint32_t* )ID3 ) ) >> 16;
+ 253              		.loc 1 217 0
+ 254 0014 0B68     		ldr	r3, [r1]
+ 255 0016 1C00     		movs	r4, r3
+ 256 0018 1368     		ldr	r3, [r2]
+ 257 001a 9C46     		mov	ip, r3
+ 258 001c 6444     		add	r4, r4, ip
+ 259 001e 230C     		lsrs	r3, r4, #16
+ 260 0020 8371     		strb	r3, [r0, #6]
+ 218:Src/mlm32l0xx_hw.c ****     id[5] = ( ( *( uint32_t* )ID1 )+ ( *( uint32_t* )ID3 ) ) >> 8;
+ 261              		.loc 1 218 0
+ 262 0022 0B68     		ldr	r3, [r1]
+ 263 0024 1C00     		movs	r4, r3
+ 264 0026 1368     		ldr	r3, [r2]
+ 265 0028 9C46     		mov	ip, r3
+ 266 002a 6444     		add	r4, r4, ip
+ 267 002c 230A     		lsrs	r3, r4, #8
+ 268 002e 4371     		strb	r3, [r0, #5]
+ 219:Src/mlm32l0xx_hw.c ****     id[4] = ( ( *( uint32_t* )ID1 )+ ( *( uint32_t* )ID3 ) );
+ 269              		.loc 1 219 0
+ 270 0030 0B68     		ldr	r3, [r1]
+ 271 0032 1268     		ldr	r2, [r2]
+ 272 0034 9B18     		adds	r3, r3, r2
+ 273 0036 0371     		strb	r3, [r0, #4]
+ 220:Src/mlm32l0xx_hw.c ****     id[3] = ( ( *( uint32_t* )ID2 ) ) >> 24;
+ 274              		.loc 1 220 0
+ 275 0038 074B     		ldr	r3, .L16+8
+ 276 003a DA78     		ldrb	r2, [r3, #3]
+ 277 003c C270     		strb	r2, [r0, #3]
+ 221:Src/mlm32l0xx_hw.c ****     id[2] = ( ( *( uint32_t* )ID2 ) ) >> 16;
+ 278              		.loc 1 221 0
+ 279 003e 5A88     		ldrh	r2, [r3, #2]
+ 280 0040 8270     		strb	r2, [r0, #2]
+ 222:Src/mlm32l0xx_hw.c ****     id[1] = ( ( *( uint32_t* )ID2 ) ) >> 8;
+ 281              		.loc 1 222 0
+ 282 0042 1A68     		ldr	r2, [r3]
+ 283 0044 120A     		lsrs	r2, r2, #8
+ 284 0046 4270     		strb	r2, [r0, #1]
+ 223:Src/mlm32l0xx_hw.c ****     id[0] = ( ( *( uint32_t* )ID2 ) );
+ 285              		.loc 1 223 0
+ 286 0048 1B68     		ldr	r3, [r3]
+ 287 004a 0370     		strb	r3, [r0]
+ 224:Src/mlm32l0xx_hw.c **** }
+ 288              		.loc 1 224 0
+ 289              		@ sp needed
+ 290 004c 10BD     		pop	{r4, pc}
+ 291              	.L17:
+ 292 004e C046     		.align	2
+ 293              	.L16:
+ 294 0050 5000F81F 		.word	536346704
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccc433ET.s 			page 10
+
+
+ 295 0054 6400F81F 		.word	536346724
+ 296 0058 5400F81F 		.word	536346708
+ 297              		.cfi_endproc
+ 298              	.LFE44:
+ 300              		.section	.text.HW_AdcInit,"ax",%progbits
+ 301              		.align	1
+ 302              		.global	HW_AdcInit
+ 303              		.syntax unified
+ 304              		.code	16
+ 305              		.thumb_func
+ 306              		.fpu softvfp
+ 308              	HW_AdcInit:
+ 309              	.LFB46:
+ 225:Src/mlm32l0xx_hw.c **** 
+ 226:Src/mlm32l0xx_hw.c **** /**
+ 227:Src/mlm32l0xx_hw.c ****   * @brief This function return the battery level
+ 228:Src/mlm32l0xx_hw.c ****   * @param none
+ 229:Src/mlm32l0xx_hw.c ****   * @retval the battery level  1 (very low) to 254 (fully charged)
+ 230:Src/mlm32l0xx_hw.c ****   */
+ 231:Src/mlm32l0xx_hw.c **** uint8_t HW_GetBatteryLevel( void ) 
+ 232:Src/mlm32l0xx_hw.c **** {
+ 233:Src/mlm32l0xx_hw.c ****   uint8_t batteryLevel = 0;
+ 234:Src/mlm32l0xx_hw.c ****   uint16_t measuredLevel = 0;
+ 235:Src/mlm32l0xx_hw.c ****   uint32_t batteryLevelmV;
+ 236:Src/mlm32l0xx_hw.c **** 
+ 237:Src/mlm32l0xx_hw.c ****   measuredLevel = HW_AdcReadChannel( ADC_CHANNEL_VREFINT ); 
+ 238:Src/mlm32l0xx_hw.c **** 
+ 239:Src/mlm32l0xx_hw.c ****   if (measuredLevel == 0)
+ 240:Src/mlm32l0xx_hw.c ****   {
+ 241:Src/mlm32l0xx_hw.c ****     batteryLevelmV = 0;
+ 242:Src/mlm32l0xx_hw.c ****   }
+ 243:Src/mlm32l0xx_hw.c ****   else
+ 244:Src/mlm32l0xx_hw.c ****   {
+ 245:Src/mlm32l0xx_hw.c ****     batteryLevelmV= (( (uint32_t) VDDA_TEMP_CAL * (*VREFINT_CAL ) )/ measuredLevel);
+ 246:Src/mlm32l0xx_hw.c ****   }
+ 247:Src/mlm32l0xx_hw.c **** 
+ 248:Src/mlm32l0xx_hw.c ****   if (batteryLevelmV > VDD_BAT)
+ 249:Src/mlm32l0xx_hw.c ****   {
+ 250:Src/mlm32l0xx_hw.c ****     batteryLevel = LORAWAN_MAX_BAT;
+ 251:Src/mlm32l0xx_hw.c ****   }
+ 252:Src/mlm32l0xx_hw.c ****   else if (batteryLevelmV < VDD_MIN)
+ 253:Src/mlm32l0xx_hw.c ****   {
+ 254:Src/mlm32l0xx_hw.c ****     batteryLevel = 0;
+ 255:Src/mlm32l0xx_hw.c ****   }
+ 256:Src/mlm32l0xx_hw.c ****   else
+ 257:Src/mlm32l0xx_hw.c ****   {
+ 258:Src/mlm32l0xx_hw.c ****     batteryLevel = (( (uint32_t) (batteryLevelmV - VDD_MIN)*LORAWAN_MAX_BAT) /(VDD_BAT-VDD_MIN) ); 
+ 259:Src/mlm32l0xx_hw.c ****   }
+ 260:Src/mlm32l0xx_hw.c ****   return batteryLevel;
+ 261:Src/mlm32l0xx_hw.c **** }
+ 262:Src/mlm32l0xx_hw.c **** 
+ 263:Src/mlm32l0xx_hw.c **** /**
+ 264:Src/mlm32l0xx_hw.c ****   * @brief This function initializes the ADC
+ 265:Src/mlm32l0xx_hw.c ****   * @param none
+ 266:Src/mlm32l0xx_hw.c ****   * @retval none
+ 267:Src/mlm32l0xx_hw.c ****   */
+ 268:Src/mlm32l0xx_hw.c **** void HW_AdcInit( void )
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccc433ET.s 			page 11
+
+
+ 269:Src/mlm32l0xx_hw.c **** {
+ 310              		.loc 1 269 0
+ 311              		.cfi_startproc
+ 312              		@ args = 0, pretend = 0, frame = 24
+ 313              		@ frame_needed = 0, uses_anonymous_args = 0
+ 314 0000 10B5     		push	{r4, lr}
+ 315              	.LCFI4:
+ 316              		.cfi_def_cfa_offset 8
+ 317              		.cfi_offset 4, -8
+ 318              		.cfi_offset 14, -4
+ 319 0002 86B0     		sub	sp, sp, #24
+ 320              	.LCFI5:
+ 321              		.cfi_def_cfa_offset 32
+ 270:Src/mlm32l0xx_hw.c ****   if( AdcInitialized == false )
+ 322              		.loc 1 270 0
+ 323 0004 184B     		ldr	r3, .L21
+ 324 0006 5B78     		ldrb	r3, [r3, #1]
+ 325 0008 002B     		cmp	r3, #0
+ 326 000a 01D0     		beq	.L20
+ 327              	.L18:
+ 271:Src/mlm32l0xx_hw.c ****   {
+ 272:Src/mlm32l0xx_hw.c ****     AdcInitialized = true;
+ 273:Src/mlm32l0xx_hw.c ****     GPIO_InitTypeDef initStruct;
+ 274:Src/mlm32l0xx_hw.c ****     
+ 275:Src/mlm32l0xx_hw.c ****     hadc.Instance  = ADC1;
+ 276:Src/mlm32l0xx_hw.c ****     
+ 277:Src/mlm32l0xx_hw.c ****     hadc.Init.OversamplingMode      = DISABLE;
+ 278:Src/mlm32l0xx_hw.c ****   
+ 279:Src/mlm32l0xx_hw.c ****     hadc.Init.ClockPrescaler        = ADC_CLOCK_SYNC_PCLK_DIV1;
+ 280:Src/mlm32l0xx_hw.c ****     hadc.Init.LowPowerAutoPowerOff  = DISABLE;
+ 281:Src/mlm32l0xx_hw.c ****     hadc.Init.LowPowerFrequencyMode = ENABLE;
+ 282:Src/mlm32l0xx_hw.c ****     hadc.Init.LowPowerAutoWait      = DISABLE;
+ 283:Src/mlm32l0xx_hw.c ****     
+ 284:Src/mlm32l0xx_hw.c ****     hadc.Init.Resolution            = ADC_RESOLUTION_12B;
+ 285:Src/mlm32l0xx_hw.c ****     hadc.Init.SamplingTime          = ADC_SAMPLETIME_7CYCLES_5;
+ 286:Src/mlm32l0xx_hw.c ****     hadc.Init.ScanConvMode          = ADC_SCAN_DIRECTION_FORWARD;
+ 287:Src/mlm32l0xx_hw.c ****     hadc.Init.DataAlign             = ADC_DATAALIGN_RIGHT;
+ 288:Src/mlm32l0xx_hw.c ****     hadc.Init.ContinuousConvMode    = DISABLE;
+ 289:Src/mlm32l0xx_hw.c ****     hadc.Init.DiscontinuousConvMode = DISABLE;
+ 290:Src/mlm32l0xx_hw.c ****     hadc.Init.ExternalTrigConvEdge  = ADC_EXTERNALTRIGCONVEDGE_NONE;
+ 291:Src/mlm32l0xx_hw.c ****     hadc.Init.EOCSelection          = ADC_EOC_SINGLE_CONV;
+ 292:Src/mlm32l0xx_hw.c ****     hadc.Init.DMAContinuousRequests = DISABLE;
+ 293:Src/mlm32l0xx_hw.c **** 
+ 294:Src/mlm32l0xx_hw.c ****     ADCCLK_ENABLE();
+ 295:Src/mlm32l0xx_hw.c ****     
+ 296:Src/mlm32l0xx_hw.c **** 
+ 297:Src/mlm32l0xx_hw.c ****     HAL_ADC_Init( &hadc );
+ 298:Src/mlm32l0xx_hw.c **** 
+ 299:Src/mlm32l0xx_hw.c ****     initStruct.Mode =GPIO_MODE_ANALOG;
+ 300:Src/mlm32l0xx_hw.c ****     initStruct.Pull = GPIO_NOPULL;
+ 301:Src/mlm32l0xx_hw.c ****     initStruct.Speed = GPIO_SPEED_HIGH;
+ 302:Src/mlm32l0xx_hw.c **** 
+ 303:Src/mlm32l0xx_hw.c ****     HW_GPIO_Init( BAT_LEVEL_PORT, BAT_LEVEL_PIN, &initStruct );
+ 304:Src/mlm32l0xx_hw.c ****   }
+ 305:Src/mlm32l0xx_hw.c **** }
+ 328              		.loc 1 305 0
+ 329 000c 06B0     		add	sp, sp, #24
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccc433ET.s 			page 12
+
+
+ 330              		@ sp needed
+ 331 000e 10BD     		pop	{r4, pc}
+ 332              	.L20:
+ 333              	.LBB14:
+ 272:Src/mlm32l0xx_hw.c ****     GPIO_InitTypeDef initStruct;
+ 334              		.loc 1 272 0
+ 335 0010 1548     		ldr	r0, .L21
+ 336 0012 0133     		adds	r3, r3, #1
+ 337 0014 4370     		strb	r3, [r0, #1]
+ 275:Src/mlm32l0xx_hw.c ****     
+ 338              		.loc 1 275 0
+ 339 0016 154A     		ldr	r2, .L21+4
+ 340 0018 4260     		str	r2, [r0, #4]
+ 277:Src/mlm32l0xx_hw.c ****   
+ 341              		.loc 1 277 0
+ 342 001a 0024     		movs	r4, #0
+ 343 001c 4464     		str	r4, [r0, #68]
+ 279:Src/mlm32l0xx_hw.c ****     hadc.Init.LowPowerAutoPowerOff  = DISABLE;
+ 344              		.loc 1 279 0
+ 345 001e C022     		movs	r2, #192
+ 346 0020 1206     		lsls	r2, r2, #24
+ 347 0022 8260     		str	r2, [r0, #8]
+ 280:Src/mlm32l0xx_hw.c ****     hadc.Init.LowPowerFrequencyMode = ENABLE;
+ 348              		.loc 1 280 0
+ 349 0024 0462     		str	r4, [r0, #32]
+ 281:Src/mlm32l0xx_hw.c ****     hadc.Init.LowPowerAutoWait      = DISABLE;
+ 350              		.loc 1 281 0
+ 351 0026 C363     		str	r3, [r0, #60]
+ 282:Src/mlm32l0xx_hw.c ****     
+ 352              		.loc 1 282 0
+ 353 0028 C461     		str	r4, [r0, #28]
+ 284:Src/mlm32l0xx_hw.c ****     hadc.Init.SamplingTime          = ADC_SAMPLETIME_7CYCLES_5;
+ 354              		.loc 1 284 0
+ 355 002a C460     		str	r4, [r0, #12]
+ 285:Src/mlm32l0xx_hw.c ****     hadc.Init.ScanConvMode          = ADC_SCAN_DIRECTION_FORWARD;
+ 356              		.loc 1 285 0
+ 357 002c 0222     		movs	r2, #2
+ 358 002e 0264     		str	r2, [r0, #64]
+ 286:Src/mlm32l0xx_hw.c ****     hadc.Init.DataAlign             = ADC_DATAALIGN_RIGHT;
+ 359              		.loc 1 286 0
+ 360 0030 4361     		str	r3, [r0, #20]
+ 287:Src/mlm32l0xx_hw.c ****     hadc.Init.ContinuousConvMode    = DISABLE;
+ 361              		.loc 1 287 0
+ 362 0032 0461     		str	r4, [r0, #16]
+ 288:Src/mlm32l0xx_hw.c ****     hadc.Init.DiscontinuousConvMode = DISABLE;
+ 363              		.loc 1 288 0
+ 364 0034 4462     		str	r4, [r0, #36]
+ 289:Src/mlm32l0xx_hw.c ****     hadc.Init.ExternalTrigConvEdge  = ADC_EXTERNALTRIGCONVEDGE_NONE;
+ 365              		.loc 1 289 0
+ 366 0036 8462     		str	r4, [r0, #40]
+ 290:Src/mlm32l0xx_hw.c ****     hadc.Init.EOCSelection          = ADC_EOC_SINGLE_CONV;
+ 367              		.loc 1 290 0
+ 368 0038 0463     		str	r4, [r0, #48]
+ 291:Src/mlm32l0xx_hw.c ****     hadc.Init.DMAContinuousRequests = DISABLE;
+ 369              		.loc 1 291 0
+ 370 003a 0333     		adds	r3, r3, #3
+ 371 003c 8361     		str	r3, [r0, #24]
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccc433ET.s 			page 13
+
+
+ 292:Src/mlm32l0xx_hw.c **** 
+ 372              		.loc 1 292 0
+ 373 003e 4463     		str	r4, [r0, #52]
+ 294:Src/mlm32l0xx_hw.c ****     
+ 374              		.loc 1 294 0
+ 375 0040 0B4A     		ldr	r2, .L21+8
+ 376 0042 516B     		ldr	r1, [r2, #52]
+ 377 0044 FD33     		adds	r3, r3, #253
+ 378 0046 FF33     		adds	r3, r3, #255
+ 379 0048 0B43     		orrs	r3, r1
+ 380 004a 5363     		str	r3, [r2, #52]
+ 297:Src/mlm32l0xx_hw.c **** 
+ 381              		.loc 1 297 0
+ 382 004c 0430     		adds	r0, r0, #4
+ 383 004e FFF7FEFF 		bl	HAL_ADC_Init
+ 384              	.LVL10:
+ 299:Src/mlm32l0xx_hw.c ****     initStruct.Pull = GPIO_NOPULL;
+ 385              		.loc 1 299 0
+ 386 0052 0323     		movs	r3, #3
+ 387 0054 0293     		str	r3, [sp, #8]
+ 300:Src/mlm32l0xx_hw.c ****     initStruct.Speed = GPIO_SPEED_HIGH;
+ 388              		.loc 1 300 0
+ 389 0056 0394     		str	r4, [sp, #12]
+ 301:Src/mlm32l0xx_hw.c **** 
+ 390              		.loc 1 301 0
+ 391 0058 0493     		str	r3, [sp, #16]
+ 303:Src/mlm32l0xx_hw.c ****   }
+ 392              		.loc 1 303 0
+ 393 005a A020     		movs	r0, #160
+ 394 005c 01AA     		add	r2, sp, #4
+ 395 005e 1021     		movs	r1, #16
+ 396 0060 C005     		lsls	r0, r0, #23
+ 397 0062 FFF7FEFF 		bl	HW_GPIO_Init
+ 398              	.LVL11:
+ 399              	.LBE14:
+ 400              		.loc 1 305 0
+ 401 0066 D1E7     		b	.L18
+ 402              	.L22:
+ 403              		.align	2
+ 404              	.L21:
+ 405 0068 00000000 		.word	.LANCHOR0
+ 406 006c 00240140 		.word	1073816576
+ 407 0070 00100240 		.word	1073876992
+ 408              		.cfi_endproc
+ 409              	.LFE46:
+ 411              		.section	.text.HW_Init,"ax",%progbits
+ 412              		.align	1
+ 413              		.global	HW_Init
+ 414              		.syntax unified
+ 415              		.code	16
+ 416              		.thumb_func
+ 417              		.fpu softvfp
+ 419              	HW_Init:
+ 420              	.LFB40:
+  97:Src/mlm32l0xx_hw.c ****   if( McuInitialized == false )
+ 421              		.loc 1 97 0
+ 422              		.cfi_startproc
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccc433ET.s 			page 14
+
+
+ 423              		@ args = 0, pretend = 0, frame = 0
+ 424              		@ frame_needed = 0, uses_anonymous_args = 0
+ 425 0000 10B5     		push	{r4, lr}
+ 426              	.LCFI6:
+ 427              		.cfi_def_cfa_offset 8
+ 428              		.cfi_offset 4, -8
+ 429              		.cfi_offset 14, -4
+  98:Src/mlm32l0xx_hw.c ****   {
+ 430              		.loc 1 98 0
+ 431 0002 104B     		ldr	r3, .L26
+ 432 0004 1B78     		ldrb	r3, [r3]
+ 433 0006 002B     		cmp	r3, #0
+ 434 0008 00D0     		beq	.L25
+ 435              	.L23:
+ 125:Src/mlm32l0xx_hw.c **** 
+ 436              		.loc 1 125 0
+ 437              		@ sp needed
+ 438 000a 10BD     		pop	{r4, pc}
+ 439              	.L25:
+ 105:Src/mlm32l0xx_hw.c **** 
+ 440              		.loc 1 105 0
+ 441 000c FFF7FEFF 		bl	HW_AdcInit
+ 442              	.LVL12:
+ 107:Src/mlm32l0xx_hw.c ****     
+ 443              		.loc 1 107 0
+ 444 0010 0D4B     		ldr	r3, .L26+4
+ 445 0012 1B68     		ldr	r3, [r3]
+ 446 0014 9847     		blx	r3
+ 447              	.LVL13:
+ 109:Src/mlm32l0xx_hw.c **** 
+ 448              		.loc 1 109 0
+ 449 0016 FFF7FEFF 		bl	HW_SPI_Init
+ 450              	.LVL14:
+ 111:Src/mlm32l0xx_hw.c ****     
+ 451              		.loc 1 111 0
+ 452 001a FFF7FEFF 		bl	HW_RTC_Init
+ 453              	.LVL15:
+ 113:Src/mlm32l0xx_hw.c ****     
+ 454              		.loc 1 113 0
+ 455 001e FFF7FEFF 		bl	vcom_Init
+ 456              	.LVL16:
+ 115:Src/mlm32l0xx_hw.c ****     
+ 457              		.loc 1 115 0
+ 458 0022 0020     		movs	r0, #0
+ 459 0024 FFF7FEFF 		bl	BSP_LED_Init
+ 460              	.LVL17:
+ 117:Src/mlm32l0xx_hw.c ****     
+ 461              		.loc 1 117 0
+ 462 0028 0120     		movs	r0, #1
+ 463 002a FFF7FEFF 		bl	BSP_LED_Init
+ 464              	.LVL18:
+ 119:Src/mlm32l0xx_hw.c ****     
+ 465              		.loc 1 119 0
+ 466 002e 0220     		movs	r0, #2
+ 467 0030 FFF7FEFF 		bl	BSP_LED_Init
+ 468              	.LVL19:
+ 121:Src/mlm32l0xx_hw.c **** 
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccc433ET.s 			page 15
+
+
+ 469              		.loc 1 121 0
+ 470 0034 0320     		movs	r0, #3
+ 471 0036 FFF7FEFF 		bl	BSP_LED_Init
+ 472              	.LVL20:
+ 123:Src/mlm32l0xx_hw.c ****   }
+ 473              		.loc 1 123 0
+ 474 003a 024B     		ldr	r3, .L26
+ 475 003c 0122     		movs	r2, #1
+ 476 003e 1A70     		strb	r2, [r3]
+ 125:Src/mlm32l0xx_hw.c **** 
+ 477              		.loc 1 125 0
+ 478 0040 E3E7     		b	.L23
+ 479              	.L27:
+ 480 0042 C046     		.align	2
+ 481              	.L26:
+ 482 0044 00000000 		.word	.LANCHOR0
+ 483 0048 00000000 		.word	Radio
+ 484              		.cfi_endproc
+ 485              	.LFE40:
+ 487              		.section	.text.HW_AdcDeInit,"ax",%progbits
+ 488              		.align	1
+ 489              		.global	HW_AdcDeInit
+ 490              		.syntax unified
+ 491              		.code	16
+ 492              		.thumb_func
+ 493              		.fpu softvfp
+ 495              	HW_AdcDeInit:
+ 496              	.LFB47:
+ 306:Src/mlm32l0xx_hw.c **** /**
+ 307:Src/mlm32l0xx_hw.c ****   * @brief This function De-initializes the ADC
+ 308:Src/mlm32l0xx_hw.c ****   * @param none
+ 309:Src/mlm32l0xx_hw.c ****   * @retval none
+ 310:Src/mlm32l0xx_hw.c ****   */
+ 311:Src/mlm32l0xx_hw.c **** void HW_AdcDeInit( void )
+ 312:Src/mlm32l0xx_hw.c **** {
+ 497              		.loc 1 312 0
+ 498              		.cfi_startproc
+ 499              		@ args = 0, pretend = 0, frame = 0
+ 500              		@ frame_needed = 0, uses_anonymous_args = 0
+ 501              		@ link register save eliminated.
+ 313:Src/mlm32l0xx_hw.c ****   AdcInitialized = false;
+ 502              		.loc 1 313 0
+ 503 0000 014B     		ldr	r3, .L29
+ 504 0002 0022     		movs	r2, #0
+ 505 0004 5A70     		strb	r2, [r3, #1]
+ 314:Src/mlm32l0xx_hw.c **** }
+ 506              		.loc 1 314 0
+ 507              		@ sp needed
+ 508 0006 7047     		bx	lr
+ 509              	.L30:
+ 510              		.align	2
+ 511              	.L29:
+ 512 0008 00000000 		.word	.LANCHOR0
+ 513              		.cfi_endproc
+ 514              	.LFE47:
+ 516              		.section	.text.HW_AdcReadChannel,"ax",%progbits
+ 517              		.align	1
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccc433ET.s 			page 16
+
+
+ 518              		.global	HW_AdcReadChannel
+ 519              		.syntax unified
+ 520              		.code	16
+ 521              		.thumb_func
+ 522              		.fpu softvfp
+ 524              	HW_AdcReadChannel:
+ 525              	.LFB48:
+ 315:Src/mlm32l0xx_hw.c **** 
+ 316:Src/mlm32l0xx_hw.c **** /**
+ 317:Src/mlm32l0xx_hw.c ****   * @brief This function De-initializes the ADC
+ 318:Src/mlm32l0xx_hw.c ****   * @param Channel
+ 319:Src/mlm32l0xx_hw.c ****   * @retval Value
+ 320:Src/mlm32l0xx_hw.c ****   */
+ 321:Src/mlm32l0xx_hw.c **** uint16_t HW_AdcReadChannel( uint32_t Channel )
+ 322:Src/mlm32l0xx_hw.c **** {
+ 526              		.loc 1 322 0
+ 527              		.cfi_startproc
+ 528              		@ args = 0, pretend = 0, frame = 8
+ 529              		@ frame_needed = 0, uses_anonymous_args = 0
+ 530              	.LVL21:
+ 531 0000 F0B5     		push	{r4, r5, r6, r7, lr}
+ 532              	.LCFI7:
+ 533              		.cfi_def_cfa_offset 20
+ 534              		.cfi_offset 4, -20
+ 535              		.cfi_offset 5, -16
+ 536              		.cfi_offset 6, -12
+ 537              		.cfi_offset 7, -8
+ 538              		.cfi_offset 14, -4
+ 539 0002 83B0     		sub	sp, sp, #12
+ 540              	.LCFI8:
+ 541              		.cfi_def_cfa_offset 32
+ 542 0004 0500     		movs	r5, r0
+ 543              	.LVL22:
+ 323:Src/mlm32l0xx_hw.c **** 
+ 324:Src/mlm32l0xx_hw.c ****   ADC_ChannelConfTypeDef adcConf;
+ 325:Src/mlm32l0xx_hw.c ****   uint16_t adcData = 0;
+ 326:Src/mlm32l0xx_hw.c ****   
+ 327:Src/mlm32l0xx_hw.c ****   if( AdcInitialized == true )
+ 544              		.loc 1 327 0
+ 545 0006 1F4B     		ldr	r3, .L35
+ 546 0008 5B78     		ldrb	r3, [r3, #1]
+ 547 000a 002B     		cmp	r3, #0
+ 548 000c 38D0     		beq	.L34
+ 549              	.L33:
+ 328:Src/mlm32l0xx_hw.c ****   {
+ 329:Src/mlm32l0xx_hw.c ****     /* wait the the Vrefint used by adc is set */
+ 330:Src/mlm32l0xx_hw.c ****     while (__HAL_PWR_GET_FLAG(PWR_FLAG_VREFINTRDY) == RESET) {};
+ 550              		.loc 1 330 0 discriminator 1
+ 551 000e 1E4B     		ldr	r3, .L35+4
+ 552 0010 5B68     		ldr	r3, [r3, #4]
+ 553 0012 1B07     		lsls	r3, r3, #28
+ 554 0014 FBD5     		bpl	.L33
+ 331:Src/mlm32l0xx_hw.c ****       
+ 332:Src/mlm32l0xx_hw.c ****     ADCCLK_ENABLE();
+ 555              		.loc 1 332 0
+ 556 0016 1D4E     		ldr	r6, .L35+8
+ 557 0018 726B     		ldr	r2, [r6, #52]
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccc433ET.s 			page 17
+
+
+ 558 001a 8023     		movs	r3, #128
+ 559 001c 9B00     		lsls	r3, r3, #2
+ 560 001e 1343     		orrs	r3, r2
+ 561 0020 7363     		str	r3, [r6, #52]
+ 333:Src/mlm32l0xx_hw.c ****     
+ 334:Src/mlm32l0xx_hw.c ****     /*calibrate ADC if any calibraiton hardware*/
+ 335:Src/mlm32l0xx_hw.c ****     HAL_ADCEx_Calibration_Start(&hadc, ADC_SINGLE_ENDED );
+ 562              		.loc 1 335 0
+ 563 0022 184F     		ldr	r7, .L35
+ 564 0024 3C1D     		adds	r4, r7, #4
+ 565 0026 0021     		movs	r1, #0
+ 566 0028 2000     		movs	r0, r4
+ 567              	.LVL23:
+ 568 002a FFF7FEFF 		bl	HAL_ADCEx_Calibration_Start
+ 569              	.LVL24:
+ 336:Src/mlm32l0xx_hw.c ****     
+ 337:Src/mlm32l0xx_hw.c ****     /* Deselects all channels*/
+ 338:Src/mlm32l0xx_hw.c ****     adcConf.Channel = ADC_CHANNEL_MASK;
+ 570              		.loc 1 338 0
+ 571 002e 184B     		ldr	r3, .L35+12
+ 572 0030 0093     		str	r3, [sp]
+ 339:Src/mlm32l0xx_hw.c ****     adcConf.Rank = ADC_RANK_NONE; 
+ 573              		.loc 1 339 0
+ 574 0032 184B     		ldr	r3, .L35+16
+ 575 0034 0193     		str	r3, [sp, #4]
+ 340:Src/mlm32l0xx_hw.c ****     HAL_ADC_ConfigChannel( &hadc, &adcConf);
+ 576              		.loc 1 340 0
+ 577 0036 6946     		mov	r1, sp
+ 578 0038 2000     		movs	r0, r4
+ 579 003a FFF7FEFF 		bl	HAL_ADC_ConfigChannel
+ 580              	.LVL25:
+ 341:Src/mlm32l0xx_hw.c ****       
+ 342:Src/mlm32l0xx_hw.c ****     /* configure adc channel */
+ 343:Src/mlm32l0xx_hw.c ****     adcConf.Channel = Channel;
+ 581              		.loc 1 343 0
+ 582 003e 0095     		str	r5, [sp]
+ 344:Src/mlm32l0xx_hw.c ****     adcConf.Rank = ADC_RANK_CHANNEL_NUMBER;
+ 583              		.loc 1 344 0
+ 584 0040 8023     		movs	r3, #128
+ 585 0042 5B01     		lsls	r3, r3, #5
+ 586 0044 0193     		str	r3, [sp, #4]
+ 345:Src/mlm32l0xx_hw.c ****     HAL_ADC_ConfigChannel( &hadc, &adcConf);
+ 587              		.loc 1 345 0
+ 588 0046 6946     		mov	r1, sp
+ 589 0048 2000     		movs	r0, r4
+ 590 004a FFF7FEFF 		bl	HAL_ADC_ConfigChannel
+ 591              	.LVL26:
+ 346:Src/mlm32l0xx_hw.c **** 
+ 347:Src/mlm32l0xx_hw.c ****     /* Start the conversion process */
+ 348:Src/mlm32l0xx_hw.c ****     HAL_ADC_Start( &hadc);
+ 592              		.loc 1 348 0
+ 593 004e 2000     		movs	r0, r4
+ 594 0050 FFF7FEFF 		bl	HAL_ADC_Start
+ 595              	.LVL27:
+ 349:Src/mlm32l0xx_hw.c ****       
+ 350:Src/mlm32l0xx_hw.c ****     /* Wait for the end of conversion */
+ 351:Src/mlm32l0xx_hw.c ****     HAL_ADC_PollForConversion( &hadc, HAL_MAX_DELAY );
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccc433ET.s 			page 18
+
+
+ 596              		.loc 1 351 0
+ 597 0054 0121     		movs	r1, #1
+ 598 0056 4942     		rsbs	r1, r1, #0
+ 599 0058 2000     		movs	r0, r4
+ 600 005a FFF7FEFF 		bl	HAL_ADC_PollForConversion
+ 601              	.LVL28:
+ 352:Src/mlm32l0xx_hw.c ****       
+ 353:Src/mlm32l0xx_hw.c ****     /* Get the converted value of regular channel */
+ 354:Src/mlm32l0xx_hw.c ****     adcData = HAL_ADC_GetValue ( &hadc);
+ 602              		.loc 1 354 0
+ 603 005e 2000     		movs	r0, r4
+ 604 0060 FFF7FEFF 		bl	HAL_ADC_GetValue
+ 605              	.LVL29:
+ 606 0064 80B2     		uxth	r0, r0
+ 607              	.LVL30:
+ 355:Src/mlm32l0xx_hw.c **** 
+ 356:Src/mlm32l0xx_hw.c ****     __HAL_ADC_DISABLE( &hadc) ;
+ 608              		.loc 1 356 0
+ 609 0066 7B68     		ldr	r3, [r7, #4]
+ 610 0068 9A68     		ldr	r2, [r3, #8]
+ 611 006a 0221     		movs	r1, #2
+ 612 006c 0A43     		orrs	r2, r1
+ 613 006e 9A60     		str	r2, [r3, #8]
+ 614 0070 0322     		movs	r2, #3
+ 615 0072 1A60     		str	r2, [r3]
+ 357:Src/mlm32l0xx_hw.c **** 
+ 358:Src/mlm32l0xx_hw.c ****     ADCCLK_DISABLE();
+ 616              		.loc 1 358 0
+ 617 0074 736B     		ldr	r3, [r6, #52]
+ 618 0076 084A     		ldr	r2, .L35+20
+ 619 0078 1340     		ands	r3, r2
+ 620 007a 7363     		str	r3, [r6, #52]
+ 621              	.LVL31:
+ 622              	.L32:
+ 359:Src/mlm32l0xx_hw.c ****   }
+ 360:Src/mlm32l0xx_hw.c ****   return adcData;
+ 361:Src/mlm32l0xx_hw.c **** }
+ 623              		.loc 1 361 0
+ 624 007c 03B0     		add	sp, sp, #12
+ 625              		@ sp needed
+ 626              	.LVL32:
+ 627 007e F0BD     		pop	{r4, r5, r6, r7, pc}
+ 628              	.LVL33:
+ 629              	.L34:
+ 325:Src/mlm32l0xx_hw.c ****   
+ 630              		.loc 1 325 0
+ 631 0080 0020     		movs	r0, #0
+ 632              	.LVL34:
+ 633 0082 FBE7     		b	.L32
+ 634              	.L36:
+ 635              		.align	2
+ 636              	.L35:
+ 637 0084 00000000 		.word	.LANCHOR0
+ 638 0088 00700040 		.word	1073770496
+ 639 008c 00100240 		.word	1073876992
+ 640 0090 FFFF0700 		.word	524287
+ 641 0094 01100000 		.word	4097
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccc433ET.s 			page 19
+
+
+ 642 0098 FFFDFFFF 		.word	-513
+ 643              		.cfi_endproc
+ 644              	.LFE48:
+ 646              		.global	__aeabi_uidiv
+ 647              		.section	.text.HW_GetBatteryLevel,"ax",%progbits
+ 648              		.align	1
+ 649              		.global	HW_GetBatteryLevel
+ 650              		.syntax unified
+ 651              		.code	16
+ 652              		.thumb_func
+ 653              		.fpu softvfp
+ 655              	HW_GetBatteryLevel:
+ 656              	.LFB45:
+ 232:Src/mlm32l0xx_hw.c ****   uint8_t batteryLevel = 0;
+ 657              		.loc 1 232 0
+ 658              		.cfi_startproc
+ 659              		@ args = 0, pretend = 0, frame = 0
+ 660              		@ frame_needed = 0, uses_anonymous_args = 0
+ 661 0000 10B5     		push	{r4, lr}
+ 662              	.LCFI9:
+ 663              		.cfi_def_cfa_offset 8
+ 664              		.cfi_offset 4, -8
+ 665              		.cfi_offset 14, -4
+ 666              	.LVL35:
+ 237:Src/mlm32l0xx_hw.c **** 
+ 667              		.loc 1 237 0
+ 668 0002 1048     		ldr	r0, .L43
+ 669 0004 FFF7FEFF 		bl	HW_AdcReadChannel
+ 670              	.LVL36:
+ 671 0008 011E     		subs	r1, r0, #0
+ 672              	.LVL37:
+ 239:Src/mlm32l0xx_hw.c ****   {
+ 673              		.loc 1 239 0
+ 674 000a 09D0     		beq	.L40
+ 245:Src/mlm32l0xx_hw.c ****   }
+ 675              		.loc 1 245 0
+ 676 000c 0E4B     		ldr	r3, .L43+4
+ 677 000e 1888     		ldrh	r0, [r3]
+ 678              	.LVL38:
+ 679 0010 0E4C     		ldr	r4, .L43+8
+ 680 0012 6043     		muls	r0, r4
+ 681 0014 FFF7FEFF 		bl	__aeabi_uidiv
+ 682              	.LVL39:
+ 248:Src/mlm32l0xx_hw.c ****   {
+ 683              		.loc 1 248 0
+ 684 0018 A042     		cmp	r0, r4
+ 685 001a 02D9     		bls	.L38
+ 250:Src/mlm32l0xx_hw.c ****   }
+ 686              		.loc 1 250 0
+ 687 001c FE20     		movs	r0, #254
+ 688              	.LVL40:
+ 689 001e 0EE0     		b	.L39
+ 690              	.LVL41:
+ 691              	.L40:
+ 241:Src/mlm32l0xx_hw.c ****   }
+ 692              		.loc 1 241 0
+ 693 0020 0020     		movs	r0, #0
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccc433ET.s 			page 20
+
+
+ 694              	.LVL42:
+ 695              	.L38:
+ 252:Src/mlm32l0xx_hw.c ****   {
+ 696              		.loc 1 252 0
+ 697 0022 0B4B     		ldr	r3, .L43+12
+ 698 0024 9842     		cmp	r0, r3
+ 699 0026 0BD9     		bls	.L42
+ 258:Src/mlm32l0xx_hw.c ****   }
+ 700              		.loc 1 258 0
+ 701 0028 C301     		lsls	r3, r0, #7
+ 702 002a 1B1A     		subs	r3, r3, r0
+ 703 002c 5800     		lsls	r0, r3, #1
+ 704 002e 094B     		ldr	r3, .L43+16
+ 705 0030 9C46     		mov	ip, r3
+ 706 0032 6044     		add	r0, r0, ip
+ 707 0034 9621     		movs	r1, #150
+ 708 0036 C900     		lsls	r1, r1, #3
+ 709 0038 FFF7FEFF 		bl	__aeabi_uidiv
+ 710              	.LVL43:
+ 711 003c C0B2     		uxtb	r0, r0
+ 712              	.LVL44:
+ 713              	.L39:
+ 261:Src/mlm32l0xx_hw.c **** 
+ 714              		.loc 1 261 0
+ 715              		@ sp needed
+ 716 003e 10BD     		pop	{r4, pc}
+ 717              	.LVL45:
+ 718              	.L42:
+ 254:Src/mlm32l0xx_hw.c ****   }
+ 719              		.loc 1 254 0
+ 720 0040 0020     		movs	r0, #0
+ 721 0042 FCE7     		b	.L39
+ 722              	.L44:
+ 723              		.align	2
+ 724              	.L43:
+ 725 0044 00000244 		.word	1140981760
+ 726 0048 7800F81F 		.word	536346744
+ 727 004c B80B0000 		.word	3000
+ 728 0050 07070000 		.word	1799
+ 729 0054 1006F9FF 		.word	-457200
+ 730              		.cfi_endproc
+ 731              	.LFE45:
+ 733              		.section	.text.LPM_EnterStopMode,"ax",%progbits
+ 734              		.align	1
+ 735              		.global	LPM_EnterStopMode
+ 736              		.syntax unified
+ 737              		.code	16
+ 738              		.thumb_func
+ 739              		.fpu softvfp
+ 741              	LPM_EnterStopMode:
+ 742              	.LFB49:
+ 362:Src/mlm32l0xx_hw.c **** 
+ 363:Src/mlm32l0xx_hw.c **** /**
+ 364:Src/mlm32l0xx_hw.c ****   * @brief Enters Low Power Stop Mode
+ 365:Src/mlm32l0xx_hw.c ****   * @note ARM exists the function when waking up
+ 366:Src/mlm32l0xx_hw.c ****   * @param none
+ 367:Src/mlm32l0xx_hw.c ****   * @retval none
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccc433ET.s 			page 21
+
+
+ 368:Src/mlm32l0xx_hw.c ****   */
+ 369:Src/mlm32l0xx_hw.c **** void LPM_EnterStopMode( void)
+ 370:Src/mlm32l0xx_hw.c **** {
+ 743              		.loc 1 370 0
+ 744              		.cfi_startproc
+ 745              		@ args = 0, pretend = 0, frame = 0
+ 746              		@ frame_needed = 0, uses_anonymous_args = 0
+ 747 0000 10B5     		push	{r4, lr}
+ 748              	.LCFI10:
+ 749              		.cfi_def_cfa_offset 8
+ 750              		.cfi_offset 4, -8
+ 751              		.cfi_offset 14, -4
+ 752              	.LBB15:
+ 753              	.LBB16:
+ 754              		.file 2 "Drivers/CMSIS/Include/cmsis_gcc.h"
+   1:Drivers/CMSIS/Include/cmsis_gcc.h **** /**************************************************************************//**
+   2:Drivers/CMSIS/Include/cmsis_gcc.h ****  * @file     cmsis_gcc.h
+   3:Drivers/CMSIS/Include/cmsis_gcc.h ****  * @brief    CMSIS Cortex-M Core Function/Instruction Header File
+   4:Drivers/CMSIS/Include/cmsis_gcc.h ****  * @version  V4.30
+   5:Drivers/CMSIS/Include/cmsis_gcc.h ****  * @date     20. October 2015
+   6:Drivers/CMSIS/Include/cmsis_gcc.h ****  ******************************************************************************/
+   7:Drivers/CMSIS/Include/cmsis_gcc.h **** /* Copyright (c) 2009 - 2015 ARM LIMITED
+   8:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+   9:Drivers/CMSIS/Include/cmsis_gcc.h ****    All rights reserved.
+  10:Drivers/CMSIS/Include/cmsis_gcc.h ****    Redistribution and use in source and binary forms, with or without
+  11:Drivers/CMSIS/Include/cmsis_gcc.h ****    modification, are permitted provided that the following conditions are met:
+  12:Drivers/CMSIS/Include/cmsis_gcc.h ****    - Redistributions of source code must retain the above copyright
+  13:Drivers/CMSIS/Include/cmsis_gcc.h ****      notice, this list of conditions and the following disclaimer.
+  14:Drivers/CMSIS/Include/cmsis_gcc.h ****    - Redistributions in binary form must reproduce the above copyright
+  15:Drivers/CMSIS/Include/cmsis_gcc.h ****      notice, this list of conditions and the following disclaimer in the
+  16:Drivers/CMSIS/Include/cmsis_gcc.h ****      documentation and/or other materials provided with the distribution.
+  17:Drivers/CMSIS/Include/cmsis_gcc.h ****    - Neither the name of ARM nor the names of its contributors may be used
+  18:Drivers/CMSIS/Include/cmsis_gcc.h ****      to endorse or promote products derived from this software without
+  19:Drivers/CMSIS/Include/cmsis_gcc.h ****      specific prior written permission.
+  20:Drivers/CMSIS/Include/cmsis_gcc.h ****    *
+  21:Drivers/CMSIS/Include/cmsis_gcc.h ****    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  22:Drivers/CMSIS/Include/cmsis_gcc.h ****    AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+  23:Drivers/CMSIS/Include/cmsis_gcc.h ****    IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+  24:Drivers/CMSIS/Include/cmsis_gcc.h ****    ARE DISCLAIMED. IN NO EVENT SHALL COPYRIGHT HOLDERS AND CONTRIBUTORS BE
+  25:Drivers/CMSIS/Include/cmsis_gcc.h ****    LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+  26:Drivers/CMSIS/Include/cmsis_gcc.h ****    CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+  27:Drivers/CMSIS/Include/cmsis_gcc.h ****    SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+  28:Drivers/CMSIS/Include/cmsis_gcc.h ****    INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+  29:Drivers/CMSIS/Include/cmsis_gcc.h ****    CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+  30:Drivers/CMSIS/Include/cmsis_gcc.h ****    ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+  31:Drivers/CMSIS/Include/cmsis_gcc.h ****    POSSIBILITY OF SUCH DAMAGE.
+  32:Drivers/CMSIS/Include/cmsis_gcc.h ****    ---------------------------------------------------------------------------*/
+  33:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+  34:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+  35:Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef __CMSIS_GCC_H
+  36:Drivers/CMSIS/Include/cmsis_gcc.h **** #define __CMSIS_GCC_H
+  37:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+  38:Drivers/CMSIS/Include/cmsis_gcc.h **** /* ignore some GCC warnings */
+  39:Drivers/CMSIS/Include/cmsis_gcc.h **** #if defined ( __GNUC__ )
+  40:Drivers/CMSIS/Include/cmsis_gcc.h **** #pragma GCC diagnostic push
+  41:Drivers/CMSIS/Include/cmsis_gcc.h **** #pragma GCC diagnostic ignored "-Wsign-conversion"
+  42:Drivers/CMSIS/Include/cmsis_gcc.h **** #pragma GCC diagnostic ignored "-Wconversion"
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccc433ET.s 			page 22
+
+
+  43:Drivers/CMSIS/Include/cmsis_gcc.h **** #pragma GCC diagnostic ignored "-Wunused-parameter"
+  44:Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
+  45:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+  46:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+  47:Drivers/CMSIS/Include/cmsis_gcc.h **** /* ###########################  Core Function Access  ########################### */
+  48:Drivers/CMSIS/Include/cmsis_gcc.h **** /** \ingroup  CMSIS_Core_FunctionInterface
+  49:Drivers/CMSIS/Include/cmsis_gcc.h ****     \defgroup CMSIS_Core_RegAccFunctions CMSIS Core Register Access Functions
+  50:Drivers/CMSIS/Include/cmsis_gcc.h ****   @{
+  51:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
+  52:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+  53:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
+  54:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Enable IRQ Interrupts
+  55:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Enables IRQ interrupts by clearing the I-bit in the CPSR.
+  56:Drivers/CMSIS/Include/cmsis_gcc.h ****            Can only be executed in Privileged modes.
+  57:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
+  58:Drivers/CMSIS/Include/cmsis_gcc.h **** __attribute__( ( always_inline ) ) __STATIC_INLINE void __enable_irq(void)
+  59:Drivers/CMSIS/Include/cmsis_gcc.h **** {
+  60:Drivers/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("cpsie i" : : : "memory");
+  61:Drivers/CMSIS/Include/cmsis_gcc.h **** }
+  62:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+  63:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+  64:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
+  65:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Disable IRQ Interrupts
+  66:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Disables IRQ interrupts by setting the I-bit in the CPSR.
+  67:Drivers/CMSIS/Include/cmsis_gcc.h ****   Can only be executed in Privileged modes.
+  68:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
+  69:Drivers/CMSIS/Include/cmsis_gcc.h **** __attribute__( ( always_inline ) ) __STATIC_INLINE void __disable_irq(void)
+  70:Drivers/CMSIS/Include/cmsis_gcc.h **** {
+  71:Drivers/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("cpsid i" : : : "memory");
+  72:Drivers/CMSIS/Include/cmsis_gcc.h **** }
+  73:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+  74:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+  75:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
+  76:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Get Control Register
+  77:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Returns the content of the Control Register.
+  78:Drivers/CMSIS/Include/cmsis_gcc.h ****   \return               Control Register value
+  79:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
+  80:Drivers/CMSIS/Include/cmsis_gcc.h **** __attribute__( ( always_inline ) ) __STATIC_INLINE uint32_t __get_CONTROL(void)
+  81:Drivers/CMSIS/Include/cmsis_gcc.h **** {
+  82:Drivers/CMSIS/Include/cmsis_gcc.h ****   uint32_t result;
+  83:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+  84:Drivers/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("MRS %0, control" : "=r" (result) );
+  85:Drivers/CMSIS/Include/cmsis_gcc.h ****   return(result);
+  86:Drivers/CMSIS/Include/cmsis_gcc.h **** }
+  87:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+  88:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+  89:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
+  90:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Set Control Register
+  91:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Writes the given value to the Control Register.
+  92:Drivers/CMSIS/Include/cmsis_gcc.h ****   \param [in]    control  Control Register value to set
+  93:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
+  94:Drivers/CMSIS/Include/cmsis_gcc.h **** __attribute__( ( always_inline ) ) __STATIC_INLINE void __set_CONTROL(uint32_t control)
+  95:Drivers/CMSIS/Include/cmsis_gcc.h **** {
+  96:Drivers/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("MSR control, %0" : : "r" (control) : "memory");
+  97:Drivers/CMSIS/Include/cmsis_gcc.h **** }
+  98:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+  99:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccc433ET.s 			page 23
+
+
+ 100:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
+ 101:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Get IPSR Register
+ 102:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Returns the content of the IPSR Register.
+ 103:Drivers/CMSIS/Include/cmsis_gcc.h ****   \return               IPSR Register value
+ 104:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
+ 105:Drivers/CMSIS/Include/cmsis_gcc.h **** __attribute__( ( always_inline ) ) __STATIC_INLINE uint32_t __get_IPSR(void)
+ 106:Drivers/CMSIS/Include/cmsis_gcc.h **** {
+ 107:Drivers/CMSIS/Include/cmsis_gcc.h ****   uint32_t result;
+ 108:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 109:Drivers/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("MRS %0, ipsr" : "=r" (result) );
+ 110:Drivers/CMSIS/Include/cmsis_gcc.h ****   return(result);
+ 111:Drivers/CMSIS/Include/cmsis_gcc.h **** }
+ 112:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 113:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 114:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
+ 115:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Get APSR Register
+ 116:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Returns the content of the APSR Register.
+ 117:Drivers/CMSIS/Include/cmsis_gcc.h ****   \return               APSR Register value
+ 118:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
+ 119:Drivers/CMSIS/Include/cmsis_gcc.h **** __attribute__( ( always_inline ) ) __STATIC_INLINE uint32_t __get_APSR(void)
+ 120:Drivers/CMSIS/Include/cmsis_gcc.h **** {
+ 121:Drivers/CMSIS/Include/cmsis_gcc.h ****   uint32_t result;
+ 122:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 123:Drivers/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("MRS %0, apsr" : "=r" (result) );
+ 124:Drivers/CMSIS/Include/cmsis_gcc.h ****   return(result);
+ 125:Drivers/CMSIS/Include/cmsis_gcc.h **** }
+ 126:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 127:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 128:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
+ 129:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Get xPSR Register
+ 130:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Returns the content of the xPSR Register.
+ 131:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 132:Drivers/CMSIS/Include/cmsis_gcc.h ****     \return               xPSR Register value
+ 133:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
+ 134:Drivers/CMSIS/Include/cmsis_gcc.h **** __attribute__( ( always_inline ) ) __STATIC_INLINE uint32_t __get_xPSR(void)
+ 135:Drivers/CMSIS/Include/cmsis_gcc.h **** {
+ 136:Drivers/CMSIS/Include/cmsis_gcc.h ****   uint32_t result;
+ 137:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 138:Drivers/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("MRS %0, xpsr" : "=r" (result) );
+ 139:Drivers/CMSIS/Include/cmsis_gcc.h ****   return(result);
+ 140:Drivers/CMSIS/Include/cmsis_gcc.h **** }
+ 141:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 142:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 143:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
+ 144:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Get Process Stack Pointer
+ 145:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Returns the current value of the Process Stack Pointer (PSP).
+ 146:Drivers/CMSIS/Include/cmsis_gcc.h ****   \return               PSP Register value
+ 147:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
+ 148:Drivers/CMSIS/Include/cmsis_gcc.h **** __attribute__( ( always_inline ) ) __STATIC_INLINE uint32_t __get_PSP(void)
+ 149:Drivers/CMSIS/Include/cmsis_gcc.h **** {
+ 150:Drivers/CMSIS/Include/cmsis_gcc.h ****   register uint32_t result;
+ 151:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 152:Drivers/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("MRS %0, psp\n"  : "=r" (result) );
+ 153:Drivers/CMSIS/Include/cmsis_gcc.h ****   return(result);
+ 154:Drivers/CMSIS/Include/cmsis_gcc.h **** }
+ 155:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 156:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccc433ET.s 			page 24
+
+
+ 157:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
+ 158:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Set Process Stack Pointer
+ 159:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Assigns the given value to the Process Stack Pointer (PSP).
+ 160:Drivers/CMSIS/Include/cmsis_gcc.h ****   \param [in]    topOfProcStack  Process Stack Pointer value to set
+ 161:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
+ 162:Drivers/CMSIS/Include/cmsis_gcc.h **** __attribute__( ( always_inline ) ) __STATIC_INLINE void __set_PSP(uint32_t topOfProcStack)
+ 163:Drivers/CMSIS/Include/cmsis_gcc.h **** {
+ 164:Drivers/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("MSR psp, %0\n" : : "r" (topOfProcStack) : "sp");
+ 165:Drivers/CMSIS/Include/cmsis_gcc.h **** }
+ 166:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 167:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 168:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
+ 169:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Get Main Stack Pointer
+ 170:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Returns the current value of the Main Stack Pointer (MSP).
+ 171:Drivers/CMSIS/Include/cmsis_gcc.h ****   \return               MSP Register value
+ 172:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
+ 173:Drivers/CMSIS/Include/cmsis_gcc.h **** __attribute__( ( always_inline ) ) __STATIC_INLINE uint32_t __get_MSP(void)
+ 174:Drivers/CMSIS/Include/cmsis_gcc.h **** {
+ 175:Drivers/CMSIS/Include/cmsis_gcc.h ****   register uint32_t result;
+ 176:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 177:Drivers/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("MRS %0, msp\n" : "=r" (result) );
+ 178:Drivers/CMSIS/Include/cmsis_gcc.h ****   return(result);
+ 179:Drivers/CMSIS/Include/cmsis_gcc.h **** }
+ 180:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 181:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 182:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
+ 183:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Set Main Stack Pointer
+ 184:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Assigns the given value to the Main Stack Pointer (MSP).
+ 185:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 186:Drivers/CMSIS/Include/cmsis_gcc.h ****     \param [in]    topOfMainStack  Main Stack Pointer value to set
+ 187:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
+ 188:Drivers/CMSIS/Include/cmsis_gcc.h **** __attribute__( ( always_inline ) ) __STATIC_INLINE void __set_MSP(uint32_t topOfMainStack)
+ 189:Drivers/CMSIS/Include/cmsis_gcc.h **** {
+ 190:Drivers/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("MSR msp, %0\n" : : "r" (topOfMainStack) : "sp");
+ 191:Drivers/CMSIS/Include/cmsis_gcc.h **** }
+ 192:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 193:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 194:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
+ 195:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Get Priority Mask
+ 196:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Returns the current state of the priority mask bit from the Priority Mask Register.
+ 197:Drivers/CMSIS/Include/cmsis_gcc.h ****   \return               Priority Mask value
+ 198:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
+ 199:Drivers/CMSIS/Include/cmsis_gcc.h **** __attribute__( ( always_inline ) ) __STATIC_INLINE uint32_t __get_PRIMASK(void)
+ 200:Drivers/CMSIS/Include/cmsis_gcc.h **** {
+ 201:Drivers/CMSIS/Include/cmsis_gcc.h ****   uint32_t result;
+ 202:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 203:Drivers/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("MRS %0, primask" : "=r" (result) );
+ 755              		.loc 2 203 0
+ 756              		.syntax divided
+ 757              	@ 203 "Drivers/CMSIS/Include/cmsis_gcc.h" 1
+ 758 0002 EFF31084 		MRS r4, primask
+ 759              	@ 0 "" 2
+ 760              		.thumb
+ 761              		.syntax unified
+ 762              	.LBE16:
+ 763              	.LBE15:
+ 764              	.LBB17:
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccc433ET.s 			page 25
+
+
+ 765              	.LBB18:
+  71:Drivers/CMSIS/Include/cmsis_gcc.h **** }
+ 766              		.loc 2 71 0
+ 767              		.syntax divided
+ 768              	@ 71 "Drivers/CMSIS/Include/cmsis_gcc.h" 1
+ 769 0006 72B6     		cpsid i
+ 770              	@ 0 "" 2
+ 771              		.thumb
+ 772              		.syntax unified
+ 773              	.LBE18:
+ 774              	.LBE17:
+ 371:Src/mlm32l0xx_hw.c ****   BACKUP_PRIMASK();
+ 372:Src/mlm32l0xx_hw.c **** 
+ 373:Src/mlm32l0xx_hw.c ****   DISABLE_IRQ( );
+ 374:Src/mlm32l0xx_hw.c **** 
+ 375:Src/mlm32l0xx_hw.c ****   HW_DeInit( );
+ 775              		.loc 1 375 0
+ 776 0008 FFF7FEFF 		bl	HW_DeInit
+ 777              	.LVL46:
+ 376:Src/mlm32l0xx_hw.c ****   
+ 377:Src/mlm32l0xx_hw.c ****   /*clear wake up flag*/
+ 378:Src/mlm32l0xx_hw.c ****   SET_BIT(PWR->CR, PWR_CR_CWUF);
+ 778              		.loc 1 378 0
+ 779 000c 054A     		ldr	r2, .L46
+ 780 000e 1368     		ldr	r3, [r2]
+ 781 0010 0421     		movs	r1, #4
+ 782 0012 0B43     		orrs	r3, r1
+ 783 0014 1360     		str	r3, [r2]
+ 784              	.LBB19:
+ 785              	.LBB20:
+ 204:Drivers/CMSIS/Include/cmsis_gcc.h ****   return(result);
+ 205:Drivers/CMSIS/Include/cmsis_gcc.h **** }
+ 206:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 207:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 208:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
+ 209:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Set Priority Mask
+ 210:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Assigns the given value to the Priority Mask Register.
+ 211:Drivers/CMSIS/Include/cmsis_gcc.h ****   \param [in]    priMask  Priority Mask
+ 212:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
+ 213:Drivers/CMSIS/Include/cmsis_gcc.h **** __attribute__( ( always_inline ) ) __STATIC_INLINE void __set_PRIMASK(uint32_t priMask)
+ 214:Drivers/CMSIS/Include/cmsis_gcc.h **** {
+ 215:Drivers/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("MSR primask, %0" : : "r" (priMask) : "memory");
+ 786              		.loc 2 215 0
+ 787              		.syntax divided
+ 788              	@ 215 "Drivers/CMSIS/Include/cmsis_gcc.h" 1
+ 789 0016 84F31088 		MSR primask, r4
+ 790              	@ 0 "" 2
+ 791              		.thumb
+ 792              		.syntax unified
+ 793              	.LBE20:
+ 794              	.LBE19:
+ 379:Src/mlm32l0xx_hw.c ****   
+ 380:Src/mlm32l0xx_hw.c ****   RESTORE_PRIMASK( );
+ 381:Src/mlm32l0xx_hw.c **** 
+ 382:Src/mlm32l0xx_hw.c ****   /* Enter Stop Mode */
+ 383:Src/mlm32l0xx_hw.c ****   HAL_PWR_EnterSTOPMode ( PWR_LOWPOWERREGULATOR_ON, PWR_STOPENTRY_WFI );
+ 795              		.loc 1 383 0
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccc433ET.s 			page 26
+
+
+ 796 001a 0339     		subs	r1, r1, #3
+ 797 001c 0120     		movs	r0, #1
+ 798 001e FFF7FEFF 		bl	HAL_PWR_EnterSTOPMode
+ 799              	.LVL47:
+ 384:Src/mlm32l0xx_hw.c **** }
+ 800              		.loc 1 384 0
+ 801              		@ sp needed
+ 802 0022 10BD     		pop	{r4, pc}
+ 803              	.L47:
+ 804              		.align	2
+ 805              	.L46:
+ 806 0024 00700040 		.word	1073770496
+ 807              		.cfi_endproc
+ 808              	.LFE49:
+ 810              		.section	.text.LPM_ExitStopMode,"ax",%progbits
+ 811              		.align	1
+ 812              		.global	LPM_ExitStopMode
+ 813              		.syntax unified
+ 814              		.code	16
+ 815              		.thumb_func
+ 816              		.fpu softvfp
+ 818              	LPM_ExitStopMode:
+ 819              	.LFB50:
+ 385:Src/mlm32l0xx_hw.c **** /**
+ 386:Src/mlm32l0xx_hw.c ****   * @brief Exists Low Power Stop Mode
+ 387:Src/mlm32l0xx_hw.c ****   * @note Enable the pll at 32MHz
+ 388:Src/mlm32l0xx_hw.c ****   * @param none
+ 389:Src/mlm32l0xx_hw.c ****   * @retval none
+ 390:Src/mlm32l0xx_hw.c ****   */
+ 391:Src/mlm32l0xx_hw.c **** void LPM_ExitStopMode( void)
+ 392:Src/mlm32l0xx_hw.c **** {
+ 820              		.loc 1 392 0
+ 821              		.cfi_startproc
+ 822              		@ args = 0, pretend = 0, frame = 0
+ 823              		@ frame_needed = 0, uses_anonymous_args = 0
+ 824 0000 10B5     		push	{r4, lr}
+ 825              	.LCFI11:
+ 826              		.cfi_def_cfa_offset 8
+ 827              		.cfi_offset 4, -8
+ 828              		.cfi_offset 14, -4
+ 829              	.LBB21:
+ 830              	.LBB22:
+ 203:Drivers/CMSIS/Include/cmsis_gcc.h ****   return(result);
+ 831              		.loc 2 203 0
+ 832              		.syntax divided
+ 833              	@ 203 "Drivers/CMSIS/Include/cmsis_gcc.h" 1
+ 834 0002 EFF31084 		MRS r4, primask
+ 835              	@ 0 "" 2
+ 836              		.thumb
+ 837              		.syntax unified
+ 838              	.LBE22:
+ 839              	.LBE21:
+ 840              	.LBB23:
+ 841              	.LBB24:
+  71:Drivers/CMSIS/Include/cmsis_gcc.h **** }
+ 842              		.loc 2 71 0
+ 843              		.syntax divided
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccc433ET.s 			page 27
+
+
+ 844              	@ 71 "Drivers/CMSIS/Include/cmsis_gcc.h" 1
+ 845 0006 72B6     		cpsid i
+ 846              	@ 0 "" 2
+ 847              		.thumb
+ 848              		.syntax unified
+ 849              	.LBE24:
+ 850              	.LBE23:
+ 393:Src/mlm32l0xx_hw.c ****   /* Disable IRQ while the MCU is not running on HSI */
+ 394:Src/mlm32l0xx_hw.c **** 
+ 395:Src/mlm32l0xx_hw.c ****   BACKUP_PRIMASK();
+ 396:Src/mlm32l0xx_hw.c ****   
+ 397:Src/mlm32l0xx_hw.c ****   DISABLE_IRQ( );
+ 398:Src/mlm32l0xx_hw.c **** 
+ 399:Src/mlm32l0xx_hw.c ****   /* After wake-up from STOP reconfigure the system clock */
+ 400:Src/mlm32l0xx_hw.c ****   /* Enable HSI */
+ 401:Src/mlm32l0xx_hw.c ****   __HAL_RCC_HSI_ENABLE();
+ 851              		.loc 1 401 0
+ 852 0008 114A     		ldr	r2, .L52
+ 853 000a 1368     		ldr	r3, [r2]
+ 854 000c 0121     		movs	r1, #1
+ 855 000e 0B43     		orrs	r3, r1
+ 856 0010 1360     		str	r3, [r2]
+ 857              	.L49:
+ 402:Src/mlm32l0xx_hw.c **** 
+ 403:Src/mlm32l0xx_hw.c ****   /* Wait till HSI is ready */
+ 404:Src/mlm32l0xx_hw.c ****   while( __HAL_RCC_GET_FLAG(RCC_FLAG_HSIRDY) == RESET ) {}
+ 858              		.loc 1 404 0 discriminator 1
+ 859 0012 0F4B     		ldr	r3, .L52
+ 860 0014 1B68     		ldr	r3, [r3]
+ 861 0016 5B07     		lsls	r3, r3, #29
+ 862 0018 FBD5     		bpl	.L49
+ 405:Src/mlm32l0xx_hw.c ****   
+ 406:Src/mlm32l0xx_hw.c ****   /* Enable PLL */
+ 407:Src/mlm32l0xx_hw.c ****   __HAL_RCC_PLL_ENABLE();
+ 863              		.loc 1 407 0
+ 864 001a 0D4A     		ldr	r2, .L52
+ 865 001c 1168     		ldr	r1, [r2]
+ 866 001e 8023     		movs	r3, #128
+ 867 0020 5B04     		lsls	r3, r3, #17
+ 868 0022 0B43     		orrs	r3, r1
+ 869 0024 1360     		str	r3, [r2]
+ 870              	.L50:
+ 408:Src/mlm32l0xx_hw.c ****   /* Wait till PLL is ready */
+ 409:Src/mlm32l0xx_hw.c ****   while( __HAL_RCC_GET_FLAG( RCC_FLAG_PLLRDY ) == RESET ) {}
+ 871              		.loc 1 409 0 discriminator 1
+ 872 0026 0A4B     		ldr	r3, .L52
+ 873 0028 1B68     		ldr	r3, [r3]
+ 874 002a 9B01     		lsls	r3, r3, #6
+ 875 002c FBD5     		bpl	.L50
+ 410:Src/mlm32l0xx_hw.c ****   
+ 411:Src/mlm32l0xx_hw.c ****   /* Select PLL as system clock source */
+ 412:Src/mlm32l0xx_hw.c ****   __HAL_RCC_SYSCLK_CONFIG ( RCC_SYSCLKSOURCE_PLLCLK );
+ 876              		.loc 1 412 0
+ 877 002e 084A     		ldr	r2, .L52
+ 878 0030 D368     		ldr	r3, [r2, #12]
+ 879 0032 0321     		movs	r1, #3
+ 880 0034 0B43     		orrs	r3, r1
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccc433ET.s 			page 28
+
+
+ 881 0036 D360     		str	r3, [r2, #12]
+ 882              	.L51:
+ 413:Src/mlm32l0xx_hw.c ****   
+ 414:Src/mlm32l0xx_hw.c ****   /* Wait till PLL is used as system clock source */ 
+ 415:Src/mlm32l0xx_hw.c ****   while( __HAL_RCC_GET_SYSCLK_SOURCE( ) != RCC_SYSCLKSOURCE_STATUS_PLLCLK ) {}
+ 883              		.loc 1 415 0 discriminator 1
+ 884 0038 054B     		ldr	r3, .L52
+ 885 003a DA68     		ldr	r2, [r3, #12]
+ 886 003c 0C23     		movs	r3, #12
+ 887 003e 1340     		ands	r3, r2
+ 888 0040 0C2B     		cmp	r3, #12
+ 889 0042 F9D1     		bne	.L51
+ 416:Src/mlm32l0xx_hw.c ****     
+ 417:Src/mlm32l0xx_hw.c ****   /*initilizes the peripherals*/
+ 418:Src/mlm32l0xx_hw.c ****   HW_Init( );
+ 890              		.loc 1 418 0
+ 891 0044 FFF7FEFF 		bl	HW_Init
+ 892              	.LVL48:
+ 893              	.LBB25:
+ 894              	.LBB26:
+ 895              		.loc 2 215 0
+ 896              		.syntax divided
+ 897              	@ 215 "Drivers/CMSIS/Include/cmsis_gcc.h" 1
+ 898 0048 84F31088 		MSR primask, r4
+ 899              	@ 0 "" 2
+ 900              	.LVL49:
+ 901              		.thumb
+ 902              		.syntax unified
+ 903              	.LBE26:
+ 904              	.LBE25:
+ 419:Src/mlm32l0xx_hw.c **** 
+ 420:Src/mlm32l0xx_hw.c ****   RESTORE_PRIMASK( );
+ 421:Src/mlm32l0xx_hw.c **** }
+ 905              		.loc 1 421 0
+ 906              		@ sp needed
+ 907 004c 10BD     		pop	{r4, pc}
+ 908              	.L53:
+ 909 004e C046     		.align	2
+ 910              	.L52:
+ 911 0050 00100240 		.word	1073876992
+ 912              		.cfi_endproc
+ 913              	.LFE50:
+ 915              		.section	.text.LPM_EnterSleepMode,"ax",%progbits
+ 916              		.align	1
+ 917              		.global	LPM_EnterSleepMode
+ 918              		.syntax unified
+ 919              		.code	16
+ 920              		.thumb_func
+ 921              		.fpu softvfp
+ 923              	LPM_EnterSleepMode:
+ 924              	.LFB51:
+ 422:Src/mlm32l0xx_hw.c **** 
+ 423:Src/mlm32l0xx_hw.c **** /**
+ 424:Src/mlm32l0xx_hw.c ****   * @brief Enters Low Power Sleep Mode
+ 425:Src/mlm32l0xx_hw.c ****   * @note ARM exits the function when waking up
+ 426:Src/mlm32l0xx_hw.c ****   * @param none
+ 427:Src/mlm32l0xx_hw.c ****   * @retval none
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccc433ET.s 			page 29
+
+
+ 428:Src/mlm32l0xx_hw.c ****   */
+ 429:Src/mlm32l0xx_hw.c **** void LPM_EnterSleepMode( void)
+ 430:Src/mlm32l0xx_hw.c **** {
+ 925              		.loc 1 430 0
+ 926              		.cfi_startproc
+ 927              		@ args = 0, pretend = 0, frame = 0
+ 928              		@ frame_needed = 0, uses_anonymous_args = 0
+ 929 0000 10B5     		push	{r4, lr}
+ 930              	.LCFI12:
+ 931              		.cfi_def_cfa_offset 8
+ 932              		.cfi_offset 4, -8
+ 933              		.cfi_offset 14, -4
+ 431:Src/mlm32l0xx_hw.c ****     HAL_PWR_EnterSLEEPMode(PWR_MAINREGULATOR_ON, PWR_SLEEPENTRY_WFI);
+ 934              		.loc 1 431 0
+ 935 0002 0121     		movs	r1, #1
+ 936 0004 0020     		movs	r0, #0
+ 937 0006 FFF7FEFF 		bl	HAL_PWR_EnterSLEEPMode
+ 938              	.LVL50:
+ 432:Src/mlm32l0xx_hw.c **** }
+ 939              		.loc 1 432 0
+ 940              		@ sp needed
+ 941 000a 10BD     		pop	{r4, pc}
+ 942              		.cfi_endproc
+ 943              	.LFE51:
+ 945              		.bss
+ 946              		.align	2
+ 947              		.set	.LANCHOR0,. + 0
+ 950              	McuInitialized:
+ 951 0000 00       		.space	1
+ 954              	AdcInitialized:
+ 955 0001 00       		.space	1
+ 956 0002 0000     		.space	2
+ 959              	hadc:
+ 960 0004 00000000 		.space	96
+ 960      00000000 
+ 960      00000000 
+ 960      00000000 
+ 960      00000000 
+ 961              		.text
+ 962              	.Letext0:
+ 963              		.file 3 "/opt/gcc-arm-none-eabi-7-2017-q4-major/arm-none-eabi/include/machine/_default_types.h"
+ 964              		.file 4 "/opt/gcc-arm-none-eabi-7-2017-q4-major/arm-none-eabi/include/sys/lock.h"
+ 965              		.file 5 "/opt/gcc-arm-none-eabi-7-2017-q4-major/arm-none-eabi/include/sys/_types.h"
+ 966              		.file 6 "/opt/gcc-arm-none-eabi-7-2017-q4-major/lib/gcc/arm-none-eabi/7.2.1/include/stddef.h"
+ 967              		.file 7 "/opt/gcc-arm-none-eabi-7-2017-q4-major/arm-none-eabi/include/sys/reent.h"
+ 968              		.file 8 "/opt/gcc-arm-none-eabi-7-2017-q4-major/arm-none-eabi/include/math.h"
+ 969              		.file 9 "/opt/gcc-arm-none-eabi-7-2017-q4-major/arm-none-eabi/include/sys/_stdint.h"
+ 970              		.file 10 "Drivers/CMSIS/Device/ST/STM32L0xx/Include/system_stm32l0xx.h"
+ 971              		.file 11 "Drivers/CMSIS/Device/ST/STM32L0xx/Include/stm32l072xx.h"
+ 972              		.file 12 "Drivers/CMSIS/Device/ST/STM32L0xx/Include/stm32l0xx.h"
+ 973              		.file 13 "Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_hal_def.h"
+ 974              		.file 14 "Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_hal_rcc.h"
+ 975              		.file 15 "Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_hal_gpio.h"
+ 976              		.file 16 "Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_hal_dma.h"
+ 977              		.file 17 "Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_hal_adc.h"
+ 978              		.file 18 "/opt/gcc-arm-none-eabi-7-2017-q4-major/arm-none-eabi/include/stdlib.h"
+ 979              		.file 19 "Drivers/BSP/B-L072Z-LRWAN1/b-l072z-lrwan1.h"
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccc433ET.s 			page 30
+
+
+ 980              		.file 20 "Middlewares/Third_Party/Lora/Phy/radio.h"
+ 981              		.file 21 "Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_hal_pwr.h"
+ 982              		.file 22 "Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_hal_adc_ex.h"
+ 983              		.file 23 "Inc/hw_gpio.h"
+ 984              		.file 24 "Inc/debug.h"
+ 985              		.file 25 "Inc/hw_spi.h"
+ 986              		.file 26 "Inc/vcom.h"
+ 987              		.file 27 "Inc/hw_rtc.h"
+ 988              		.file 28 "<built-in>"
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccc433ET.s 			page 31
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 mlm32l0xx_hw.c
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccc433ET.s:16     .text.HW_DeInit:0000000000000000 $t
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccc433ET.s:23     .text.HW_DeInit:0000000000000000 HW_DeInit
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccc433ET.s:56     .text.HW_DeInit:0000000000000018 $d
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccc433ET.s:62     .text.SystemClock_Config:0000000000000000 $t
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccc433ET.s:69     .text.SystemClock_Config:0000000000000000 SystemClock_Config
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccc433ET.s:181    .text.SystemClock_Config:000000000000008c $d
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccc433ET.s:188    .text.HW_GetRandomSeed:0000000000000000 $t
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccc433ET.s:195    .text.HW_GetRandomSeed:0000000000000000 HW_GetRandomSeed
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccc433ET.s:217    .text.HW_GetRandomSeed:0000000000000014 $d
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccc433ET.s:224    .text.HW_GetUniqueId:0000000000000000 $t
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccc433ET.s:231    .text.HW_GetUniqueId:0000000000000000 HW_GetUniqueId
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccc433ET.s:294    .text.HW_GetUniqueId:0000000000000050 $d
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccc433ET.s:301    .text.HW_AdcInit:0000000000000000 $t
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccc433ET.s:308    .text.HW_AdcInit:0000000000000000 HW_AdcInit
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccc433ET.s:405    .text.HW_AdcInit:0000000000000068 $d
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccc433ET.s:412    .text.HW_Init:0000000000000000 $t
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccc433ET.s:419    .text.HW_Init:0000000000000000 HW_Init
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccc433ET.s:482    .text.HW_Init:0000000000000044 $d
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccc433ET.s:488    .text.HW_AdcDeInit:0000000000000000 $t
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccc433ET.s:495    .text.HW_AdcDeInit:0000000000000000 HW_AdcDeInit
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccc433ET.s:512    .text.HW_AdcDeInit:0000000000000008 $d
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccc433ET.s:517    .text.HW_AdcReadChannel:0000000000000000 $t
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccc433ET.s:524    .text.HW_AdcReadChannel:0000000000000000 HW_AdcReadChannel
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccc433ET.s:637    .text.HW_AdcReadChannel:0000000000000084 $d
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccc433ET.s:648    .text.HW_GetBatteryLevel:0000000000000000 $t
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccc433ET.s:655    .text.HW_GetBatteryLevel:0000000000000000 HW_GetBatteryLevel
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccc433ET.s:725    .text.HW_GetBatteryLevel:0000000000000044 $d
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccc433ET.s:734    .text.LPM_EnterStopMode:0000000000000000 $t
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccc433ET.s:741    .text.LPM_EnterStopMode:0000000000000000 LPM_EnterStopMode
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccc433ET.s:806    .text.LPM_EnterStopMode:0000000000000024 $d
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccc433ET.s:811    .text.LPM_ExitStopMode:0000000000000000 $t
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccc433ET.s:818    .text.LPM_ExitStopMode:0000000000000000 LPM_ExitStopMode
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccc433ET.s:911    .text.LPM_ExitStopMode:0000000000000050 $d
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccc433ET.s:916    .text.LPM_EnterSleepMode:0000000000000000 $t
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccc433ET.s:923    .text.LPM_EnterSleepMode:0000000000000000 LPM_EnterSleepMode
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccc433ET.s:946    .bss:0000000000000000 $d
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccc433ET.s:950    .bss:0000000000000000 McuInitialized
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccc433ET.s:954    .bss:0000000000000001 AdcInitialized
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccc433ET.s:959    .bss:0000000000000004 hadc
+
+UNDEFINED SYMBOLS
+HW_SPI_DeInit
+vcom_DeInit
+Radio
+memset
+HAL_RCC_OscConfig
+HAL_RCC_ClockConfig
+Error_Handler
+HAL_ADC_Init
+HW_GPIO_Init
+HW_SPI_Init
+HW_RTC_Init
+vcom_Init
+BSP_LED_Init
+HAL_ADCEx_Calibration_Start
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccc433ET.s 			page 32
+
+
+HAL_ADC_ConfigChannel
+HAL_ADC_Start
+HAL_ADC_PollForConversion
+HAL_ADC_GetValue
+__aeabi_uidiv
+HAL_PWR_EnterSTOPMode
+HAL_PWR_EnterSLEEPMode

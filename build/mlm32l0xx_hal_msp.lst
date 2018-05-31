@@ -1,0 +1,651 @@
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccWYva4V.s 			page 1
+
+
+   1              		.cpu cortex-m0plus
+   2              		.eabi_attribute 20, 1
+   3              		.eabi_attribute 21, 1
+   4              		.eabi_attribute 23, 3
+   5              		.eabi_attribute 24, 1
+   6              		.eabi_attribute 25, 1
+   7              		.eabi_attribute 26, 1
+   8              		.eabi_attribute 30, 1
+   9              		.eabi_attribute 34, 0
+  10              		.eabi_attribute 18, 4
+  11              		.file	"mlm32l0xx_hal_msp.c"
+  12              		.text
+  13              	.Ltext0:
+  14              		.cfi_sections	.debug_frame
+  15              		.section	.text.HAL_InitTick,"ax",%progbits
+  16              		.align	1
+  17              		.global	HAL_InitTick
+  18              		.syntax unified
+  19              		.code	16
+  20              		.thumb_func
+  21              		.fpu softvfp
+  23              	HAL_InitTick:
+  24              	.LFB40:
+  25              		.file 1 "Src/mlm32l0xx_hal_msp.c"
+   1:Src/mlm32l0xx_hal_msp.c **** 
+   2:Src/mlm32l0xx_hal_msp.c ****  /******************************************************************************
+   3:Src/mlm32l0xx_hal_msp.c ****   * @file    mlm32l0xx_hal_msp.c
+   4:Src/mlm32l0xx_hal_msp.c ****   * @author  MCD Application Team
+   5:Src/mlm32l0xx_hal_msp.c ****   * @version V1.1.5
+   6:Src/mlm32l0xx_hal_msp.c ****   * @date    30-March-2018
+   7:Src/mlm32l0xx_hal_msp.c ****   * @brief   msp file for HAL
+   8:Src/mlm32l0xx_hal_msp.c ****   ******************************************************************************
+   9:Src/mlm32l0xx_hal_msp.c ****   * @attention
+  10:Src/mlm32l0xx_hal_msp.c ****   *
+  11:Src/mlm32l0xx_hal_msp.c ****   * <h2><center>&copy; Copyright (c) 2017 STMicroelectronics International N.V. 
+  12:Src/mlm32l0xx_hal_msp.c ****   * All rights reserved.</center></h2>
+  13:Src/mlm32l0xx_hal_msp.c ****   *
+  14:Src/mlm32l0xx_hal_msp.c ****   * Redistribution and use in source and binary forms, with or without 
+  15:Src/mlm32l0xx_hal_msp.c ****   * modification, are permitted, provided that the following conditions are met:
+  16:Src/mlm32l0xx_hal_msp.c ****   *
+  17:Src/mlm32l0xx_hal_msp.c ****   * 1. Redistribution of source code must retain the above copyright notice, 
+  18:Src/mlm32l0xx_hal_msp.c ****   *    this list of conditions and the following disclaimer.
+  19:Src/mlm32l0xx_hal_msp.c ****   * 2. Redistributions in binary form must reproduce the above copyright notice,
+  20:Src/mlm32l0xx_hal_msp.c ****   *    this list of conditions and the following disclaimer in the documentation
+  21:Src/mlm32l0xx_hal_msp.c ****   *    and/or other materials provided with the distribution.
+  22:Src/mlm32l0xx_hal_msp.c ****   * 3. Neither the name of STMicroelectronics nor the names of other 
+  23:Src/mlm32l0xx_hal_msp.c ****   *    contributors to this software may be used to endorse or promote products 
+  24:Src/mlm32l0xx_hal_msp.c ****   *    derived from this software without specific written permission.
+  25:Src/mlm32l0xx_hal_msp.c ****   * 4. This software, including modifications and/or derivative works of this 
+  26:Src/mlm32l0xx_hal_msp.c ****   *    software, must execute solely and exclusively on microcontroller or
+  27:Src/mlm32l0xx_hal_msp.c ****   *    microprocessor devices manufactured by or for STMicroelectronics.
+  28:Src/mlm32l0xx_hal_msp.c ****   * 5. Redistribution and use of this software other than as permitted under 
+  29:Src/mlm32l0xx_hal_msp.c ****   *    this license is void and will automatically terminate your rights under 
+  30:Src/mlm32l0xx_hal_msp.c ****   *    this license. 
+  31:Src/mlm32l0xx_hal_msp.c ****   *
+  32:Src/mlm32l0xx_hal_msp.c ****   * THIS SOFTWARE IS PROVIDED BY STMICROELECTRONICS AND CONTRIBUTORS "AS IS" 
+  33:Src/mlm32l0xx_hal_msp.c ****   * AND ANY EXPRESS, IMPLIED OR STATUTORY WARRANTIES, INCLUDING, BUT NOT 
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccWYva4V.s 			page 2
+
+
+  34:Src/mlm32l0xx_hal_msp.c ****   * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A 
+  35:Src/mlm32l0xx_hal_msp.c ****   * PARTICULAR PURPOSE AND NON-INFRINGEMENT OF THIRD PARTY INTELLECTUAL PROPERTY
+  36:Src/mlm32l0xx_hal_msp.c ****   * RIGHTS ARE DISCLAIMED TO THE FULLEST EXTENT PERMITTED BY LAW. IN NO EVENT 
+  37:Src/mlm32l0xx_hal_msp.c ****   * SHALL STMICROELECTRONICS OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+  38:Src/mlm32l0xx_hal_msp.c ****   * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+  39:Src/mlm32l0xx_hal_msp.c ****   * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, 
+  40:Src/mlm32l0xx_hal_msp.c ****   * OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF 
+  41:Src/mlm32l0xx_hal_msp.c ****   * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING 
+  42:Src/mlm32l0xx_hal_msp.c ****   * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+  43:Src/mlm32l0xx_hal_msp.c ****   * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+  44:Src/mlm32l0xx_hal_msp.c ****   *
+  45:Src/mlm32l0xx_hal_msp.c ****   ******************************************************************************
+  46:Src/mlm32l0xx_hal_msp.c ****   */
+  47:Src/mlm32l0xx_hal_msp.c **** 
+  48:Src/mlm32l0xx_hal_msp.c **** /* Includes ------------------------------------------------------------------*/
+  49:Src/mlm32l0xx_hal_msp.c **** #include "hw.h"
+  50:Src/mlm32l0xx_hal_msp.c **** #include "delay.h"
+  51:Src/mlm32l0xx_hal_msp.c **** #include "timeServer.h"
+  52:Src/mlm32l0xx_hal_msp.c **** /* when fast wake up is enabled, the mcu wakes up in ~20us  * and 
+  53:Src/mlm32l0xx_hal_msp.c ****  * does not wait for the VREFINT to be settled. THis is ok for 
+  54:Src/mlm32l0xx_hal_msp.c ****  * most of the case except when adc must be used in this case before 
+  55:Src/mlm32l0xx_hal_msp.c ****  *starting the adc, you must make sure VREFINT is settled*/
+  56:Src/mlm32l0xx_hal_msp.c **** #define ENABLE_FAST_WAKEUP
+  57:Src/mlm32l0xx_hal_msp.c **** 
+  58:Src/mlm32l0xx_hal_msp.c **** /* Private typedef -----------------------------------------------------------*/
+  59:Src/mlm32l0xx_hal_msp.c **** /* Private define ------------------------------------------------------------*/
+  60:Src/mlm32l0xx_hal_msp.c **** /* Private macro -------------------------------------------------------------*/
+  61:Src/mlm32l0xx_hal_msp.c **** /* Private variables ---------------------------------------------------------*/
+  62:Src/mlm32l0xx_hal_msp.c **** /* Private function prototypes -----------------------------------------------*/
+  63:Src/mlm32l0xx_hal_msp.c **** /* Private functions ---------------------------------------------------------*/
+  64:Src/mlm32l0xx_hal_msp.c **** 
+  65:Src/mlm32l0xx_hal_msp.c **** /**
+  66:Src/mlm32l0xx_hal_msp.c ****   * @brief This function configures the source of the time base.
+  67:Src/mlm32l0xx_hal_msp.c ****   * @brief  don't enable systick
+  68:Src/mlm32l0xx_hal_msp.c ****   * @param TickPriority: Tick interrupt priority.
+  69:Src/mlm32l0xx_hal_msp.c ****   * @retval HAL status
+  70:Src/mlm32l0xx_hal_msp.c ****   */
+  71:Src/mlm32l0xx_hal_msp.c **** HAL_StatusTypeDef HAL_InitTick(uint32_t TickPriority)
+  72:Src/mlm32l0xx_hal_msp.c **** {
+  26              		.loc 1 72 0
+  27              		.cfi_startproc
+  28              		@ args = 0, pretend = 0, frame = 0
+  29              		@ frame_needed = 0, uses_anonymous_args = 0
+  30              		@ link register save eliminated.
+  31              	.LVL0:
+  73:Src/mlm32l0xx_hal_msp.c ****    /* Return function status */
+  74:Src/mlm32l0xx_hal_msp.c ****   return HAL_OK;
+  75:Src/mlm32l0xx_hal_msp.c **** }
+  32              		.loc 1 75 0
+  33 0000 0020     		movs	r0, #0
+  34              	.LVL1:
+  35              		@ sp needed
+  36 0002 7047     		bx	lr
+  37              		.cfi_endproc
+  38              	.LFE40:
+  40              		.section	.text.HAL_Delay,"ax",%progbits
+  41              		.align	1
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccWYva4V.s 			page 3
+
+
+  42              		.global	HAL_Delay
+  43              		.syntax unified
+  44              		.code	16
+  45              		.thumb_func
+  46              		.fpu softvfp
+  48              	HAL_Delay:
+  49              	.LFB41:
+  76:Src/mlm32l0xx_hal_msp.c **** 
+  77:Src/mlm32l0xx_hal_msp.c **** /**
+  78:Src/mlm32l0xx_hal_msp.c ****   * @brief This function provides delay (in ms)
+  79:Src/mlm32l0xx_hal_msp.c ****   * @param Delay: specifies the delay time length, in milliseconds.
+  80:Src/mlm32l0xx_hal_msp.c ****   * @retval None
+  81:Src/mlm32l0xx_hal_msp.c ****   */
+  82:Src/mlm32l0xx_hal_msp.c **** void HAL_Delay(__IO uint32_t Delay)
+  83:Src/mlm32l0xx_hal_msp.c **** {
+  50              		.loc 1 83 0
+  51              		.cfi_startproc
+  52              		@ args = 0, pretend = 0, frame = 8
+  53              		@ frame_needed = 0, uses_anonymous_args = 0
+  54              	.LVL2:
+  55 0000 00B5     		push	{lr}
+  56              	.LCFI0:
+  57              		.cfi_def_cfa_offset 4
+  58              		.cfi_offset 14, -4
+  59 0002 83B0     		sub	sp, sp, #12
+  60              	.LCFI1:
+  61              		.cfi_def_cfa_offset 16
+  62 0004 0190     		str	r0, [sp, #4]
+  84:Src/mlm32l0xx_hal_msp.c ****   DelayMs( Delay ); /* based on RTC */
+  63              		.loc 1 84 0
+  64 0006 0198     		ldr	r0, [sp, #4]
+  65              	.LVL3:
+  66 0008 FFF7FEFF 		bl	DelayMs
+  67              	.LVL4:
+  85:Src/mlm32l0xx_hal_msp.c **** }
+  68              		.loc 1 85 0
+  69 000c 03B0     		add	sp, sp, #12
+  70              		@ sp needed
+  71 000e 00BD     		pop	{pc}
+  72              		.cfi_endproc
+  73              	.LFE41:
+  75              		.section	.text.HAL_MspInit,"ax",%progbits
+  76              		.align	1
+  77              		.global	HAL_MspInit
+  78              		.syntax unified
+  79              		.code	16
+  80              		.thumb_func
+  81              		.fpu softvfp
+  83              	HAL_MspInit:
+  84              	.LFB42:
+  86:Src/mlm32l0xx_hal_msp.c **** 
+  87:Src/mlm32l0xx_hal_msp.c **** /**
+  88:Src/mlm32l0xx_hal_msp.c ****   * @brief  Initializes the MSP.
+  89:Src/mlm32l0xx_hal_msp.c ****   * @retval None
+  90:Src/mlm32l0xx_hal_msp.c ****   */
+  91:Src/mlm32l0xx_hal_msp.c **** void HAL_MspInit(void)
+  92:Src/mlm32l0xx_hal_msp.c **** {
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccWYva4V.s 			page 4
+
+
+  85              		.loc 1 92 0
+  86              		.cfi_startproc
+  87              		@ args = 0, pretend = 0, frame = 0
+  88              		@ frame_needed = 0, uses_anonymous_args = 0
+  89 0000 10B5     		push	{r4, lr}
+  90              	.LCFI2:
+  91              		.cfi_def_cfa_offset 8
+  92              		.cfi_offset 4, -8
+  93              		.cfi_offset 14, -4
+  93:Src/mlm32l0xx_hal_msp.c ****   /* Disable the Power Voltage Detector */
+  94:Src/mlm32l0xx_hal_msp.c ****   HAL_PWR_DisablePVD( ); 
+  94              		.loc 1 94 0
+  95 0002 FFF7FEFF 		bl	HAL_PWR_DisablePVD
+  96              	.LVL5:
+  95:Src/mlm32l0xx_hal_msp.c **** 
+  96:Src/mlm32l0xx_hal_msp.c ****   /* Enables the Ultra Low Power mode */
+  97:Src/mlm32l0xx_hal_msp.c ****   HAL_PWREx_EnableUltraLowPower( );
+  97              		.loc 1 97 0
+  98 0006 FFF7FEFF 		bl	HAL_PWREx_EnableUltraLowPower
+  99              	.LVL6:
+  98:Src/mlm32l0xx_hal_msp.c ****   
+  99:Src/mlm32l0xx_hal_msp.c ****   __HAL_FLASH_SLEEP_POWERDOWN_ENABLE();
+ 100              		.loc 1 99 0
+ 101 000a 044A     		ldr	r2, .L4
+ 102 000c 1368     		ldr	r3, [r2]
+ 103 000e 0821     		movs	r1, #8
+ 104 0010 0B43     		orrs	r3, r1
+ 105 0012 1360     		str	r3, [r2]
+ 100:Src/mlm32l0xx_hal_msp.c ****   
+ 101:Src/mlm32l0xx_hal_msp.c ****   /*In debug mode, e.g. when DBGMCU is activated, Arm core has always clocks
+ 102:Src/mlm32l0xx_hal_msp.c ****    * And will not wait that the FLACH is ready to be read. It can miss in this 
+ 103:Src/mlm32l0xx_hal_msp.c ****    * case the first instruction. To overcome this issue, the flash remain clcoked during sleep mode
+ 104:Src/mlm32l0xx_hal_msp.c ****    */
+ 105:Src/mlm32l0xx_hal_msp.c ****   DBG( __HAL_FLASH_SLEEP_POWERDOWN_DISABLE(); );
+ 106:Src/mlm32l0xx_hal_msp.c ****   
+ 107:Src/mlm32l0xx_hal_msp.c **** #ifdef ENABLE_FAST_WAKEUP
+ 108:Src/mlm32l0xx_hal_msp.c ****   /*Enable fast wakeUp*/  
+ 109:Src/mlm32l0xx_hal_msp.c ****   HAL_PWREx_EnableFastWakeUp( );
+ 106              		.loc 1 109 0
+ 107 0014 FFF7FEFF 		bl	HAL_PWREx_EnableFastWakeUp
+ 108              	.LVL7:
+ 110:Src/mlm32l0xx_hal_msp.c **** #else  
+ 111:Src/mlm32l0xx_hal_msp.c ****   HAL_PWREx_DisableFastWakeUp( );
+ 112:Src/mlm32l0xx_hal_msp.c **** #endif
+ 113:Src/mlm32l0xx_hal_msp.c **** }
+ 109              		.loc 1 113 0
+ 110              		@ sp needed
+ 111 0018 10BD     		pop	{r4, pc}
+ 112              	.L5:
+ 113 001a C046     		.align	2
+ 114              	.L4:
+ 115 001c 00200240 		.word	1073881088
+ 116              		.cfi_endproc
+ 117              	.LFE42:
+ 119              		.section	.text.HAL_RTC_MspInit,"ax",%progbits
+ 120              		.align	1
+ 121              		.global	HAL_RTC_MspInit
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccWYva4V.s 			page 5
+
+
+ 122              		.syntax unified
+ 123              		.code	16
+ 124              		.thumb_func
+ 125              		.fpu softvfp
+ 127              	HAL_RTC_MspInit:
+ 128              	.LFB43:
+ 114:Src/mlm32l0xx_hal_msp.c **** 
+ 115:Src/mlm32l0xx_hal_msp.c **** /**
+ 116:Src/mlm32l0xx_hal_msp.c ****   * @brief RTC MSP Initialization
+ 117:Src/mlm32l0xx_hal_msp.c ****   *        This function configures the hardware resources used in this example:
+ 118:Src/mlm32l0xx_hal_msp.c ****   *           - Peripheral's clock enable
+ 119:Src/mlm32l0xx_hal_msp.c ****   * @param hrtc: RTC handle pointer
+ 120:Src/mlm32l0xx_hal_msp.c ****   * @note  Care must be taken when HAL_RCCEx_PeriphCLKConfig() is used to select 
+ 121:Src/mlm32l0xx_hal_msp.c ****   *        the RTC clock source; in this case the Backup domain will be reset in  
+ 122:Src/mlm32l0xx_hal_msp.c ****   *        order to modify the RTC Clock source, as consequence RTC registers (including 
+ 123:Src/mlm32l0xx_hal_msp.c ****   *        the backup registers) and RCC_CSR register are set to their reset values.  
+ 124:Src/mlm32l0xx_hal_msp.c ****   * @retval None
+ 125:Src/mlm32l0xx_hal_msp.c ****   */
+ 126:Src/mlm32l0xx_hal_msp.c **** void HAL_RTC_MspInit(RTC_HandleTypeDef *hrtc)
+ 127:Src/mlm32l0xx_hal_msp.c **** {
+ 129              		.loc 1 127 0
+ 130              		.cfi_startproc
+ 131              		@ args = 0, pretend = 0, frame = 96
+ 132              		@ frame_needed = 0, uses_anonymous_args = 0
+ 133              	.LVL8:
+ 134 0000 00B5     		push	{lr}
+ 135              	.LCFI3:
+ 136              		.cfi_def_cfa_offset 4
+ 137              		.cfi_offset 14, -4
+ 138 0002 99B0     		sub	sp, sp, #100
+ 139              	.LCFI4:
+ 140              		.cfi_def_cfa_offset 104
+ 128:Src/mlm32l0xx_hal_msp.c ****   RCC_OscInitTypeDef RCC_OscInitStruct;
+ 129:Src/mlm32l0xx_hal_msp.c ****   RCC_PeriphCLKInitTypeDef  PeriphClkInitStruct;
+ 130:Src/mlm32l0xx_hal_msp.c **** 
+ 131:Src/mlm32l0xx_hal_msp.c ****   /*##-1- Configue the RTC clock soucre ######################################*/
+ 132:Src/mlm32l0xx_hal_msp.c ****   /* -a- Enable LSE Oscillator */
+ 133:Src/mlm32l0xx_hal_msp.c ****   RCC_OscInitStruct.OscillatorType =  RCC_OSCILLATORTYPE_LSE;
+ 141              		.loc 1 133 0
+ 142 0004 0423     		movs	r3, #4
+ 143 0006 0A93     		str	r3, [sp, #40]
+ 134:Src/mlm32l0xx_hal_msp.c ****   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_NONE;
+ 144              		.loc 1 134 0
+ 145 0008 0023     		movs	r3, #0
+ 146 000a 1493     		str	r3, [sp, #80]
+ 135:Src/mlm32l0xx_hal_msp.c ****   RCC_OscInitStruct.LSEState = RCC_LSE_ON;
+ 147              		.loc 1 135 0
+ 148 000c 0133     		adds	r3, r3, #1
+ 149 000e FF33     		adds	r3, r3, #255
+ 150 0010 0C93     		str	r3, [sp, #48]
+ 136:Src/mlm32l0xx_hal_msp.c ****   if(HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
+ 151              		.loc 1 136 0
+ 152 0012 0AA8     		add	r0, sp, #40
+ 153              	.LVL9:
+ 154 0014 FFF7FEFF 		bl	HAL_RCC_OscConfig
+ 155              	.LVL10:
+ 156 0018 0028     		cmp	r0, #0
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccWYva4V.s 			page 6
+
+
+ 157 001a 19D1     		bne	.L9
+ 158              	.L7:
+ 137:Src/mlm32l0xx_hal_msp.c ****   {
+ 138:Src/mlm32l0xx_hal_msp.c ****     Error_Handler();
+ 139:Src/mlm32l0xx_hal_msp.c ****   }
+ 140:Src/mlm32l0xx_hal_msp.c **** 
+ 141:Src/mlm32l0xx_hal_msp.c ****   /* -b- Select LSI as RTC clock source */
+ 142:Src/mlm32l0xx_hal_msp.c ****   PeriphClkInitStruct.PeriphClockSelection = RCC_PERIPHCLK_RTC;
+ 159              		.loc 1 142 0
+ 160 001c 2023     		movs	r3, #32
+ 161 001e 0193     		str	r3, [sp, #4]
+ 143:Src/mlm32l0xx_hal_msp.c ****   PeriphClkInitStruct.RTCClockSelection = RCC_RTCCLKSOURCE_LSE;
+ 162              		.loc 1 143 0
+ 163 0020 8023     		movs	r3, #128
+ 164 0022 5B02     		lsls	r3, r3, #9
+ 165 0024 0293     		str	r3, [sp, #8]
+ 144:Src/mlm32l0xx_hal_msp.c ****   if(HAL_RCCEx_PeriphCLKConfig(&PeriphClkInitStruct) != HAL_OK)
+ 166              		.loc 1 144 0
+ 167 0026 01A8     		add	r0, sp, #4
+ 168 0028 FFF7FEFF 		bl	HAL_RCCEx_PeriphCLKConfig
+ 169              	.LVL11:
+ 170 002c 0028     		cmp	r0, #0
+ 171 002e 12D1     		bne	.L10
+ 172              	.L8:
+ 145:Src/mlm32l0xx_hal_msp.c ****   { 
+ 146:Src/mlm32l0xx_hal_msp.c ****     Error_Handler();
+ 147:Src/mlm32l0xx_hal_msp.c ****   }
+ 148:Src/mlm32l0xx_hal_msp.c **** 
+ 149:Src/mlm32l0xx_hal_msp.c ****   /*##-2- Enable the RTC peripheral Clock ####################################*/
+ 150:Src/mlm32l0xx_hal_msp.c ****   /* Enable RTC Clock */
+ 151:Src/mlm32l0xx_hal_msp.c ****   __HAL_RCC_RTC_ENABLE();
+ 173              		.loc 1 151 0
+ 174 0030 0A4A     		ldr	r2, .L11
+ 175 0032 116D     		ldr	r1, [r2, #80]
+ 176 0034 8023     		movs	r3, #128
+ 177 0036 DB02     		lsls	r3, r3, #11
+ 178 0038 0B43     		orrs	r3, r1
+ 179 003a 1365     		str	r3, [r2, #80]
+ 152:Src/mlm32l0xx_hal_msp.c ****   
+ 153:Src/mlm32l0xx_hal_msp.c ****   /*##-3- Configure the NVIC for RTC Alarm ###################################*/
+ 154:Src/mlm32l0xx_hal_msp.c ****   HAL_NVIC_SetPriority(RTC_Alarm_IRQn, 0x0, 0);
+ 180              		.loc 1 154 0
+ 181 003c 0022     		movs	r2, #0
+ 182 003e 0021     		movs	r1, #0
+ 183 0040 0220     		movs	r0, #2
+ 184 0042 FFF7FEFF 		bl	HAL_NVIC_SetPriority
+ 185              	.LVL12:
+ 155:Src/mlm32l0xx_hal_msp.c ****   HAL_NVIC_EnableIRQ(RTC_Alarm_IRQn);
+ 186              		.loc 1 155 0
+ 187 0046 0220     		movs	r0, #2
+ 188 0048 FFF7FEFF 		bl	HAL_NVIC_EnableIRQ
+ 189              	.LVL13:
+ 156:Src/mlm32l0xx_hal_msp.c **** }
+ 190              		.loc 1 156 0
+ 191 004c 19B0     		add	sp, sp, #100
+ 192              		@ sp needed
+ 193 004e 00BD     		pop	{pc}
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccWYva4V.s 			page 7
+
+
+ 194              	.L9:
+ 138:Src/mlm32l0xx_hal_msp.c ****   }
+ 195              		.loc 1 138 0
+ 196 0050 FFF7FEFF 		bl	Error_Handler
+ 197              	.LVL14:
+ 198 0054 E2E7     		b	.L7
+ 199              	.L10:
+ 146:Src/mlm32l0xx_hal_msp.c ****   }
+ 200              		.loc 1 146 0
+ 201 0056 FFF7FEFF 		bl	Error_Handler
+ 202              	.LVL15:
+ 203 005a E9E7     		b	.L8
+ 204              	.L12:
+ 205              		.align	2
+ 206              	.L11:
+ 207 005c 00100240 		.word	1073876992
+ 208              		.cfi_endproc
+ 209              	.LFE43:
+ 211              		.section	.text.HAL_RTC_MspDeInit,"ax",%progbits
+ 212              		.align	1
+ 213              		.global	HAL_RTC_MspDeInit
+ 214              		.syntax unified
+ 215              		.code	16
+ 216              		.thumb_func
+ 217              		.fpu softvfp
+ 219              	HAL_RTC_MspDeInit:
+ 220              	.LFB44:
+ 157:Src/mlm32l0xx_hal_msp.c **** 
+ 158:Src/mlm32l0xx_hal_msp.c **** /**
+ 159:Src/mlm32l0xx_hal_msp.c ****   * @brief RTC MSP De-Initialization 
+ 160:Src/mlm32l0xx_hal_msp.c ****   *        This function freeze the hardware resources used in this example:
+ 161:Src/mlm32l0xx_hal_msp.c ****   *          - Disable the Peripheral's clock
+ 162:Src/mlm32l0xx_hal_msp.c ****   * @param hrtc: RTC handle pointer
+ 163:Src/mlm32l0xx_hal_msp.c ****   * @retval None
+ 164:Src/mlm32l0xx_hal_msp.c ****   */
+ 165:Src/mlm32l0xx_hal_msp.c **** void HAL_RTC_MspDeInit(RTC_HandleTypeDef *hrtc)
+ 166:Src/mlm32l0xx_hal_msp.c **** {
+ 221              		.loc 1 166 0
+ 222              		.cfi_startproc
+ 223              		@ args = 0, pretend = 0, frame = 0
+ 224              		@ frame_needed = 0, uses_anonymous_args = 0
+ 225              		@ link register save eliminated.
+ 226              	.LVL16:
+ 167:Src/mlm32l0xx_hal_msp.c ****   /* Reset peripherals */
+ 168:Src/mlm32l0xx_hal_msp.c ****   __HAL_RCC_RTC_DISABLE();
+ 227              		.loc 1 168 0
+ 228 0000 024A     		ldr	r2, .L14
+ 229 0002 136D     		ldr	r3, [r2, #80]
+ 230 0004 0249     		ldr	r1, .L14+4
+ 231 0006 0B40     		ands	r3, r1
+ 232 0008 1365     		str	r3, [r2, #80]
+ 169:Src/mlm32l0xx_hal_msp.c **** }
+ 233              		.loc 1 169 0
+ 234              		@ sp needed
+ 235 000a 7047     		bx	lr
+ 236              	.L15:
+ 237              		.align	2
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccWYva4V.s 			page 8
+
+
+ 238              	.L14:
+ 239 000c 00100240 		.word	1073876992
+ 240 0010 FFFFFBFF 		.word	-262145
+ 241              		.cfi_endproc
+ 242              	.LFE44:
+ 244              		.section	.text.HAL_RTC_AlarmAEventCallback,"ax",%progbits
+ 245              		.align	1
+ 246              		.global	HAL_RTC_AlarmAEventCallback
+ 247              		.syntax unified
+ 248              		.code	16
+ 249              		.thumb_func
+ 250              		.fpu softvfp
+ 252              	HAL_RTC_AlarmAEventCallback:
+ 253              	.LFB45:
+ 170:Src/mlm32l0xx_hal_msp.c **** 
+ 171:Src/mlm32l0xx_hal_msp.c **** 
+ 172:Src/mlm32l0xx_hal_msp.c **** /**
+ 173:Src/mlm32l0xx_hal_msp.c ****   * @brief  Alarm A callback.
+ 174:Src/mlm32l0xx_hal_msp.c ****   * @param  hrtc: RTC handle
+ 175:Src/mlm32l0xx_hal_msp.c ****   * @retval None
+ 176:Src/mlm32l0xx_hal_msp.c ****   */
+ 177:Src/mlm32l0xx_hal_msp.c **** void HAL_RTC_AlarmAEventCallback(RTC_HandleTypeDef *hrtc)
+ 178:Src/mlm32l0xx_hal_msp.c **** {
+ 254              		.loc 1 178 0
+ 255              		.cfi_startproc
+ 256              		@ args = 0, pretend = 0, frame = 0
+ 257              		@ frame_needed = 0, uses_anonymous_args = 0
+ 258              	.LVL17:
+ 259 0000 10B5     		push	{r4, lr}
+ 260              	.LCFI5:
+ 261              		.cfi_def_cfa_offset 8
+ 262              		.cfi_offset 4, -8
+ 263              		.cfi_offset 14, -4
+ 179:Src/mlm32l0xx_hal_msp.c ****   TimerIrqHandler( );
+ 264              		.loc 1 179 0
+ 265 0002 FFF7FEFF 		bl	TimerIrqHandler
+ 266              	.LVL18:
+ 180:Src/mlm32l0xx_hal_msp.c **** }
+ 267              		.loc 1 180 0
+ 268              		@ sp needed
+ 269 0006 10BD     		pop	{r4, pc}
+ 270              		.cfi_endproc
+ 271              	.LFE45:
+ 273              		.section	.text.HAL_GPIO_EXTI_Callback,"ax",%progbits
+ 274              		.align	1
+ 275              		.global	HAL_GPIO_EXTI_Callback
+ 276              		.syntax unified
+ 277              		.code	16
+ 278              		.thumb_func
+ 279              		.fpu softvfp
+ 281              	HAL_GPIO_EXTI_Callback:
+ 282              	.LFB46:
+ 181:Src/mlm32l0xx_hal_msp.c **** 
+ 182:Src/mlm32l0xx_hal_msp.c **** /**
+ 183:Src/mlm32l0xx_hal_msp.c ****   * @brief  EXTI line detection callbacks.
+ 184:Src/mlm32l0xx_hal_msp.c ****   * @param  GPIO_Pin: Specifies the pins connected to the EXTI line.
+ 185:Src/mlm32l0xx_hal_msp.c ****   * @retval None
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccWYva4V.s 			page 9
+
+
+ 186:Src/mlm32l0xx_hal_msp.c ****   */
+ 187:Src/mlm32l0xx_hal_msp.c **** void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
+ 188:Src/mlm32l0xx_hal_msp.c **** {
+ 283              		.loc 1 188 0
+ 284              		.cfi_startproc
+ 285              		@ args = 0, pretend = 0, frame = 0
+ 286              		@ frame_needed = 0, uses_anonymous_args = 0
+ 287              	.LVL19:
+ 288 0000 10B5     		push	{r4, lr}
+ 289              	.LCFI6:
+ 290              		.cfi_def_cfa_offset 8
+ 291              		.cfi_offset 4, -8
+ 292              		.cfi_offset 14, -4
+ 189:Src/mlm32l0xx_hal_msp.c ****   HW_GPIO_IrqHandler( GPIO_Pin );
+ 293              		.loc 1 189 0
+ 294 0002 FFF7FEFF 		bl	HW_GPIO_IrqHandler
+ 295              	.LVL20:
+ 190:Src/mlm32l0xx_hal_msp.c **** }
+ 296              		.loc 1 190 0
+ 297              		@ sp needed
+ 298 0006 10BD     		pop	{r4, pc}
+ 299              		.cfi_endproc
+ 300              	.LFE46:
+ 302              		.section	.text.MSP_GetIRQn,"ax",%progbits
+ 303              		.align	1
+ 304              		.global	MSP_GetIRQn
+ 305              		.syntax unified
+ 306              		.code	16
+ 307              		.thumb_func
+ 308              		.fpu softvfp
+ 310              	MSP_GetIRQn:
+ 311              	.LFB47:
+ 191:Src/mlm32l0xx_hal_msp.c **** 
+ 192:Src/mlm32l0xx_hal_msp.c **** /**
+ 193:Src/mlm32l0xx_hal_msp.c ****   * @brief  Gets IRQ number as a function of the GPIO_Pin.
+ 194:Src/mlm32l0xx_hal_msp.c ****   * @param  GPIO_Pin: Specifies the pins connected to the EXTI line.
+ 195:Src/mlm32l0xx_hal_msp.c ****   * @retval IRQ number
+ 196:Src/mlm32l0xx_hal_msp.c ****   */
+ 197:Src/mlm32l0xx_hal_msp.c **** IRQn_Type MSP_GetIRQn( uint16_t GPIO_Pin)
+ 198:Src/mlm32l0xx_hal_msp.c **** {
+ 312              		.loc 1 198 0
+ 313              		.cfi_startproc
+ 314              		@ args = 0, pretend = 0, frame = 0
+ 315              		@ frame_needed = 0, uses_anonymous_args = 0
+ 316              		@ link register save eliminated.
+ 317              	.LVL21:
+ 199:Src/mlm32l0xx_hal_msp.c ****   switch( GPIO_Pin )
+ 318              		.loc 1 199 0
+ 319 0000 0428     		cmp	r0, #4
+ 320 0002 09D0     		beq	.L23
+ 321 0004 04D8     		bhi	.L21
+ 322 0006 0138     		subs	r0, r0, #1
+ 323              	.LVL22:
+ 324 0008 0128     		cmp	r0, #1
+ 325 000a 03D8     		bhi	.L19
+ 200:Src/mlm32l0xx_hal_msp.c ****   {
+ 201:Src/mlm32l0xx_hal_msp.c ****     case GPIO_PIN_0:  
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccWYva4V.s 			page 10
+
+
+ 202:Src/mlm32l0xx_hal_msp.c ****     case GPIO_PIN_1:  return EXTI0_1_IRQn;
+ 326              		.loc 1 202 0
+ 327 000c 0520     		movs	r0, #5
+ 328              	.L20:
+ 203:Src/mlm32l0xx_hal_msp.c ****     case GPIO_PIN_2: 
+ 204:Src/mlm32l0xx_hal_msp.c ****     case GPIO_PIN_3:  return EXTI2_3_IRQn;
+ 205:Src/mlm32l0xx_hal_msp.c ****     case GPIO_PIN_4:  
+ 206:Src/mlm32l0xx_hal_msp.c ****     case GPIO_PIN_5:  
+ 207:Src/mlm32l0xx_hal_msp.c ****     case GPIO_PIN_6:
+ 208:Src/mlm32l0xx_hal_msp.c ****     case GPIO_PIN_7:
+ 209:Src/mlm32l0xx_hal_msp.c ****     case GPIO_PIN_8:
+ 210:Src/mlm32l0xx_hal_msp.c ****     case GPIO_PIN_9:  
+ 211:Src/mlm32l0xx_hal_msp.c ****     case GPIO_PIN_10:
+ 212:Src/mlm32l0xx_hal_msp.c ****     case GPIO_PIN_11:
+ 213:Src/mlm32l0xx_hal_msp.c ****     case GPIO_PIN_12:
+ 214:Src/mlm32l0xx_hal_msp.c ****     case GPIO_PIN_13:
+ 215:Src/mlm32l0xx_hal_msp.c ****     case GPIO_PIN_14:
+ 216:Src/mlm32l0xx_hal_msp.c ****     case GPIO_PIN_15: 
+ 217:Src/mlm32l0xx_hal_msp.c ****     default: return EXTI4_15_IRQn;
+ 218:Src/mlm32l0xx_hal_msp.c ****   }
+ 219:Src/mlm32l0xx_hal_msp.c **** }
+ 329              		.loc 1 219 0
+ 330              		@ sp needed
+ 331 000e 7047     		bx	lr
+ 332              	.LVL23:
+ 333              	.L21:
+ 199:Src/mlm32l0xx_hal_msp.c ****   {
+ 334              		.loc 1 199 0
+ 335 0010 0828     		cmp	r0, #8
+ 336 0012 01D0     		beq	.L23
+ 337              	.LVL24:
+ 338              	.L19:
+ 217:Src/mlm32l0xx_hal_msp.c ****   }
+ 339              		.loc 1 217 0
+ 340 0014 0720     		movs	r0, #7
+ 341 0016 FAE7     		b	.L20
+ 342              	.LVL25:
+ 343              	.L23:
+ 204:Src/mlm32l0xx_hal_msp.c ****     case GPIO_PIN_4:  
+ 344              		.loc 1 204 0
+ 345 0018 0620     		movs	r0, #6
+ 346              	.LVL26:
+ 347 001a F8E7     		b	.L20
+ 348              		.cfi_endproc
+ 349              	.LFE47:
+ 351              		.text
+ 352              	.Letext0:
+ 353              		.file 2 "/opt/gcc-arm-none-eabi-7-2017-q4-major/arm-none-eabi/include/machine/_default_types.h"
+ 354              		.file 3 "/opt/gcc-arm-none-eabi-7-2017-q4-major/arm-none-eabi/include/sys/lock.h"
+ 355              		.file 4 "/opt/gcc-arm-none-eabi-7-2017-q4-major/arm-none-eabi/include/sys/_types.h"
+ 356              		.file 5 "/opt/gcc-arm-none-eabi-7-2017-q4-major/lib/gcc/arm-none-eabi/7.2.1/include/stddef.h"
+ 357              		.file 6 "/opt/gcc-arm-none-eabi-7-2017-q4-major/arm-none-eabi/include/sys/reent.h"
+ 358              		.file 7 "/opt/gcc-arm-none-eabi-7-2017-q4-major/arm-none-eabi/include/math.h"
+ 359              		.file 8 "/opt/gcc-arm-none-eabi-7-2017-q4-major/arm-none-eabi/include/sys/_stdint.h"
+ 360              		.file 9 "Drivers/CMSIS/Device/ST/STM32L0xx/Include/stm32l072xx.h"
+ 361              		.file 10 "Drivers/CMSIS/Device/ST/STM32L0xx/Include/system_stm32l0xx.h"
+ 362              		.file 11 "Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_hal_def.h"
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccWYva4V.s 			page 11
+
+
+ 363              		.file 12 "Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_hal_rcc.h"
+ 364              		.file 13 "Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_hal_rcc_ex.h"
+ 365              		.file 14 "Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_hal_rtc.h"
+ 366              		.file 15 "/opt/gcc-arm-none-eabi-7-2017-q4-major/arm-none-eabi/include/stdlib.h"
+ 367              		.file 16 "Inc/hw_gpio.h"
+ 368              		.file 17 "Middlewares/Third_Party/Lora/Utilities/timeServer.h"
+ 369              		.file 18 "Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_hal_cortex.h"
+ 370              		.file 19 "Inc/debug.h"
+ 371              		.file 20 "Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_hal_pwr.h"
+ 372              		.file 21 "Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_hal_pwr_ex.h"
+ 373              		.file 22 "Middlewares/Third_Party/Lora/Utilities/delay.h"
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccWYva4V.s 			page 12
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 mlm32l0xx_hal_msp.c
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccWYva4V.s:16     .text.HAL_InitTick:0000000000000000 $t
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccWYva4V.s:23     .text.HAL_InitTick:0000000000000000 HAL_InitTick
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccWYva4V.s:41     .text.HAL_Delay:0000000000000000 $t
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccWYva4V.s:48     .text.HAL_Delay:0000000000000000 HAL_Delay
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccWYva4V.s:76     .text.HAL_MspInit:0000000000000000 $t
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccWYva4V.s:83     .text.HAL_MspInit:0000000000000000 HAL_MspInit
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccWYva4V.s:115    .text.HAL_MspInit:000000000000001c $d
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccWYva4V.s:120    .text.HAL_RTC_MspInit:0000000000000000 $t
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccWYva4V.s:127    .text.HAL_RTC_MspInit:0000000000000000 HAL_RTC_MspInit
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccWYva4V.s:207    .text.HAL_RTC_MspInit:000000000000005c $d
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccWYva4V.s:212    .text.HAL_RTC_MspDeInit:0000000000000000 $t
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccWYva4V.s:219    .text.HAL_RTC_MspDeInit:0000000000000000 HAL_RTC_MspDeInit
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccWYva4V.s:239    .text.HAL_RTC_MspDeInit:000000000000000c $d
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccWYva4V.s:245    .text.HAL_RTC_AlarmAEventCallback:0000000000000000 $t
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccWYva4V.s:252    .text.HAL_RTC_AlarmAEventCallback:0000000000000000 HAL_RTC_AlarmAEventCallback
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccWYva4V.s:274    .text.HAL_GPIO_EXTI_Callback:0000000000000000 $t
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccWYva4V.s:281    .text.HAL_GPIO_EXTI_Callback:0000000000000000 HAL_GPIO_EXTI_Callback
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccWYva4V.s:303    .text.MSP_GetIRQn:0000000000000000 $t
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccWYva4V.s:310    .text.MSP_GetIRQn:0000000000000000 MSP_GetIRQn
+
+UNDEFINED SYMBOLS
+DelayMs
+HAL_PWR_DisablePVD
+HAL_PWREx_EnableUltraLowPower
+HAL_PWREx_EnableFastWakeUp
+HAL_RCC_OscConfig
+HAL_RCCEx_PeriphCLKConfig
+HAL_NVIC_SetPriority
+HAL_NVIC_EnableIRQ
+Error_Handler
+TimerIrqHandler
+HW_GPIO_IrqHandler

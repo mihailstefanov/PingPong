@@ -1,0 +1,956 @@
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccfpf18K.s 			page 1
+
+
+   1              		.cpu cortex-m0plus
+   2              		.eabi_attribute 20, 1
+   3              		.eabi_attribute 21, 1
+   4              		.eabi_attribute 23, 3
+   5              		.eabi_attribute 24, 1
+   6              		.eabi_attribute 25, 1
+   7              		.eabi_attribute 26, 1
+   8              		.eabi_attribute 30, 1
+   9              		.eabi_attribute 34, 0
+  10              		.eabi_attribute 18, 4
+  11              		.file	"low_power_manager.c"
+  12              		.text
+  13              	.Ltext0:
+  14              		.cfi_sections	.debug_frame
+  15              		.section	.text.LPM_SetOffMode,"ax",%progbits
+  16              		.align	1
+  17              		.global	LPM_SetOffMode
+  18              		.syntax unified
+  19              		.code	16
+  20              		.thumb_func
+  21              		.fpu softvfp
+  23              	LPM_SetOffMode:
+  24              	.LFB40:
+  25              		.file 1 "Middlewares/Third_Party/Lora/Utilities/low_power_manager.c"
+   1:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c **** /**
+   2:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****  ******************************************************************************
+   3:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****  * @file    low_power_manager.c
+   4:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****  * @author  MCD Application Team
+   5:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****  * @version V1.1.5
+   6:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****  * @date    30-March-2018
+   7:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****  * @brief   Low Power Manager
+   8:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****  ******************************************************************************
+   9:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****  * @attention
+  10:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****  *
+  11:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****  * <h2><center>&copy; Copyright (c) 2016 STMicroelectronics International N.V.
+  12:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****  * All rights reserved.</center></h2>
+  13:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****  *
+  14:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****  * Redistribution and use in source and binary forms, with or without
+  15:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****  * modification, are permitted, provided that the following conditions are met:
+  16:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****  *
+  17:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****  * 1. Redistribution of source code must retain the above copyright notice,
+  18:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****  *    this list of conditions and the following disclaimer.
+  19:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****  * 2. Redistributions in binary form must reproduce the above copyright notice,
+  20:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****  *    this list of conditions and the following disclaimer in the documentation
+  21:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****  *    and/or other materials provided with the distribution.
+  22:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****  * 3. Neither the name of STMicroelectronics nor the names of other
+  23:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****  *    contributors to this software may be used to endorse or promote products
+  24:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****  *    derived from this software without specific written permission.
+  25:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****  * 4. This software, including modifications and/or derivative works of this
+  26:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****  *    software, must execute solely and exclusively on microcontroller or
+  27:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****  *    microprocessor devices manufactured by or for STMicroelectronics.
+  28:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****  * 5. Redistribution and use of this software other than as permitted under
+  29:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****  *    this license is void and will automatically terminate your rights under
+  30:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****  *    this license.
+  31:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****  *
+  32:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****  * THIS SOFTWARE IS PROVIDED BY STMICROELECTRONICS AND CONTRIBUTORS "AS IS"
+  33:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****  * AND ANY EXPRESS, IMPLIED OR STATUTORY WARRANTIES, INCLUDING, BUT NOT
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccfpf18K.s 			page 2
+
+
+  34:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****  * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A
+  35:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****  * PARTICULAR PURPOSE AND NON-INFRINGEMENT OF THIRD PARTY INTELLECTUAL PROPERTY
+  36:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****  * RIGHTS ARE DISCLAIMED TO THE FULLEST EXTENT PERMITTED BY LAW. IN NO EVENT
+  37:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****  * SHALL STMICROELECTRONICS OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+  38:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****  * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+  39:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****  * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA,
+  40:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****  * OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+  41:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****  * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+  42:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+  43:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****  * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+  44:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****  *
+  45:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****  ******************************************************************************
+  46:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****  */
+  47:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c **** 
+  48:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c **** /* Includes ------------------------------------------------------------------*/
+  49:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c **** #include "hw.h"
+  50:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c **** #include "low_power_manager.h"
+  51:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c **** 
+  52:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c **** /* Private typedef -----------------------------------------------------------*/
+  53:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c **** /* Private defines -----------------------------------------------------------*/
+  54:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c **** /* Private macros ------------------------------------------------------------*/
+  55:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c **** /* Private variables ---------------------------------------------------------*/
+  56:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c **** static uint32_t StopModeDisable = 0;
+  57:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c **** static uint32_t OffModeDisable = 0;
+  58:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c **** 
+  59:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c **** /* Global variables ----------------------------------------------------------*/
+  60:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c **** /* Private function prototypes -----------------------------------------------*/
+  61:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c **** /* Functions Definition ------------------------------------------------------*/
+  62:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c **** void LPM_SetOffMode(LPM_Id_t id, LPM_SetMode_t mode)
+  63:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c **** {
+  26              		.loc 1 63 0
+  27              		.cfi_startproc
+  28              		@ args = 0, pretend = 0, frame = 0
+  29              		@ frame_needed = 0, uses_anonymous_args = 0
+  30              		@ link register save eliminated.
+  31              	.LVL0:
+  32              	.LBB20:
+  33              	.LBB21:
+  34              		.file 2 "Drivers/CMSIS/Include/cmsis_gcc.h"
+   1:Drivers/CMSIS/Include/cmsis_gcc.h **** /**************************************************************************//**
+   2:Drivers/CMSIS/Include/cmsis_gcc.h ****  * @file     cmsis_gcc.h
+   3:Drivers/CMSIS/Include/cmsis_gcc.h ****  * @brief    CMSIS Cortex-M Core Function/Instruction Header File
+   4:Drivers/CMSIS/Include/cmsis_gcc.h ****  * @version  V4.30
+   5:Drivers/CMSIS/Include/cmsis_gcc.h ****  * @date     20. October 2015
+   6:Drivers/CMSIS/Include/cmsis_gcc.h ****  ******************************************************************************/
+   7:Drivers/CMSIS/Include/cmsis_gcc.h **** /* Copyright (c) 2009 - 2015 ARM LIMITED
+   8:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+   9:Drivers/CMSIS/Include/cmsis_gcc.h ****    All rights reserved.
+  10:Drivers/CMSIS/Include/cmsis_gcc.h ****    Redistribution and use in source and binary forms, with or without
+  11:Drivers/CMSIS/Include/cmsis_gcc.h ****    modification, are permitted provided that the following conditions are met:
+  12:Drivers/CMSIS/Include/cmsis_gcc.h ****    - Redistributions of source code must retain the above copyright
+  13:Drivers/CMSIS/Include/cmsis_gcc.h ****      notice, this list of conditions and the following disclaimer.
+  14:Drivers/CMSIS/Include/cmsis_gcc.h ****    - Redistributions in binary form must reproduce the above copyright
+  15:Drivers/CMSIS/Include/cmsis_gcc.h ****      notice, this list of conditions and the following disclaimer in the
+  16:Drivers/CMSIS/Include/cmsis_gcc.h ****      documentation and/or other materials provided with the distribution.
+  17:Drivers/CMSIS/Include/cmsis_gcc.h ****    - Neither the name of ARM nor the names of its contributors may be used
+  18:Drivers/CMSIS/Include/cmsis_gcc.h ****      to endorse or promote products derived from this software without
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccfpf18K.s 			page 3
+
+
+  19:Drivers/CMSIS/Include/cmsis_gcc.h ****      specific prior written permission.
+  20:Drivers/CMSIS/Include/cmsis_gcc.h ****    *
+  21:Drivers/CMSIS/Include/cmsis_gcc.h ****    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  22:Drivers/CMSIS/Include/cmsis_gcc.h ****    AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+  23:Drivers/CMSIS/Include/cmsis_gcc.h ****    IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+  24:Drivers/CMSIS/Include/cmsis_gcc.h ****    ARE DISCLAIMED. IN NO EVENT SHALL COPYRIGHT HOLDERS AND CONTRIBUTORS BE
+  25:Drivers/CMSIS/Include/cmsis_gcc.h ****    LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+  26:Drivers/CMSIS/Include/cmsis_gcc.h ****    CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+  27:Drivers/CMSIS/Include/cmsis_gcc.h ****    SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+  28:Drivers/CMSIS/Include/cmsis_gcc.h ****    INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+  29:Drivers/CMSIS/Include/cmsis_gcc.h ****    CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+  30:Drivers/CMSIS/Include/cmsis_gcc.h ****    ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+  31:Drivers/CMSIS/Include/cmsis_gcc.h ****    POSSIBILITY OF SUCH DAMAGE.
+  32:Drivers/CMSIS/Include/cmsis_gcc.h ****    ---------------------------------------------------------------------------*/
+  33:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+  34:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+  35:Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef __CMSIS_GCC_H
+  36:Drivers/CMSIS/Include/cmsis_gcc.h **** #define __CMSIS_GCC_H
+  37:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+  38:Drivers/CMSIS/Include/cmsis_gcc.h **** /* ignore some GCC warnings */
+  39:Drivers/CMSIS/Include/cmsis_gcc.h **** #if defined ( __GNUC__ )
+  40:Drivers/CMSIS/Include/cmsis_gcc.h **** #pragma GCC diagnostic push
+  41:Drivers/CMSIS/Include/cmsis_gcc.h **** #pragma GCC diagnostic ignored "-Wsign-conversion"
+  42:Drivers/CMSIS/Include/cmsis_gcc.h **** #pragma GCC diagnostic ignored "-Wconversion"
+  43:Drivers/CMSIS/Include/cmsis_gcc.h **** #pragma GCC diagnostic ignored "-Wunused-parameter"
+  44:Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
+  45:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+  46:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+  47:Drivers/CMSIS/Include/cmsis_gcc.h **** /* ###########################  Core Function Access  ########################### */
+  48:Drivers/CMSIS/Include/cmsis_gcc.h **** /** \ingroup  CMSIS_Core_FunctionInterface
+  49:Drivers/CMSIS/Include/cmsis_gcc.h ****     \defgroup CMSIS_Core_RegAccFunctions CMSIS Core Register Access Functions
+  50:Drivers/CMSIS/Include/cmsis_gcc.h ****   @{
+  51:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
+  52:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+  53:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
+  54:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Enable IRQ Interrupts
+  55:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Enables IRQ interrupts by clearing the I-bit in the CPSR.
+  56:Drivers/CMSIS/Include/cmsis_gcc.h ****            Can only be executed in Privileged modes.
+  57:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
+  58:Drivers/CMSIS/Include/cmsis_gcc.h **** __attribute__( ( always_inline ) ) __STATIC_INLINE void __enable_irq(void)
+  59:Drivers/CMSIS/Include/cmsis_gcc.h **** {
+  60:Drivers/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("cpsie i" : : : "memory");
+  61:Drivers/CMSIS/Include/cmsis_gcc.h **** }
+  62:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+  63:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+  64:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
+  65:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Disable IRQ Interrupts
+  66:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Disables IRQ interrupts by setting the I-bit in the CPSR.
+  67:Drivers/CMSIS/Include/cmsis_gcc.h ****   Can only be executed in Privileged modes.
+  68:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
+  69:Drivers/CMSIS/Include/cmsis_gcc.h **** __attribute__( ( always_inline ) ) __STATIC_INLINE void __disable_irq(void)
+  70:Drivers/CMSIS/Include/cmsis_gcc.h **** {
+  71:Drivers/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("cpsid i" : : : "memory");
+  72:Drivers/CMSIS/Include/cmsis_gcc.h **** }
+  73:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+  74:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+  75:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccfpf18K.s 			page 4
+
+
+  76:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Get Control Register
+  77:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Returns the content of the Control Register.
+  78:Drivers/CMSIS/Include/cmsis_gcc.h ****   \return               Control Register value
+  79:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
+  80:Drivers/CMSIS/Include/cmsis_gcc.h **** __attribute__( ( always_inline ) ) __STATIC_INLINE uint32_t __get_CONTROL(void)
+  81:Drivers/CMSIS/Include/cmsis_gcc.h **** {
+  82:Drivers/CMSIS/Include/cmsis_gcc.h ****   uint32_t result;
+  83:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+  84:Drivers/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("MRS %0, control" : "=r" (result) );
+  85:Drivers/CMSIS/Include/cmsis_gcc.h ****   return(result);
+  86:Drivers/CMSIS/Include/cmsis_gcc.h **** }
+  87:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+  88:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+  89:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
+  90:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Set Control Register
+  91:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Writes the given value to the Control Register.
+  92:Drivers/CMSIS/Include/cmsis_gcc.h ****   \param [in]    control  Control Register value to set
+  93:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
+  94:Drivers/CMSIS/Include/cmsis_gcc.h **** __attribute__( ( always_inline ) ) __STATIC_INLINE void __set_CONTROL(uint32_t control)
+  95:Drivers/CMSIS/Include/cmsis_gcc.h **** {
+  96:Drivers/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("MSR control, %0" : : "r" (control) : "memory");
+  97:Drivers/CMSIS/Include/cmsis_gcc.h **** }
+  98:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+  99:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 100:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
+ 101:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Get IPSR Register
+ 102:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Returns the content of the IPSR Register.
+ 103:Drivers/CMSIS/Include/cmsis_gcc.h ****   \return               IPSR Register value
+ 104:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
+ 105:Drivers/CMSIS/Include/cmsis_gcc.h **** __attribute__( ( always_inline ) ) __STATIC_INLINE uint32_t __get_IPSR(void)
+ 106:Drivers/CMSIS/Include/cmsis_gcc.h **** {
+ 107:Drivers/CMSIS/Include/cmsis_gcc.h ****   uint32_t result;
+ 108:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 109:Drivers/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("MRS %0, ipsr" : "=r" (result) );
+ 110:Drivers/CMSIS/Include/cmsis_gcc.h ****   return(result);
+ 111:Drivers/CMSIS/Include/cmsis_gcc.h **** }
+ 112:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 113:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 114:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
+ 115:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Get APSR Register
+ 116:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Returns the content of the APSR Register.
+ 117:Drivers/CMSIS/Include/cmsis_gcc.h ****   \return               APSR Register value
+ 118:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
+ 119:Drivers/CMSIS/Include/cmsis_gcc.h **** __attribute__( ( always_inline ) ) __STATIC_INLINE uint32_t __get_APSR(void)
+ 120:Drivers/CMSIS/Include/cmsis_gcc.h **** {
+ 121:Drivers/CMSIS/Include/cmsis_gcc.h ****   uint32_t result;
+ 122:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 123:Drivers/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("MRS %0, apsr" : "=r" (result) );
+ 124:Drivers/CMSIS/Include/cmsis_gcc.h ****   return(result);
+ 125:Drivers/CMSIS/Include/cmsis_gcc.h **** }
+ 126:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 127:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 128:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
+ 129:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Get xPSR Register
+ 130:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Returns the content of the xPSR Register.
+ 131:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 132:Drivers/CMSIS/Include/cmsis_gcc.h ****     \return               xPSR Register value
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccfpf18K.s 			page 5
+
+
+ 133:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
+ 134:Drivers/CMSIS/Include/cmsis_gcc.h **** __attribute__( ( always_inline ) ) __STATIC_INLINE uint32_t __get_xPSR(void)
+ 135:Drivers/CMSIS/Include/cmsis_gcc.h **** {
+ 136:Drivers/CMSIS/Include/cmsis_gcc.h ****   uint32_t result;
+ 137:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 138:Drivers/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("MRS %0, xpsr" : "=r" (result) );
+ 139:Drivers/CMSIS/Include/cmsis_gcc.h ****   return(result);
+ 140:Drivers/CMSIS/Include/cmsis_gcc.h **** }
+ 141:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 142:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 143:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
+ 144:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Get Process Stack Pointer
+ 145:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Returns the current value of the Process Stack Pointer (PSP).
+ 146:Drivers/CMSIS/Include/cmsis_gcc.h ****   \return               PSP Register value
+ 147:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
+ 148:Drivers/CMSIS/Include/cmsis_gcc.h **** __attribute__( ( always_inline ) ) __STATIC_INLINE uint32_t __get_PSP(void)
+ 149:Drivers/CMSIS/Include/cmsis_gcc.h **** {
+ 150:Drivers/CMSIS/Include/cmsis_gcc.h ****   register uint32_t result;
+ 151:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 152:Drivers/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("MRS %0, psp\n"  : "=r" (result) );
+ 153:Drivers/CMSIS/Include/cmsis_gcc.h ****   return(result);
+ 154:Drivers/CMSIS/Include/cmsis_gcc.h **** }
+ 155:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 156:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 157:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
+ 158:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Set Process Stack Pointer
+ 159:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Assigns the given value to the Process Stack Pointer (PSP).
+ 160:Drivers/CMSIS/Include/cmsis_gcc.h ****   \param [in]    topOfProcStack  Process Stack Pointer value to set
+ 161:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
+ 162:Drivers/CMSIS/Include/cmsis_gcc.h **** __attribute__( ( always_inline ) ) __STATIC_INLINE void __set_PSP(uint32_t topOfProcStack)
+ 163:Drivers/CMSIS/Include/cmsis_gcc.h **** {
+ 164:Drivers/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("MSR psp, %0\n" : : "r" (topOfProcStack) : "sp");
+ 165:Drivers/CMSIS/Include/cmsis_gcc.h **** }
+ 166:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 167:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 168:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
+ 169:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Get Main Stack Pointer
+ 170:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Returns the current value of the Main Stack Pointer (MSP).
+ 171:Drivers/CMSIS/Include/cmsis_gcc.h ****   \return               MSP Register value
+ 172:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
+ 173:Drivers/CMSIS/Include/cmsis_gcc.h **** __attribute__( ( always_inline ) ) __STATIC_INLINE uint32_t __get_MSP(void)
+ 174:Drivers/CMSIS/Include/cmsis_gcc.h **** {
+ 175:Drivers/CMSIS/Include/cmsis_gcc.h ****   register uint32_t result;
+ 176:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 177:Drivers/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("MRS %0, msp\n" : "=r" (result) );
+ 178:Drivers/CMSIS/Include/cmsis_gcc.h ****   return(result);
+ 179:Drivers/CMSIS/Include/cmsis_gcc.h **** }
+ 180:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 181:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 182:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
+ 183:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Set Main Stack Pointer
+ 184:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Assigns the given value to the Main Stack Pointer (MSP).
+ 185:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 186:Drivers/CMSIS/Include/cmsis_gcc.h ****     \param [in]    topOfMainStack  Main Stack Pointer value to set
+ 187:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
+ 188:Drivers/CMSIS/Include/cmsis_gcc.h **** __attribute__( ( always_inline ) ) __STATIC_INLINE void __set_MSP(uint32_t topOfMainStack)
+ 189:Drivers/CMSIS/Include/cmsis_gcc.h **** {
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccfpf18K.s 			page 6
+
+
+ 190:Drivers/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("MSR msp, %0\n" : : "r" (topOfMainStack) : "sp");
+ 191:Drivers/CMSIS/Include/cmsis_gcc.h **** }
+ 192:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 193:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 194:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
+ 195:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Get Priority Mask
+ 196:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Returns the current state of the priority mask bit from the Priority Mask Register.
+ 197:Drivers/CMSIS/Include/cmsis_gcc.h ****   \return               Priority Mask value
+ 198:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
+ 199:Drivers/CMSIS/Include/cmsis_gcc.h **** __attribute__( ( always_inline ) ) __STATIC_INLINE uint32_t __get_PRIMASK(void)
+ 200:Drivers/CMSIS/Include/cmsis_gcc.h **** {
+ 201:Drivers/CMSIS/Include/cmsis_gcc.h ****   uint32_t result;
+ 202:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 203:Drivers/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("MRS %0, primask" : "=r" (result) );
+  35              		.loc 2 203 0
+  36              		.syntax divided
+  37              	@ 203 "Drivers/CMSIS/Include/cmsis_gcc.h" 1
+  38 0000 EFF31083 		MRS r3, primask
+  39              	@ 0 "" 2
+  40              		.thumb
+  41              		.syntax unified
+  42              	.LBE21:
+  43              	.LBE20:
+  44              	.LBB22:
+  45              	.LBB23:
+  71:Drivers/CMSIS/Include/cmsis_gcc.h **** }
+  46              		.loc 2 71 0
+  47              		.syntax divided
+  48              	@ 71 "Drivers/CMSIS/Include/cmsis_gcc.h" 1
+  49 0004 72B6     		cpsid i
+  50              	@ 0 "" 2
+  51              		.thumb
+  52              		.syntax unified
+  53              	.LBE23:
+  54              	.LBE22:
+  64:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****   BACKUP_PRIMASK();
+  65:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****   
+  66:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****   DISABLE_IRQ( );
+  67:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****   
+  68:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****   
+  69:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****   switch(mode)
+  55              		.loc 1 69 0
+  56 0006 0029     		cmp	r1, #0
+  57 0008 08D0     		beq	.L3
+  58 000a 0129     		cmp	r1, #1
+  59 000c 03D1     		bne	.L2
+  70:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****   {
+  71:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****     case LPM_Disable:
+  72:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****     {
+  73:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****       OffModeDisable |= (uint32_t)id;
+  60              		.loc 1 73 0
+  61 000e 064A     		ldr	r2, .L5
+  62 0010 1168     		ldr	r1, [r2]
+  63              	.LVL1:
+  64 0012 0843     		orrs	r0, r1
+  65              	.LVL2:
+  66 0014 1060     		str	r0, [r2]
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccfpf18K.s 			page 7
+
+
+  67              	.L2:
+  68              	.LVL3:
+  69              	.LBB24:
+  70              	.LBB25:
+ 204:Drivers/CMSIS/Include/cmsis_gcc.h ****   return(result);
+ 205:Drivers/CMSIS/Include/cmsis_gcc.h **** }
+ 206:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 207:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 208:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
+ 209:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Set Priority Mask
+ 210:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Assigns the given value to the Priority Mask Register.
+ 211:Drivers/CMSIS/Include/cmsis_gcc.h ****   \param [in]    priMask  Priority Mask
+ 212:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
+ 213:Drivers/CMSIS/Include/cmsis_gcc.h **** __attribute__( ( always_inline ) ) __STATIC_INLINE void __set_PRIMASK(uint32_t priMask)
+ 214:Drivers/CMSIS/Include/cmsis_gcc.h **** {
+ 215:Drivers/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("MSR primask, %0" : : "r" (priMask) : "memory");
+  71              		.loc 2 215 0
+  72              		.syntax divided
+  73              	@ 215 "Drivers/CMSIS/Include/cmsis_gcc.h" 1
+  74 0016 83F31088 		MSR primask, r3
+  75              	@ 0 "" 2
+  76              	.LVL4:
+  77              		.thumb
+  78              		.syntax unified
+  79              	.LBE25:
+  80              	.LBE24:
+  74:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****       break;
+  75:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****     }
+  76:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****     case LPM_Enable:
+  77:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****     {
+  78:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****       OffModeDisable &= ~(uint32_t)id;
+  79:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****       break;
+  80:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****     }
+  81:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****     default:
+  82:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****       break;
+  83:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****   }
+  84:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****   
+  85:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****   RESTORE_PRIMASK( );
+  86:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c **** 
+  87:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****   return;
+  88:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c **** }
+  81              		.loc 1 88 0
+  82              		@ sp needed
+  83 001a 7047     		bx	lr
+  84              	.LVL5:
+  85              	.L3:
+  78:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****       break;
+  86              		.loc 1 78 0
+  87 001c 0249     		ldr	r1, .L5
+  88              	.LVL6:
+  89 001e 0A68     		ldr	r2, [r1]
+  90 0020 8243     		bics	r2, r0
+  91 0022 0A60     		str	r2, [r1]
+  79:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****     }
+  92              		.loc 1 79 0
+  93 0024 F7E7     		b	.L2
+  94              	.L6:
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccfpf18K.s 			page 8
+
+
+  95 0026 C046     		.align	2
+  96              	.L5:
+  97 0028 00000000 		.word	.LANCHOR0
+  98              		.cfi_endproc
+  99              	.LFE40:
+ 101              		.section	.text.LPM_SetStopMode,"ax",%progbits
+ 102              		.align	1
+ 103              		.global	LPM_SetStopMode
+ 104              		.syntax unified
+ 105              		.code	16
+ 106              		.thumb_func
+ 107              		.fpu softvfp
+ 109              	LPM_SetStopMode:
+ 110              	.LFB41:
+  89:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c **** 
+  90:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c **** void LPM_SetStopMode(LPM_Id_t id, LPM_SetMode_t mode)
+  91:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c **** {
+ 111              		.loc 1 91 0
+ 112              		.cfi_startproc
+ 113              		@ args = 0, pretend = 0, frame = 0
+ 114              		@ frame_needed = 0, uses_anonymous_args = 0
+ 115              		@ link register save eliminated.
+ 116              	.LVL7:
+ 117              	.LBB26:
+ 118              	.LBB27:
+ 203:Drivers/CMSIS/Include/cmsis_gcc.h ****   return(result);
+ 119              		.loc 2 203 0
+ 120              		.syntax divided
+ 121              	@ 203 "Drivers/CMSIS/Include/cmsis_gcc.h" 1
+ 122 0000 EFF31083 		MRS r3, primask
+ 123              	@ 0 "" 2
+ 124              		.thumb
+ 125              		.syntax unified
+ 126              	.LBE27:
+ 127              	.LBE26:
+ 128              	.LBB28:
+ 129              	.LBB29:
+  71:Drivers/CMSIS/Include/cmsis_gcc.h **** }
+ 130              		.loc 2 71 0
+ 131              		.syntax divided
+ 132              	@ 71 "Drivers/CMSIS/Include/cmsis_gcc.h" 1
+ 133 0004 72B6     		cpsid i
+ 134              	@ 0 "" 2
+ 135              		.thumb
+ 136              		.syntax unified
+ 137              	.LBE29:
+ 138              	.LBE28:
+  92:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****   BACKUP_PRIMASK();
+  93:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****   
+  94:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****   DISABLE_IRQ( );
+  95:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****   
+  96:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****   
+  97:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****   switch(mode)
+ 139              		.loc 1 97 0
+ 140 0006 0029     		cmp	r1, #0
+ 141 0008 08D0     		beq	.L9
+ 142 000a 0129     		cmp	r1, #1
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccfpf18K.s 			page 9
+
+
+ 143 000c 03D1     		bne	.L8
+  98:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****   {
+  99:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****     case LPM_Disable:
+ 100:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****     {
+ 101:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****       StopModeDisable |= (uint32_t)id;
+ 144              		.loc 1 101 0
+ 145 000e 064A     		ldr	r2, .L11
+ 146 0010 5168     		ldr	r1, [r2, #4]
+ 147              	.LVL8:
+ 148 0012 0843     		orrs	r0, r1
+ 149              	.LVL9:
+ 150 0014 5060     		str	r0, [r2, #4]
+ 151              	.L8:
+ 152              	.LVL10:
+ 153              	.LBB30:
+ 154              	.LBB31:
+ 155              		.loc 2 215 0
+ 156              		.syntax divided
+ 157              	@ 215 "Drivers/CMSIS/Include/cmsis_gcc.h" 1
+ 158 0016 83F31088 		MSR primask, r3
+ 159              	@ 0 "" 2
+ 160              	.LVL11:
+ 161              		.thumb
+ 162              		.syntax unified
+ 163              	.LBE31:
+ 164              	.LBE30:
+ 102:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****       break;
+ 103:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****     }
+ 104:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****     case LPM_Enable:
+ 105:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****     {
+ 106:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****       StopModeDisable &= ~(uint32_t)id;
+ 107:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****       break;
+ 108:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****     }
+ 109:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****     default:
+ 110:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****       break;
+ 111:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****   }
+ 112:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****   RESTORE_PRIMASK( );
+ 113:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c **** 
+ 114:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****   return;
+ 115:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c **** }
+ 165              		.loc 1 115 0
+ 166              		@ sp needed
+ 167 001a 7047     		bx	lr
+ 168              	.LVL12:
+ 169              	.L9:
+ 106:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****       break;
+ 170              		.loc 1 106 0
+ 171 001c 0249     		ldr	r1, .L11
+ 172              	.LVL13:
+ 173 001e 4A68     		ldr	r2, [r1, #4]
+ 174 0020 8243     		bics	r2, r0
+ 175 0022 4A60     		str	r2, [r1, #4]
+ 107:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****     }
+ 176              		.loc 1 107 0
+ 177 0024 F7E7     		b	.L8
+ 178              	.L12:
+ 179 0026 C046     		.align	2
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccfpf18K.s 			page 10
+
+
+ 180              	.L11:
+ 181 0028 00000000 		.word	.LANCHOR0
+ 182              		.cfi_endproc
+ 183              	.LFE41:
+ 185              		.section	.text.LPM_GetMode,"ax",%progbits
+ 186              		.align	1
+ 187              		.global	LPM_GetMode
+ 188              		.syntax unified
+ 189              		.code	16
+ 190              		.thumb_func
+ 191              		.fpu softvfp
+ 193              	LPM_GetMode:
+ 194              	.LFB43:
+ 116:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c **** 
+ 117:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c **** void LPM_EnterLowPower(void)
+ 118:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c **** {
+ 119:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****   if( StopModeDisable )
+ 120:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****   {
+ 121:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****     /**
+ 122:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****      * SLEEP mode is required
+ 123:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****      */
+ 124:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****     LPM_EnterSleepMode();
+ 125:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****     LPM_ExitSleepMode();
+ 126:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****   }
+ 127:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****   else
+ 128:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****   { 
+ 129:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****     if( OffModeDisable )
+ 130:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****     {
+ 131:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****       /**
+ 132:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****        * STOP mode is required
+ 133:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****        */
+ 134:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****       LPM_EnterStopMode();
+ 135:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****       LPM_ExitStopMode();
+ 136:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****     }
+ 137:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****     else
+ 138:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****     {
+ 139:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****       /**
+ 140:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****        * OFF mode is required
+ 141:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****        */
+ 142:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****       LPM_EnterOffMode();
+ 143:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****       LPM_ExitOffMode();
+ 144:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****     }
+ 145:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****   }
+ 146:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c **** 
+ 147:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****   return;
+ 148:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c **** }
+ 149:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c **** 
+ 150:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c **** LPM_GetMode_t LPM_GetMode(void)
+ 151:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c **** {
+ 195              		.loc 1 151 0
+ 196              		.cfi_startproc
+ 197              		@ args = 0, pretend = 0, frame = 0
+ 198              		@ frame_needed = 0, uses_anonymous_args = 0
+ 199              		@ link register save eliminated.
+ 200              	.LBB32:
+ 201              	.LBB33:
+ 203:Drivers/CMSIS/Include/cmsis_gcc.h ****   return(result);
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccfpf18K.s 			page 11
+
+
+ 202              		.loc 2 203 0
+ 203              		.syntax divided
+ 204              	@ 203 "Drivers/CMSIS/Include/cmsis_gcc.h" 1
+ 205 0000 EFF31083 		MRS r3, primask
+ 206              	@ 0 "" 2
+ 207              		.thumb
+ 208              		.syntax unified
+ 209              	.LBE33:
+ 210              	.LBE32:
+ 211              	.LBB34:
+ 212              	.LBB35:
+  71:Drivers/CMSIS/Include/cmsis_gcc.h **** }
+ 213              		.loc 2 71 0
+ 214              		.syntax divided
+ 215              	@ 71 "Drivers/CMSIS/Include/cmsis_gcc.h" 1
+ 216 0004 72B6     		cpsid i
+ 217              	@ 0 "" 2
+ 218              		.thumb
+ 219              		.syntax unified
+ 220              	.LBE35:
+ 221              	.LBE34:
+ 152:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****   LPM_GetMode_t mode_selected;
+ 153:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c **** 
+ 154:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****   BACKUP_PRIMASK();
+ 155:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****   
+ 156:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****   DISABLE_IRQ( );
+ 157:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c **** 
+ 158:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****   if(StopModeDisable )
+ 222              		.loc 1 158 0
+ 223 0006 084A     		ldr	r2, .L17
+ 224 0008 5268     		ldr	r2, [r2, #4]
+ 225 000a 002A     		cmp	r2, #0
+ 226 000c 05D1     		bne	.L15
+ 159:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****   {
+ 160:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****     mode_selected = LPM_SleepMode;
+ 161:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****   }
+ 162:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****   else
+ 163:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****   {
+ 164:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****     if(OffModeDisable)
+ 227              		.loc 1 164 0
+ 228 000e 064A     		ldr	r2, .L17
+ 229 0010 1268     		ldr	r2, [r2]
+ 230 0012 002A     		cmp	r2, #0
+ 231 0014 05D0     		beq	.L16
+ 165:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****     {
+ 166:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****       mode_selected = LPM_StopMode;
+ 232              		.loc 1 166 0
+ 233 0016 0120     		movs	r0, #1
+ 234 0018 00E0     		b	.L14
+ 235              	.L15:
+ 160:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****   }
+ 236              		.loc 1 160 0
+ 237 001a 0020     		movs	r0, #0
+ 238              	.L14:
+ 239              	.LVL14:
+ 240              	.LBB36:
+ 241              	.LBB37:
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccfpf18K.s 			page 12
+
+
+ 242              		.loc 2 215 0
+ 243              		.syntax divided
+ 244              	@ 215 "Drivers/CMSIS/Include/cmsis_gcc.h" 1
+ 245 001c 83F31088 		MSR primask, r3
+ 246              	@ 0 "" 2
+ 247              	.LVL15:
+ 248              		.thumb
+ 249              		.syntax unified
+ 250              	.LBE37:
+ 251              	.LBE36:
+ 167:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****     }
+ 168:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****     else
+ 169:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****     {
+ 170:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****       mode_selected = LPM_OffMode;
+ 171:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****     }
+ 172:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****   }
+ 173:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c **** 
+ 174:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****   RESTORE_PRIMASK( );
+ 175:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c **** 
+ 176:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****   return mode_selected;
+ 177:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c **** }
+ 252              		.loc 1 177 0
+ 253              		@ sp needed
+ 254 0020 7047     		bx	lr
+ 255              	.LVL16:
+ 256              	.L16:
+ 170:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****     }
+ 257              		.loc 1 170 0
+ 258 0022 0220     		movs	r0, #2
+ 259 0024 FAE7     		b	.L14
+ 260              	.L18:
+ 261 0026 C046     		.align	2
+ 262              	.L17:
+ 263 0028 00000000 		.word	.LANCHOR0
+ 264              		.cfi_endproc
+ 265              	.LFE43:
+ 267              		.section	.text.LPM_EnterSleepMode,"ax",%progbits
+ 268              		.align	1
+ 269              		.weak	LPM_EnterSleepMode
+ 270              		.syntax unified
+ 271              		.code	16
+ 272              		.thumb_func
+ 273              		.fpu softvfp
+ 275              	LPM_EnterSleepMode:
+ 276              	.LFB44:
+ 178:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c **** 
+ 179:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c **** __weak void LPM_EnterSleepMode(void) {}
+ 277              		.loc 1 179 0
+ 278              		.cfi_startproc
+ 279              		@ args = 0, pretend = 0, frame = 0
+ 280              		@ frame_needed = 0, uses_anonymous_args = 0
+ 281              		@ link register save eliminated.
+ 282              		.loc 1 179 0
+ 283              		@ sp needed
+ 284 0000 7047     		bx	lr
+ 285              		.cfi_endproc
+ 286              	.LFE44:
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccfpf18K.s 			page 13
+
+
+ 288              		.section	.text.LPM_ExitSleepMode,"ax",%progbits
+ 289              		.align	1
+ 290              		.weak	LPM_ExitSleepMode
+ 291              		.syntax unified
+ 292              		.code	16
+ 293              		.thumb_func
+ 294              		.fpu softvfp
+ 296              	LPM_ExitSleepMode:
+ 297              	.LFB45:
+ 180:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c **** __weak void LPM_ExitSleepMode(void) {}
+ 298              		.loc 1 180 0
+ 299              		.cfi_startproc
+ 300              		@ args = 0, pretend = 0, frame = 0
+ 301              		@ frame_needed = 0, uses_anonymous_args = 0
+ 302              		@ link register save eliminated.
+ 303              		.loc 1 180 0
+ 304              		@ sp needed
+ 305 0000 7047     		bx	lr
+ 306              		.cfi_endproc
+ 307              	.LFE45:
+ 309              		.section	.text.LPM_EnterStopMode,"ax",%progbits
+ 310              		.align	1
+ 311              		.weak	LPM_EnterStopMode
+ 312              		.syntax unified
+ 313              		.code	16
+ 314              		.thumb_func
+ 315              		.fpu softvfp
+ 317              	LPM_EnterStopMode:
+ 318              	.LFB46:
+ 181:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c **** __weak void LPM_EnterStopMode(void) {}
+ 319              		.loc 1 181 0
+ 320              		.cfi_startproc
+ 321              		@ args = 0, pretend = 0, frame = 0
+ 322              		@ frame_needed = 0, uses_anonymous_args = 0
+ 323              		@ link register save eliminated.
+ 324              		.loc 1 181 0
+ 325              		@ sp needed
+ 326 0000 7047     		bx	lr
+ 327              		.cfi_endproc
+ 328              	.LFE46:
+ 330              		.section	.text.LPM_ExitStopMode,"ax",%progbits
+ 331              		.align	1
+ 332              		.weak	LPM_ExitStopMode
+ 333              		.syntax unified
+ 334              		.code	16
+ 335              		.thumb_func
+ 336              		.fpu softvfp
+ 338              	LPM_ExitStopMode:
+ 339              	.LFB47:
+ 182:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c **** __weak void LPM_ExitStopMode(void) {}
+ 340              		.loc 1 182 0
+ 341              		.cfi_startproc
+ 342              		@ args = 0, pretend = 0, frame = 0
+ 343              		@ frame_needed = 0, uses_anonymous_args = 0
+ 344              		@ link register save eliminated.
+ 345              		.loc 1 182 0
+ 346              		@ sp needed
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccfpf18K.s 			page 14
+
+
+ 347 0000 7047     		bx	lr
+ 348              		.cfi_endproc
+ 349              	.LFE47:
+ 351              		.section	.text.LPM_EnterOffMode,"ax",%progbits
+ 352              		.align	1
+ 353              		.weak	LPM_EnterOffMode
+ 354              		.syntax unified
+ 355              		.code	16
+ 356              		.thumb_func
+ 357              		.fpu softvfp
+ 359              	LPM_EnterOffMode:
+ 360              	.LFB48:
+ 183:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c **** __weak void LPM_EnterOffMode(void) {}
+ 361              		.loc 1 183 0
+ 362              		.cfi_startproc
+ 363              		@ args = 0, pretend = 0, frame = 0
+ 364              		@ frame_needed = 0, uses_anonymous_args = 0
+ 365              		@ link register save eliminated.
+ 366              		.loc 1 183 0
+ 367              		@ sp needed
+ 368 0000 7047     		bx	lr
+ 369              		.cfi_endproc
+ 370              	.LFE48:
+ 372              		.section	.text.LPM_ExitOffMode,"ax",%progbits
+ 373              		.align	1
+ 374              		.weak	LPM_ExitOffMode
+ 375              		.syntax unified
+ 376              		.code	16
+ 377              		.thumb_func
+ 378              		.fpu softvfp
+ 380              	LPM_ExitOffMode:
+ 381              	.LFB49:
+ 184:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c **** __weak void LPM_ExitOffMode(void) {}
+ 382              		.loc 1 184 0
+ 383              		.cfi_startproc
+ 384              		@ args = 0, pretend = 0, frame = 0
+ 385              		@ frame_needed = 0, uses_anonymous_args = 0
+ 386              		@ link register save eliminated.
+ 387              		.loc 1 184 0
+ 388              		@ sp needed
+ 389 0000 7047     		bx	lr
+ 390              		.cfi_endproc
+ 391              	.LFE49:
+ 393              		.section	.text.LPM_EnterLowPower,"ax",%progbits
+ 394              		.align	1
+ 395              		.global	LPM_EnterLowPower
+ 396              		.syntax unified
+ 397              		.code	16
+ 398              		.thumb_func
+ 399              		.fpu softvfp
+ 401              	LPM_EnterLowPower:
+ 402              	.LFB42:
+ 118:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****   if( StopModeDisable )
+ 403              		.loc 1 118 0
+ 404              		.cfi_startproc
+ 405              		@ args = 0, pretend = 0, frame = 0
+ 406              		@ frame_needed = 0, uses_anonymous_args = 0
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccfpf18K.s 			page 15
+
+
+ 407 0000 10B5     		push	{r4, lr}
+ 408              	.LCFI0:
+ 409              		.cfi_def_cfa_offset 8
+ 410              		.cfi_offset 4, -8
+ 411              		.cfi_offset 14, -4
+ 119:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****   {
+ 412              		.loc 1 119 0
+ 413 0002 0B4B     		ldr	r3, .L31
+ 414 0004 5B68     		ldr	r3, [r3, #4]
+ 415 0006 002B     		cmp	r3, #0
+ 416 0008 08D1     		bne	.L29
+ 129:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****     {
+ 417              		.loc 1 129 0
+ 418 000a 094B     		ldr	r3, .L31
+ 419 000c 1B68     		ldr	r3, [r3]
+ 420 000e 002B     		cmp	r3, #0
+ 421 0010 09D1     		bne	.L30
+ 142:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****       LPM_ExitOffMode();
+ 422              		.loc 1 142 0
+ 423 0012 FFF7FEFF 		bl	LPM_EnterOffMode
+ 424              	.LVL17:
+ 143:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****     }
+ 425              		.loc 1 143 0
+ 426 0016 FFF7FEFF 		bl	LPM_ExitOffMode
+ 427              	.LVL18:
+ 428              	.L25:
+ 148:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c **** 
+ 429              		.loc 1 148 0
+ 430              		@ sp needed
+ 431 001a 10BD     		pop	{r4, pc}
+ 432              	.L29:
+ 124:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****     LPM_ExitSleepMode();
+ 433              		.loc 1 124 0
+ 434 001c FFF7FEFF 		bl	LPM_EnterSleepMode
+ 435              	.LVL19:
+ 125:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****   }
+ 436              		.loc 1 125 0
+ 437 0020 FFF7FEFF 		bl	LPM_ExitSleepMode
+ 438              	.LVL20:
+ 439 0024 F9E7     		b	.L25
+ 440              	.L30:
+ 134:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****       LPM_ExitStopMode();
+ 441              		.loc 1 134 0
+ 442 0026 FFF7FEFF 		bl	LPM_EnterStopMode
+ 443              	.LVL21:
+ 135:Middlewares/Third_Party/Lora/Utilities/low_power_manager.c ****     }
+ 444              		.loc 1 135 0
+ 445 002a FFF7FEFF 		bl	LPM_ExitStopMode
+ 446              	.LVL22:
+ 447 002e F4E7     		b	.L25
+ 448              	.L32:
+ 449              		.align	2
+ 450              	.L31:
+ 451 0030 00000000 		.word	.LANCHOR0
+ 452              		.cfi_endproc
+ 453              	.LFE42:
+ 455              		.bss
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccfpf18K.s 			page 16
+
+
+ 456              		.align	2
+ 457              		.set	.LANCHOR0,. + 0
+ 460              	OffModeDisable:
+ 461 0000 00000000 		.space	4
+ 464              	StopModeDisable:
+ 465 0004 00000000 		.space	4
+ 466              		.text
+ 467              	.Letext0:
+ 468              		.file 3 "/opt/gcc-arm-none-eabi-7-2017-q4-major/arm-none-eabi/include/machine/_default_types.h"
+ 469              		.file 4 "/opt/gcc-arm-none-eabi-7-2017-q4-major/arm-none-eabi/include/sys/lock.h"
+ 470              		.file 5 "/opt/gcc-arm-none-eabi-7-2017-q4-major/arm-none-eabi/include/sys/_types.h"
+ 471              		.file 6 "/opt/gcc-arm-none-eabi-7-2017-q4-major/lib/gcc/arm-none-eabi/7.2.1/include/stddef.h"
+ 472              		.file 7 "/opt/gcc-arm-none-eabi-7-2017-q4-major/arm-none-eabi/include/sys/reent.h"
+ 473              		.file 8 "/opt/gcc-arm-none-eabi-7-2017-q4-major/arm-none-eabi/include/math.h"
+ 474              		.file 9 "/opt/gcc-arm-none-eabi-7-2017-q4-major/arm-none-eabi/include/sys/_stdint.h"
+ 475              		.file 10 "Drivers/CMSIS/Device/ST/STM32L0xx/Include/system_stm32l0xx.h"
+ 476              		.file 11 "/opt/gcc-arm-none-eabi-7-2017-q4-major/arm-none-eabi/include/stdlib.h"
+ 477              		.file 12 "Inc/utilities_conf.h"
+ 478              		.file 13 "Middlewares/Third_Party/Lora/Utilities/low_power_manager.h"
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccfpf18K.s 			page 17
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 low_power_manager.c
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccfpf18K.s:16     .text.LPM_SetOffMode:0000000000000000 $t
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccfpf18K.s:23     .text.LPM_SetOffMode:0000000000000000 LPM_SetOffMode
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccfpf18K.s:97     .text.LPM_SetOffMode:0000000000000028 $d
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccfpf18K.s:102    .text.LPM_SetStopMode:0000000000000000 $t
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccfpf18K.s:109    .text.LPM_SetStopMode:0000000000000000 LPM_SetStopMode
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccfpf18K.s:181    .text.LPM_SetStopMode:0000000000000028 $d
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccfpf18K.s:186    .text.LPM_GetMode:0000000000000000 $t
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccfpf18K.s:193    .text.LPM_GetMode:0000000000000000 LPM_GetMode
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccfpf18K.s:263    .text.LPM_GetMode:0000000000000028 $d
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccfpf18K.s:268    .text.LPM_EnterSleepMode:0000000000000000 $t
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccfpf18K.s:275    .text.LPM_EnterSleepMode:0000000000000000 LPM_EnterSleepMode
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccfpf18K.s:289    .text.LPM_ExitSleepMode:0000000000000000 $t
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccfpf18K.s:296    .text.LPM_ExitSleepMode:0000000000000000 LPM_ExitSleepMode
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccfpf18K.s:310    .text.LPM_EnterStopMode:0000000000000000 $t
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccfpf18K.s:317    .text.LPM_EnterStopMode:0000000000000000 LPM_EnterStopMode
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccfpf18K.s:331    .text.LPM_ExitStopMode:0000000000000000 $t
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccfpf18K.s:338    .text.LPM_ExitStopMode:0000000000000000 LPM_ExitStopMode
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccfpf18K.s:352    .text.LPM_EnterOffMode:0000000000000000 $t
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccfpf18K.s:359    .text.LPM_EnterOffMode:0000000000000000 LPM_EnterOffMode
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccfpf18K.s:373    .text.LPM_ExitOffMode:0000000000000000 $t
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccfpf18K.s:380    .text.LPM_ExitOffMode:0000000000000000 LPM_ExitOffMode
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccfpf18K.s:394    .text.LPM_EnterLowPower:0000000000000000 $t
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccfpf18K.s:401    .text.LPM_EnterLowPower:0000000000000000 LPM_EnterLowPower
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccfpf18K.s:451    .text.LPM_EnterLowPower:0000000000000030 $d
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccfpf18K.s:456    .bss:0000000000000000 $d
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccfpf18K.s:460    .bss:0000000000000000 OffModeDisable
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccfpf18K.s:464    .bss:0000000000000004 StopModeDisable
+
+NO UNDEFINED SYMBOLS

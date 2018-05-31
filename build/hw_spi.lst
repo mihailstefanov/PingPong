@@ -1,0 +1,771 @@
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccpm9amd.s 			page 1
+
+
+   1              		.cpu cortex-m0plus
+   2              		.eabi_attribute 20, 1
+   3              		.eabi_attribute 21, 1
+   4              		.eabi_attribute 23, 3
+   5              		.eabi_attribute 24, 1
+   6              		.eabi_attribute 25, 1
+   7              		.eabi_attribute 26, 1
+   8              		.eabi_attribute 30, 1
+   9              		.eabi_attribute 34, 0
+  10              		.eabi_attribute 18, 4
+  11              		.file	"hw_spi.c"
+  12              		.text
+  13              	.Ltext0:
+  14              		.cfi_sections	.debug_frame
+  15              		.section	.text.SpiFrequency,"ax",%progbits
+  16              		.align	1
+  17              		.syntax unified
+  18              		.code	16
+  19              		.thumb_func
+  20              		.fpu softvfp
+  22              	SpiFrequency:
+  23              	.LFB43:
+  24              		.file 1 "Src/hw_spi.c"
+   1:Src/hw_spi.c  **** /*
+   2:Src/hw_spi.c  ****  / _____)             _              | |
+   3:Src/hw_spi.c  **** ( (____  _____ ____ _| |_ _____  ____| |__
+   4:Src/hw_spi.c  ****  \____ \| ___ |    (_   _) ___ |/ ___)  _ \
+   5:Src/hw_spi.c  ****  _____) ) ____| | | || |_| ____( (___| | | |
+   6:Src/hw_spi.c  **** (______/|_____)_|_|_| \__)_____)\____)_| |_|
+   7:Src/hw_spi.c  ****     (C)2013 Semtech
+   8:Src/hw_spi.c  **** 
+   9:Src/hw_spi.c  **** Description: Bleeper board SPI driver implementation
+  10:Src/hw_spi.c  **** 
+  11:Src/hw_spi.c  **** License: Revised BSD License, see LICENSE.TXT file include in the project
+  12:Src/hw_spi.c  **** 
+  13:Src/hw_spi.c  **** Maintainer: Miguel Luis and Gregory Cristian
+  14:Src/hw_spi.c  **** */
+  15:Src/hw_spi.c  ****  /*******************************************************************************
+  16:Src/hw_spi.c  ****   * @file    hw_spi.c
+  17:Src/hw_spi.c  ****   * @author  MCD Application Team
+  18:Src/hw_spi.c  ****   * @version V1.1.5
+  19:Src/hw_spi.c  ****   * @date    30-March-2018
+  20:Src/hw_spi.c  ****   * @brief   manages the SPI interface
+  21:Src/hw_spi.c  ****   ******************************************************************************
+  22:Src/hw_spi.c  ****   * @attention
+  23:Src/hw_spi.c  ****   *
+  24:Src/hw_spi.c  ****   * <h2><center>&copy; Copyright (c) 2017 STMicroelectronics International N.V. 
+  25:Src/hw_spi.c  ****   * All rights reserved.</center></h2>
+  26:Src/hw_spi.c  ****   *
+  27:Src/hw_spi.c  ****   * Redistribution and use in source and binary forms, with or without 
+  28:Src/hw_spi.c  ****   * modification, are permitted, provided that the following conditions are met:
+  29:Src/hw_spi.c  ****   *
+  30:Src/hw_spi.c  ****   * 1. Redistribution of source code must retain the above copyright notice, 
+  31:Src/hw_spi.c  ****   *    this list of conditions and the following disclaimer.
+  32:Src/hw_spi.c  ****   * 2. Redistributions in binary form must reproduce the above copyright notice,
+  33:Src/hw_spi.c  ****   *    this list of conditions and the following disclaimer in the documentation
+  34:Src/hw_spi.c  ****   *    and/or other materials provided with the distribution.
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccpm9amd.s 			page 2
+
+
+  35:Src/hw_spi.c  ****   * 3. Neither the name of STMicroelectronics nor the names of other 
+  36:Src/hw_spi.c  ****   *    contributors to this software may be used to endorse or promote products 
+  37:Src/hw_spi.c  ****   *    derived from this software without specific written permission.
+  38:Src/hw_spi.c  ****   * 4. This software, including modifications and/or derivative works of this 
+  39:Src/hw_spi.c  ****   *    software, must execute solely and exclusively on microcontroller or
+  40:Src/hw_spi.c  ****   *    microprocessor devices manufactured by or for STMicroelectronics.
+  41:Src/hw_spi.c  ****   * 5. Redistribution and use of this software other than as permitted under 
+  42:Src/hw_spi.c  ****   *    this license is void and will automatically terminate your rights under 
+  43:Src/hw_spi.c  ****   *    this license. 
+  44:Src/hw_spi.c  ****   *
+  45:Src/hw_spi.c  ****   * THIS SOFTWARE IS PROVIDED BY STMICROELECTRONICS AND CONTRIBUTORS "AS IS" 
+  46:Src/hw_spi.c  ****   * AND ANY EXPRESS, IMPLIED OR STATUTORY WARRANTIES, INCLUDING, BUT NOT 
+  47:Src/hw_spi.c  ****   * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A 
+  48:Src/hw_spi.c  ****   * PARTICULAR PURPOSE AND NON-INFRINGEMENT OF THIRD PARTY INTELLECTUAL PROPERTY
+  49:Src/hw_spi.c  ****   * RIGHTS ARE DISCLAIMED TO THE FULLEST EXTENT PERMITTED BY LAW. IN NO EVENT 
+  50:Src/hw_spi.c  ****   * SHALL STMICROELECTRONICS OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+  51:Src/hw_spi.c  ****   * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+  52:Src/hw_spi.c  ****   * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, 
+  53:Src/hw_spi.c  ****   * OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF 
+  54:Src/hw_spi.c  ****   * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING 
+  55:Src/hw_spi.c  ****   * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+  56:Src/hw_spi.c  ****   * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+  57:Src/hw_spi.c  ****   *
+  58:Src/hw_spi.c  ****   ******************************************************************************
+  59:Src/hw_spi.c  ****   */
+  60:Src/hw_spi.c  **** 
+  61:Src/hw_spi.c  **** /* Includes ------------------------------------------------------------------*/
+  62:Src/hw_spi.c  **** #include "hw.h"
+  63:Src/hw_spi.c  **** #include "utilities.h"
+  64:Src/hw_spi.c  **** 
+  65:Src/hw_spi.c  **** 
+  66:Src/hw_spi.c  **** /* Private typedef -----------------------------------------------------------*/
+  67:Src/hw_spi.c  **** /* Private define ------------------------------------------------------------*/
+  68:Src/hw_spi.c  **** /* Private macro -------------------------------------------------------------*/
+  69:Src/hw_spi.c  **** /* Private variables ---------------------------------------------------------*/
+  70:Src/hw_spi.c  **** static SPI_HandleTypeDef hspi;
+  71:Src/hw_spi.c  **** /* Private function prototypes -----------------------------------------------*/
+  72:Src/hw_spi.c  **** 
+  73:Src/hw_spi.c  **** /*!
+  74:Src/hw_spi.c  ****  * @brief Calculates Spi Divisor based on Spi Frequency and Mcu Frequency
+  75:Src/hw_spi.c  ****  *
+  76:Src/hw_spi.c  ****  * @param [IN] Spi Frequency
+  77:Src/hw_spi.c  ****  * @retval Spi divisor
+  78:Src/hw_spi.c  ****  */
+  79:Src/hw_spi.c  **** static uint32_t SpiFrequency( uint32_t hz );
+  80:Src/hw_spi.c  **** 
+  81:Src/hw_spi.c  **** /* Exported functions ---------------------------------------------------------*/
+  82:Src/hw_spi.c  **** 
+  83:Src/hw_spi.c  **** /*!
+  84:Src/hw_spi.c  ****  * @brief Initializes the SPI object and MCU peripheral
+  85:Src/hw_spi.c  ****  *
+  86:Src/hw_spi.c  ****  * @param [IN] none
+  87:Src/hw_spi.c  ****  */
+  88:Src/hw_spi.c  **** void HW_SPI_Init( void )
+  89:Src/hw_spi.c  **** {
+  90:Src/hw_spi.c  ****   GPIO_InitTypeDef initStruct={0};
+  91:Src/hw_spi.c  ****   /*##-1- Configure the SPI peripheral */
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccpm9amd.s 			page 3
+
+
+  92:Src/hw_spi.c  ****   /* Set the SPI parameters */
+  93:Src/hw_spi.c  **** 
+  94:Src/hw_spi.c  ****   hspi.Instance = SPI1;
+  95:Src/hw_spi.c  **** 
+  96:Src/hw_spi.c  ****   hspi.Init.BaudRatePrescaler = SpiFrequency( 10000000 );
+  97:Src/hw_spi.c  ****   hspi.Init.Direction      = SPI_DIRECTION_2LINES;
+  98:Src/hw_spi.c  ****   hspi.Init.Mode           = SPI_MODE_MASTER;
+  99:Src/hw_spi.c  ****   hspi.Init.CLKPolarity    = SPI_POLARITY_LOW;
+ 100:Src/hw_spi.c  ****   hspi.Init.CLKPhase       = SPI_PHASE_1EDGE;
+ 101:Src/hw_spi.c  ****   hspi.Init.DataSize       = SPI_DATASIZE_8BIT;
+ 102:Src/hw_spi.c  ****   hspi.Init.CRCCalculation = SPI_CRCCALCULATION_DISABLE;  
+ 103:Src/hw_spi.c  ****   hspi.Init.FirstBit       = SPI_FIRSTBIT_MSB;
+ 104:Src/hw_spi.c  ****   hspi.Init.NSS            = SPI_NSS_SOFT;
+ 105:Src/hw_spi.c  ****   hspi.Init.TIMode         = SPI_TIMODE_DISABLE;
+ 106:Src/hw_spi.c  **** 
+ 107:Src/hw_spi.c  **** 
+ 108:Src/hw_spi.c  ****   SPI_CLK_ENABLE(); 
+ 109:Src/hw_spi.c  **** 
+ 110:Src/hw_spi.c  **** 
+ 111:Src/hw_spi.c  ****   if(HAL_SPI_Init( &hspi) != HAL_OK)
+ 112:Src/hw_spi.c  ****   {
+ 113:Src/hw_spi.c  ****     /* Initialization Error */
+ 114:Src/hw_spi.c  ****      Error_Handler();
+ 115:Src/hw_spi.c  ****   }
+ 116:Src/hw_spi.c  **** 
+ 117:Src/hw_spi.c  ****   /*##-2- Configure the SPI GPIOs */
+ 118:Src/hw_spi.c  ****   initStruct.Mode =GPIO_MODE_AF_PP;
+ 119:Src/hw_spi.c  ****   initStruct.Pull = GPIO_PULLDOWN;
+ 120:Src/hw_spi.c  ****   initStruct.Speed = GPIO_SPEED_HIGH;
+ 121:Src/hw_spi.c  ****   initStruct.Alternate= SPI1_AF ;
+ 122:Src/hw_spi.c  **** 
+ 123:Src/hw_spi.c  ****   HW_GPIO_Init( RADIO_SCLK_PORT, RADIO_SCLK_PIN, &initStruct); 
+ 124:Src/hw_spi.c  ****   HW_GPIO_Init( RADIO_MISO_PORT, RADIO_MISO_PIN, &initStruct); 
+ 125:Src/hw_spi.c  ****   HW_GPIO_Init( RADIO_MOSI_PORT, RADIO_MOSI_PIN, &initStruct); 
+ 126:Src/hw_spi.c  **** 
+ 127:Src/hw_spi.c  ****   initStruct.Mode =GPIO_MODE_OUTPUT_PP;
+ 128:Src/hw_spi.c  ****   initStruct.Pull = GPIO_PULLUP;
+ 129:Src/hw_spi.c  **** 
+ 130:Src/hw_spi.c  ****   HW_GPIO_Init(  RADIO_NSS_PORT, RADIO_NSS_PIN, &initStruct );
+ 131:Src/hw_spi.c  **** 
+ 132:Src/hw_spi.c  ****   HW_GPIO_Write ( RADIO_NSS_PORT, RADIO_NSS_PIN, 1 );
+ 133:Src/hw_spi.c  **** }
+ 134:Src/hw_spi.c  **** 
+ 135:Src/hw_spi.c  **** /*!
+ 136:Src/hw_spi.c  ****  * @brief De-initializes the SPI object and MCU peripheral
+ 137:Src/hw_spi.c  ****  *
+ 138:Src/hw_spi.c  ****  * @param [IN] none
+ 139:Src/hw_spi.c  ****  */
+ 140:Src/hw_spi.c  **** void HW_SPI_DeInit( void )
+ 141:Src/hw_spi.c  **** {
+ 142:Src/hw_spi.c  ****   GPIO_InitTypeDef initStruct={0};
+ 143:Src/hw_spi.c  **** 
+ 144:Src/hw_spi.c  ****   HAL_SPI_DeInit( &hspi);
+ 145:Src/hw_spi.c  **** 
+ 146:Src/hw_spi.c  ****     /*##-1- Reset peripherals ####*/
+ 147:Src/hw_spi.c  ****   __HAL_RCC_SPI1_FORCE_RESET();
+ 148:Src/hw_spi.c  ****   __HAL_RCC_SPI1_RELEASE_RESET();
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccpm9amd.s 			page 4
+
+
+ 149:Src/hw_spi.c  ****     
+ 150:Src/hw_spi.c  ****   initStruct.Mode =GPIO_MODE_OUTPUT_PP;
+ 151:Src/hw_spi.c  **** 
+ 152:Src/hw_spi.c  ****   initStruct.Pull =GPIO_NOPULL  ; 
+ 153:Src/hw_spi.c  ****   HW_GPIO_Init ( RADIO_MOSI_PORT, RADIO_MOSI_PIN, &initStruct ); 
+ 154:Src/hw_spi.c  ****   HW_GPIO_Write( RADIO_MOSI_PORT, RADIO_MOSI_PIN, 0 );
+ 155:Src/hw_spi.c  ****   
+ 156:Src/hw_spi.c  ****   initStruct.Pull =GPIO_PULLDOWN; 
+ 157:Src/hw_spi.c  ****   HW_GPIO_Init ( RADIO_MISO_PORT, RADIO_MISO_PIN, &initStruct ); 
+ 158:Src/hw_spi.c  ****   HW_GPIO_Write( RADIO_MISO_PORT, RADIO_MISO_PIN, 0 );
+ 159:Src/hw_spi.c  ****   
+ 160:Src/hw_spi.c  ****   initStruct.Pull =GPIO_NOPULL  ; 
+ 161:Src/hw_spi.c  ****   HW_GPIO_Init ( RADIO_SCLK_PORT, RADIO_SCLK_PIN, &initStruct ); 
+ 162:Src/hw_spi.c  ****   HW_GPIO_Write(  RADIO_SCLK_PORT, RADIO_SCLK_PIN, 0 );
+ 163:Src/hw_spi.c  ****   
+ 164:Src/hw_spi.c  ****   initStruct.Pull =GPIO_PULLUP  ; 
+ 165:Src/hw_spi.c  ****   HW_GPIO_Init ( RADIO_NSS_PORT, RADIO_NSS_PIN , &initStruct ); 
+ 166:Src/hw_spi.c  ****   HW_GPIO_Write( RADIO_NSS_PORT, RADIO_NSS_PIN , 1 );
+ 167:Src/hw_spi.c  **** }
+ 168:Src/hw_spi.c  **** 
+ 169:Src/hw_spi.c  **** /*!
+ 170:Src/hw_spi.c  ****  * @brief Sends outData and receives inData
+ 171:Src/hw_spi.c  ****  *
+ 172:Src/hw_spi.c  ****  * @param [IN] outData Byte to be sent
+ 173:Src/hw_spi.c  ****  * @retval inData      Received byte.
+ 174:Src/hw_spi.c  ****  */
+ 175:Src/hw_spi.c  **** uint16_t HW_SPI_InOut( uint16_t txData )
+ 176:Src/hw_spi.c  **** {
+ 177:Src/hw_spi.c  ****   uint16_t rxData ;
+ 178:Src/hw_spi.c  **** 
+ 179:Src/hw_spi.c  ****   HAL_SPI_TransmitReceive( &hspi, ( uint8_t * ) &txData, ( uint8_t* ) &rxData, 1, HAL_MAX_DELAY);	
+ 180:Src/hw_spi.c  **** 
+ 181:Src/hw_spi.c  ****   return rxData;
+ 182:Src/hw_spi.c  **** }
+ 183:Src/hw_spi.c  **** 
+ 184:Src/hw_spi.c  **** /* Private functions ---------------------------------------------------------*/
+ 185:Src/hw_spi.c  **** 
+ 186:Src/hw_spi.c  **** static uint32_t SpiFrequency( uint32_t hz )
+ 187:Src/hw_spi.c  **** {
+  25              		.loc 1 187 0
+  26              		.cfi_startproc
+  27              		@ args = 0, pretend = 0, frame = 0
+  28              		@ frame_needed = 0, uses_anonymous_args = 0
+  29              		@ link register save eliminated.
+  30              	.LVL0:
+ 188:Src/hw_spi.c  ****   uint32_t divisor = 0;
+ 189:Src/hw_spi.c  ****   uint32_t SysClkTmp = SystemCoreClock;
+  31              		.loc 1 189 0
+  32 0000 0D4B     		ldr	r3, .L12
+  33 0002 1A68     		ldr	r2, [r3]
+  34              	.LVL1:
+ 188:Src/hw_spi.c  ****   uint32_t divisor = 0;
+  35              		.loc 1 188 0
+  36 0004 0023     		movs	r3, #0
+  37              	.LVL2:
+  38              	.L2:
+ 190:Src/hw_spi.c  ****   uint32_t baudRate;
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccpm9amd.s 			page 5
+
+
+ 191:Src/hw_spi.c  ****   
+ 192:Src/hw_spi.c  ****   while( SysClkTmp > hz)
+  39              		.loc 1 192 0
+  40 0006 8242     		cmp	r2, r0
+  41 0008 03D9     		bls	.L3
+ 193:Src/hw_spi.c  ****   {
+ 194:Src/hw_spi.c  ****     divisor++;
+  42              		.loc 1 194 0
+  43 000a 0133     		adds	r3, r3, #1
+  44              	.LVL3:
+ 195:Src/hw_spi.c  ****     SysClkTmp= ( SysClkTmp >> 1);
+  45              		.loc 1 195 0
+  46 000c 5208     		lsrs	r2, r2, #1
+  47              	.LVL4:
+ 196:Src/hw_spi.c  ****     
+ 197:Src/hw_spi.c  ****     if (divisor >= 7)
+  48              		.loc 1 197 0
+  49 000e 062B     		cmp	r3, #6
+  50 0010 F9D9     		bls	.L2
+  51              	.L3:
+ 198:Src/hw_spi.c  ****       break;
+ 199:Src/hw_spi.c  ****   }
+ 200:Src/hw_spi.c  ****   
+ 201:Src/hw_spi.c  ****   baudRate =((( divisor & 0x4 ) == 0 )? 0x0 : SPI_CR1_BR_2  )| 
+  52              		.loc 1 201 0
+  53 0012 5A07     		lsls	r2, r3, #29
+  54 0014 09D4     		bmi	.L8
+  55              	.LVL5:
+  56 0016 0020     		movs	r0, #0
+  57              	.LVL6:
+  58              	.L5:
+ 202:Src/hw_spi.c  ****             ((( divisor & 0x2 ) == 0 )? 0x0 : SPI_CR1_BR_1  )| 
+  59              		.loc 1 202 0
+  60 0018 9A07     		lsls	r2, r3, #30
+  61 001a 08D4     		bmi	.L9
+  62 001c 0022     		movs	r2, #0
+  63              	.L6:
+ 201:Src/hw_spi.c  ****             ((( divisor & 0x2 ) == 0 )? 0x0 : SPI_CR1_BR_1  )| 
+  64              		.loc 1 201 0
+  65 001e 1043     		orrs	r0, r2
+ 203:Src/hw_spi.c  ****             ((( divisor & 0x1 ) == 0 )? 0x0 : SPI_CR1_BR_0  );
+  66              		.loc 1 203 0
+  67 0020 DB07     		lsls	r3, r3, #31
+  68 0022 06D5     		bpl	.L11
+  69              	.LVL7:
+  70 0024 0823     		movs	r3, #8
+  71              	.L7:
+ 201:Src/hw_spi.c  ****             ((( divisor & 0x2 ) == 0 )? 0x0 : SPI_CR1_BR_1  )| 
+  72              		.loc 1 201 0
+  73 0026 1843     		orrs	r0, r3
+  74              	.LVL8:
+ 204:Src/hw_spi.c  ****   
+ 205:Src/hw_spi.c  ****   return baudRate;
+ 206:Src/hw_spi.c  **** }
+  75              		.loc 1 206 0
+  76              		@ sp needed
+  77 0028 7047     		bx	lr
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccpm9amd.s 			page 6
+
+
+  78              	.LVL9:
+  79              	.L8:
+ 201:Src/hw_spi.c  ****             ((( divisor & 0x2 ) == 0 )? 0x0 : SPI_CR1_BR_1  )| 
+  80              		.loc 1 201 0
+  81 002a 2020     		movs	r0, #32
+  82              	.LVL10:
+  83 002c F4E7     		b	.L5
+  84              	.L9:
+ 202:Src/hw_spi.c  ****             ((( divisor & 0x1 ) == 0 )? 0x0 : SPI_CR1_BR_0  );
+  85              		.loc 1 202 0
+  86 002e 1022     		movs	r2, #16
+  87 0030 F5E7     		b	.L6
+  88              	.LVL11:
+  89              	.L11:
+ 203:Src/hw_spi.c  ****   
+  90              		.loc 1 203 0
+  91 0032 0023     		movs	r3, #0
+  92 0034 F7E7     		b	.L7
+  93              	.L13:
+  94 0036 C046     		.align	2
+  95              	.L12:
+  96 0038 00000000 		.word	SystemCoreClock
+  97              		.cfi_endproc
+  98              	.LFE43:
+ 100              		.section	.text.HW_SPI_Init,"ax",%progbits
+ 101              		.align	1
+ 102              		.global	HW_SPI_Init
+ 103              		.syntax unified
+ 104              		.code	16
+ 105              		.thumb_func
+ 106              		.fpu softvfp
+ 108              	HW_SPI_Init:
+ 109              	.LFB40:
+  89:Src/hw_spi.c  ****   GPIO_InitTypeDef initStruct={0};
+ 110              		.loc 1 89 0
+ 111              		.cfi_startproc
+ 112              		@ args = 0, pretend = 0, frame = 24
+ 113              		@ frame_needed = 0, uses_anonymous_args = 0
+ 114 0000 30B5     		push	{r4, r5, lr}
+ 115              	.LCFI0:
+ 116              		.cfi_def_cfa_offset 12
+ 117              		.cfi_offset 4, -12
+ 118              		.cfi_offset 5, -8
+ 119              		.cfi_offset 14, -4
+ 120 0002 87B0     		sub	sp, sp, #28
+ 121              	.LCFI1:
+ 122              		.cfi_def_cfa_offset 40
+  90:Src/hw_spi.c  ****   /*##-1- Configure the SPI peripheral */
+ 123              		.loc 1 90 0
+ 124 0004 1422     		movs	r2, #20
+ 125 0006 0021     		movs	r1, #0
+ 126 0008 01A8     		add	r0, sp, #4
+ 127 000a FFF7FEFF 		bl	memset
+ 128              	.LVL12:
+  94:Src/hw_spi.c  **** 
+ 129              		.loc 1 94 0
+ 130 000e 254C     		ldr	r4, .L17
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccpm9amd.s 			page 7
+
+
+ 131 0010 254B     		ldr	r3, .L17+4
+ 132 0012 2360     		str	r3, [r4]
+  96:Src/hw_spi.c  ****   hspi.Init.Direction      = SPI_DIRECTION_2LINES;
+ 133              		.loc 1 96 0
+ 134 0014 2548     		ldr	r0, .L17+8
+ 135 0016 FFF7FEFF 		bl	SpiFrequency
+ 136              	.LVL13:
+ 137 001a E061     		str	r0, [r4, #28]
+  97:Src/hw_spi.c  ****   hspi.Init.Mode           = SPI_MODE_MASTER;
+ 138              		.loc 1 97 0
+ 139 001c 0023     		movs	r3, #0
+ 140 001e A360     		str	r3, [r4, #8]
+  98:Src/hw_spi.c  ****   hspi.Init.CLKPolarity    = SPI_POLARITY_LOW;
+ 141              		.loc 1 98 0
+ 142 0020 8222     		movs	r2, #130
+ 143 0022 5200     		lsls	r2, r2, #1
+ 144 0024 6260     		str	r2, [r4, #4]
+  99:Src/hw_spi.c  ****   hspi.Init.CLKPhase       = SPI_PHASE_1EDGE;
+ 145              		.loc 1 99 0
+ 146 0026 2361     		str	r3, [r4, #16]
+ 100:Src/hw_spi.c  ****   hspi.Init.DataSize       = SPI_DATASIZE_8BIT;
+ 147              		.loc 1 100 0
+ 148 0028 6361     		str	r3, [r4, #20]
+ 101:Src/hw_spi.c  ****   hspi.Init.CRCCalculation = SPI_CRCCALCULATION_DISABLE;  
+ 149              		.loc 1 101 0
+ 150 002a E360     		str	r3, [r4, #12]
+ 102:Src/hw_spi.c  ****   hspi.Init.FirstBit       = SPI_FIRSTBIT_MSB;
+ 151              		.loc 1 102 0
+ 152 002c A362     		str	r3, [r4, #40]
+ 103:Src/hw_spi.c  ****   hspi.Init.NSS            = SPI_NSS_SOFT;
+ 153              		.loc 1 103 0
+ 154 002e 2362     		str	r3, [r4, #32]
+ 104:Src/hw_spi.c  ****   hspi.Init.TIMode         = SPI_TIMODE_DISABLE;
+ 155              		.loc 1 104 0
+ 156 0030 FC32     		adds	r2, r2, #252
+ 157 0032 A261     		str	r2, [r4, #24]
+ 105:Src/hw_spi.c  **** 
+ 158              		.loc 1 105 0
+ 159 0034 6362     		str	r3, [r4, #36]
+ 108:Src/hw_spi.c  **** 
+ 160              		.loc 1 108 0
+ 161 0036 1E4A     		ldr	r2, .L17+12
+ 162 0038 516B     		ldr	r1, [r2, #52]
+ 163 003a 8023     		movs	r3, #128
+ 164 003c 5B01     		lsls	r3, r3, #5
+ 165 003e 0B43     		orrs	r3, r1
+ 166 0040 5363     		str	r3, [r2, #52]
+ 111:Src/hw_spi.c  ****   {
+ 167              		.loc 1 111 0
+ 168 0042 2000     		movs	r0, r4
+ 169 0044 FFF7FEFF 		bl	HAL_SPI_Init
+ 170              	.LVL14:
+ 171 0048 0028     		cmp	r0, #0
+ 172 004a 28D1     		bne	.L16
+ 173              	.L15:
+ 118:Src/hw_spi.c  ****   initStruct.Pull = GPIO_PULLDOWN;
+ 174              		.loc 1 118 0
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccpm9amd.s 			page 8
+
+
+ 175 004c 0223     		movs	r3, #2
+ 176 004e 0293     		str	r3, [sp, #8]
+ 119:Src/hw_spi.c  ****   initStruct.Speed = GPIO_SPEED_HIGH;
+ 177              		.loc 1 119 0
+ 178 0050 0393     		str	r3, [sp, #12]
+ 120:Src/hw_spi.c  ****   initStruct.Alternate= SPI1_AF ;
+ 179              		.loc 1 120 0
+ 180 0052 0133     		adds	r3, r3, #1
+ 181 0054 0493     		str	r3, [sp, #16]
+ 121:Src/hw_spi.c  **** 
+ 182              		.loc 1 121 0
+ 183 0056 0023     		movs	r3, #0
+ 184 0058 0593     		str	r3, [sp, #20]
+ 123:Src/hw_spi.c  ****   HW_GPIO_Init( RADIO_MISO_PORT, RADIO_MISO_PIN, &initStruct); 
+ 185              		.loc 1 123 0
+ 186 005a 01AA     		add	r2, sp, #4
+ 187 005c 0821     		movs	r1, #8
+ 188 005e 1548     		ldr	r0, .L17+16
+ 189 0060 FFF7FEFF 		bl	HW_GPIO_Init
+ 190              	.LVL15:
+ 124:Src/hw_spi.c  ****   HW_GPIO_Init( RADIO_MOSI_PORT, RADIO_MOSI_PIN, &initStruct); 
+ 191              		.loc 1 124 0
+ 192 0064 A024     		movs	r4, #160
+ 193 0066 E405     		lsls	r4, r4, #23
+ 194 0068 01AA     		add	r2, sp, #4
+ 195 006a 4021     		movs	r1, #64
+ 196 006c 2000     		movs	r0, r4
+ 197 006e FFF7FEFF 		bl	HW_GPIO_Init
+ 198              	.LVL16:
+ 125:Src/hw_spi.c  **** 
+ 199              		.loc 1 125 0
+ 200 0072 01AA     		add	r2, sp, #4
+ 201 0074 8021     		movs	r1, #128
+ 202 0076 2000     		movs	r0, r4
+ 203 0078 FFF7FEFF 		bl	HW_GPIO_Init
+ 204              	.LVL17:
+ 127:Src/hw_spi.c  ****   initStruct.Pull = GPIO_PULLUP;
+ 205              		.loc 1 127 0
+ 206 007c 0123     		movs	r3, #1
+ 207 007e 0293     		str	r3, [sp, #8]
+ 128:Src/hw_spi.c  **** 
+ 208              		.loc 1 128 0
+ 209 0080 0393     		str	r3, [sp, #12]
+ 130:Src/hw_spi.c  **** 
+ 210              		.loc 1 130 0
+ 211 0082 8025     		movs	r5, #128
+ 212 0084 2D02     		lsls	r5, r5, #8
+ 213 0086 01AA     		add	r2, sp, #4
+ 214 0088 2900     		movs	r1, r5
+ 215 008a 2000     		movs	r0, r4
+ 216 008c FFF7FEFF 		bl	HW_GPIO_Init
+ 217              	.LVL18:
+ 132:Src/hw_spi.c  **** }
+ 218              		.loc 1 132 0
+ 219 0090 0122     		movs	r2, #1
+ 220 0092 2900     		movs	r1, r5
+ 221 0094 2000     		movs	r0, r4
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccpm9amd.s 			page 9
+
+
+ 222 0096 FFF7FEFF 		bl	HW_GPIO_Write
+ 223              	.LVL19:
+ 133:Src/hw_spi.c  **** 
+ 224              		.loc 1 133 0
+ 225 009a 07B0     		add	sp, sp, #28
+ 226              		@ sp needed
+ 227 009c 30BD     		pop	{r4, r5, pc}
+ 228              	.L16:
+ 114:Src/hw_spi.c  ****   }
+ 229              		.loc 1 114 0
+ 230 009e FFF7FEFF 		bl	Error_Handler
+ 231              	.LVL20:
+ 232 00a2 D3E7     		b	.L15
+ 233              	.L18:
+ 234              		.align	2
+ 235              	.L17:
+ 236 00a4 00000000 		.word	.LANCHOR0
+ 237 00a8 00300140 		.word	1073819648
+ 238 00ac 80969800 		.word	10000000
+ 239 00b0 00100240 		.word	1073876992
+ 240 00b4 00040050 		.word	1342178304
+ 241              		.cfi_endproc
+ 242              	.LFE40:
+ 244              		.section	.text.HW_SPI_DeInit,"ax",%progbits
+ 245              		.align	1
+ 246              		.global	HW_SPI_DeInit
+ 247              		.syntax unified
+ 248              		.code	16
+ 249              		.thumb_func
+ 250              		.fpu softvfp
+ 252              	HW_SPI_DeInit:
+ 253              	.LFB41:
+ 141:Src/hw_spi.c  ****   GPIO_InitTypeDef initStruct={0};
+ 254              		.loc 1 141 0
+ 255              		.cfi_startproc
+ 256              		@ args = 0, pretend = 0, frame = 24
+ 257              		@ frame_needed = 0, uses_anonymous_args = 0
+ 258 0000 70B5     		push	{r4, r5, r6, lr}
+ 259              	.LCFI2:
+ 260              		.cfi_def_cfa_offset 16
+ 261              		.cfi_offset 4, -16
+ 262              		.cfi_offset 5, -12
+ 263              		.cfi_offset 6, -8
+ 264              		.cfi_offset 14, -4
+ 265 0002 86B0     		sub	sp, sp, #24
+ 266              	.LCFI3:
+ 267              		.cfi_def_cfa_offset 40
+ 142:Src/hw_spi.c  **** 
+ 268              		.loc 1 142 0
+ 269 0004 1422     		movs	r2, #20
+ 270 0006 0021     		movs	r1, #0
+ 271 0008 01A8     		add	r0, sp, #4
+ 272 000a FFF7FEFF 		bl	memset
+ 273              	.LVL21:
+ 144:Src/hw_spi.c  **** 
+ 274              		.loc 1 144 0
+ 275 000e 2248     		ldr	r0, .L20
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccpm9amd.s 			page 10
+
+
+ 276 0010 FFF7FEFF 		bl	HAL_SPI_DeInit
+ 277              	.LVL22:
+ 147:Src/hw_spi.c  ****   __HAL_RCC_SPI1_RELEASE_RESET();
+ 278              		.loc 1 147 0
+ 279 0014 214B     		ldr	r3, .L20+4
+ 280 0016 596A     		ldr	r1, [r3, #36]
+ 281 0018 8022     		movs	r2, #128
+ 282 001a 5201     		lsls	r2, r2, #5
+ 283 001c 0A43     		orrs	r2, r1
+ 284 001e 5A62     		str	r2, [r3, #36]
+ 148:Src/hw_spi.c  ****     
+ 285              		.loc 1 148 0
+ 286 0020 5A6A     		ldr	r2, [r3, #36]
+ 287 0022 1F49     		ldr	r1, .L20+8
+ 288 0024 0A40     		ands	r2, r1
+ 289 0026 5A62     		str	r2, [r3, #36]
+ 150:Src/hw_spi.c  **** 
+ 290              		.loc 1 150 0
+ 291 0028 0125     		movs	r5, #1
+ 292 002a 0295     		str	r5, [sp, #8]
+ 152:Src/hw_spi.c  ****   HW_GPIO_Init ( RADIO_MOSI_PORT, RADIO_MOSI_PIN, &initStruct ); 
+ 293              		.loc 1 152 0
+ 294 002c 0026     		movs	r6, #0
+ 295 002e 0396     		str	r6, [sp, #12]
+ 153:Src/hw_spi.c  ****   HW_GPIO_Write( RADIO_MOSI_PORT, RADIO_MOSI_PIN, 0 );
+ 296              		.loc 1 153 0
+ 297 0030 A024     		movs	r4, #160
+ 298 0032 E405     		lsls	r4, r4, #23
+ 299 0034 01AA     		add	r2, sp, #4
+ 300 0036 8021     		movs	r1, #128
+ 301 0038 2000     		movs	r0, r4
+ 302 003a FFF7FEFF 		bl	HW_GPIO_Init
+ 303              	.LVL23:
+ 154:Src/hw_spi.c  ****   
+ 304              		.loc 1 154 0
+ 305 003e 0022     		movs	r2, #0
+ 306 0040 8021     		movs	r1, #128
+ 307 0042 2000     		movs	r0, r4
+ 308 0044 FFF7FEFF 		bl	HW_GPIO_Write
+ 309              	.LVL24:
+ 156:Src/hw_spi.c  ****   HW_GPIO_Init ( RADIO_MISO_PORT, RADIO_MISO_PIN, &initStruct ); 
+ 310              		.loc 1 156 0
+ 311 0048 0223     		movs	r3, #2
+ 312 004a 0393     		str	r3, [sp, #12]
+ 157:Src/hw_spi.c  ****   HW_GPIO_Write( RADIO_MISO_PORT, RADIO_MISO_PIN, 0 );
+ 313              		.loc 1 157 0
+ 314 004c 01AA     		add	r2, sp, #4
+ 315 004e 4021     		movs	r1, #64
+ 316 0050 2000     		movs	r0, r4
+ 317 0052 FFF7FEFF 		bl	HW_GPIO_Init
+ 318              	.LVL25:
+ 158:Src/hw_spi.c  ****   
+ 319              		.loc 1 158 0
+ 320 0056 0022     		movs	r2, #0
+ 321 0058 4021     		movs	r1, #64
+ 322 005a 2000     		movs	r0, r4
+ 323 005c FFF7FEFF 		bl	HW_GPIO_Write
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccpm9amd.s 			page 11
+
+
+ 324              	.LVL26:
+ 160:Src/hw_spi.c  ****   HW_GPIO_Init ( RADIO_SCLK_PORT, RADIO_SCLK_PIN, &initStruct ); 
+ 325              		.loc 1 160 0
+ 326 0060 0396     		str	r6, [sp, #12]
+ 161:Src/hw_spi.c  ****   HW_GPIO_Write(  RADIO_SCLK_PORT, RADIO_SCLK_PIN, 0 );
+ 327              		.loc 1 161 0
+ 328 0062 104E     		ldr	r6, .L20+12
+ 329 0064 01AA     		add	r2, sp, #4
+ 330 0066 0821     		movs	r1, #8
+ 331 0068 3000     		movs	r0, r6
+ 332 006a FFF7FEFF 		bl	HW_GPIO_Init
+ 333              	.LVL27:
+ 162:Src/hw_spi.c  ****   
+ 334              		.loc 1 162 0
+ 335 006e 0022     		movs	r2, #0
+ 336 0070 0821     		movs	r1, #8
+ 337 0072 3000     		movs	r0, r6
+ 338 0074 FFF7FEFF 		bl	HW_GPIO_Write
+ 339              	.LVL28:
+ 164:Src/hw_spi.c  ****   HW_GPIO_Init ( RADIO_NSS_PORT, RADIO_NSS_PIN , &initStruct ); 
+ 340              		.loc 1 164 0
+ 341 0078 0395     		str	r5, [sp, #12]
+ 165:Src/hw_spi.c  ****   HW_GPIO_Write( RADIO_NSS_PORT, RADIO_NSS_PIN , 1 );
+ 342              		.loc 1 165 0
+ 343 007a 8025     		movs	r5, #128
+ 344 007c 2D02     		lsls	r5, r5, #8
+ 345 007e 01AA     		add	r2, sp, #4
+ 346 0080 2900     		movs	r1, r5
+ 347 0082 2000     		movs	r0, r4
+ 348 0084 FFF7FEFF 		bl	HW_GPIO_Init
+ 349              	.LVL29:
+ 166:Src/hw_spi.c  **** }
+ 350              		.loc 1 166 0
+ 351 0088 0122     		movs	r2, #1
+ 352 008a 2900     		movs	r1, r5
+ 353 008c 2000     		movs	r0, r4
+ 354 008e FFF7FEFF 		bl	HW_GPIO_Write
+ 355              	.LVL30:
+ 167:Src/hw_spi.c  **** 
+ 356              		.loc 1 167 0
+ 357 0092 06B0     		add	sp, sp, #24
+ 358              		@ sp needed
+ 359 0094 70BD     		pop	{r4, r5, r6, pc}
+ 360              	.L21:
+ 361 0096 C046     		.align	2
+ 362              	.L20:
+ 363 0098 00000000 		.word	.LANCHOR0
+ 364 009c 00100240 		.word	1073876992
+ 365 00a0 FFEFFFFF 		.word	-4097
+ 366 00a4 00040050 		.word	1342178304
+ 367              		.cfi_endproc
+ 368              	.LFE41:
+ 370              		.section	.text.HW_SPI_InOut,"ax",%progbits
+ 371              		.align	1
+ 372              		.global	HW_SPI_InOut
+ 373              		.syntax unified
+ 374              		.code	16
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccpm9amd.s 			page 12
+
+
+ 375              		.thumb_func
+ 376              		.fpu softvfp
+ 378              	HW_SPI_InOut:
+ 379              	.LFB42:
+ 176:Src/hw_spi.c  ****   uint16_t rxData ;
+ 380              		.loc 1 176 0
+ 381              		.cfi_startproc
+ 382              		@ args = 0, pretend = 0, frame = 16
+ 383              		@ frame_needed = 0, uses_anonymous_args = 0
+ 384              	.LVL31:
+ 385 0000 10B5     		push	{r4, lr}
+ 386              	.LCFI4:
+ 387              		.cfi_def_cfa_offset 8
+ 388              		.cfi_offset 4, -8
+ 389              		.cfi_offset 14, -4
+ 390 0002 86B0     		sub	sp, sp, #24
+ 391              	.LCFI5:
+ 392              		.cfi_def_cfa_offset 32
+ 393 0004 0E21     		movs	r1, #14
+ 394 0006 6944     		add	r1, r1, sp
+ 395 0008 0880     		strh	r0, [r1]
+ 179:Src/hw_spi.c  **** 
+ 396              		.loc 1 179 0
+ 397 000a 1624     		movs	r4, #22
+ 398 000c 6C44     		add	r4, r4, sp
+ 399 000e 0123     		movs	r3, #1
+ 400 0010 5B42     		rsbs	r3, r3, #0
+ 401 0012 0093     		str	r3, [sp]
+ 402 0014 0233     		adds	r3, r3, #2
+ 403 0016 2200     		movs	r2, r4
+ 404 0018 0248     		ldr	r0, .L23
+ 405              	.LVL32:
+ 406 001a FFF7FEFF 		bl	HAL_SPI_TransmitReceive
+ 407              	.LVL33:
+ 181:Src/hw_spi.c  **** }
+ 408              		.loc 1 181 0
+ 409 001e 2088     		ldrh	r0, [r4]
+ 182:Src/hw_spi.c  **** 
+ 410              		.loc 1 182 0
+ 411 0020 06B0     		add	sp, sp, #24
+ 412              		@ sp needed
+ 413 0022 10BD     		pop	{r4, pc}
+ 414              	.L24:
+ 415              		.align	2
+ 416              	.L23:
+ 417 0024 00000000 		.word	.LANCHOR0
+ 418              		.cfi_endproc
+ 419              	.LFE42:
+ 421              		.bss
+ 422              		.align	2
+ 423              		.set	.LANCHOR0,. + 0
+ 426              	hspi:
+ 427 0000 00000000 		.space	88
+ 427      00000000 
+ 427      00000000 
+ 427      00000000 
+ 427      00000000 
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccpm9amd.s 			page 13
+
+
+ 428              		.text
+ 429              	.Letext0:
+ 430              		.file 2 "/opt/gcc-arm-none-eabi-7-2017-q4-major/arm-none-eabi/include/machine/_default_types.h"
+ 431              		.file 3 "/opt/gcc-arm-none-eabi-7-2017-q4-major/arm-none-eabi/include/sys/lock.h"
+ 432              		.file 4 "/opt/gcc-arm-none-eabi-7-2017-q4-major/arm-none-eabi/include/sys/_types.h"
+ 433              		.file 5 "/opt/gcc-arm-none-eabi-7-2017-q4-major/lib/gcc/arm-none-eabi/7.2.1/include/stddef.h"
+ 434              		.file 6 "/opt/gcc-arm-none-eabi-7-2017-q4-major/arm-none-eabi/include/sys/reent.h"
+ 435              		.file 7 "/opt/gcc-arm-none-eabi-7-2017-q4-major/arm-none-eabi/include/math.h"
+ 436              		.file 8 "/opt/gcc-arm-none-eabi-7-2017-q4-major/arm-none-eabi/include/sys/_stdint.h"
+ 437              		.file 9 "Drivers/CMSIS/Device/ST/STM32L0xx/Include/system_stm32l0xx.h"
+ 438              		.file 10 "Drivers/CMSIS/Device/ST/STM32L0xx/Include/stm32l072xx.h"
+ 439              		.file 11 "Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_hal_def.h"
+ 440              		.file 12 "Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_hal_gpio.h"
+ 441              		.file 13 "Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_hal_dma.h"
+ 442              		.file 14 "Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_hal_spi.h"
+ 443              		.file 15 "/opt/gcc-arm-none-eabi-7-2017-q4-major/arm-none-eabi/include/stdlib.h"
+ 444              		.file 16 "Inc/hw_gpio.h"
+ 445              		.file 17 "Inc/debug.h"
+ 446              		.file 18 "<built-in>"
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccpm9amd.s 			page 14
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 hw_spi.c
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccpm9amd.s:16     .text.SpiFrequency:0000000000000000 $t
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccpm9amd.s:22     .text.SpiFrequency:0000000000000000 SpiFrequency
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccpm9amd.s:96     .text.SpiFrequency:0000000000000038 $d
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccpm9amd.s:101    .text.HW_SPI_Init:0000000000000000 $t
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccpm9amd.s:108    .text.HW_SPI_Init:0000000000000000 HW_SPI_Init
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccpm9amd.s:236    .text.HW_SPI_Init:00000000000000a4 $d
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccpm9amd.s:245    .text.HW_SPI_DeInit:0000000000000000 $t
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccpm9amd.s:252    .text.HW_SPI_DeInit:0000000000000000 HW_SPI_DeInit
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccpm9amd.s:363    .text.HW_SPI_DeInit:0000000000000098 $d
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccpm9amd.s:371    .text.HW_SPI_InOut:0000000000000000 $t
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccpm9amd.s:378    .text.HW_SPI_InOut:0000000000000000 HW_SPI_InOut
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccpm9amd.s:417    .text.HW_SPI_InOut:0000000000000024 $d
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccpm9amd.s:422    .bss:0000000000000000 $d
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccpm9amd.s:426    .bss:0000000000000000 hspi
+
+UNDEFINED SYMBOLS
+SystemCoreClock
+memset
+HAL_SPI_Init
+HW_GPIO_Init
+HW_GPIO_Write
+Error_Handler
+HAL_SPI_DeInit
+HAL_SPI_TransmitReceive

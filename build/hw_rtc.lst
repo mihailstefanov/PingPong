@@ -1,0 +1,2710 @@
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//cciAWxUP.s 			page 1
+
+
+   1              		.cpu cortex-m0plus
+   2              		.eabi_attribute 20, 1
+   3              		.eabi_attribute 21, 1
+   4              		.eabi_attribute 23, 3
+   5              		.eabi_attribute 24, 1
+   6              		.eabi_attribute 25, 1
+   7              		.eabi_attribute 26, 1
+   8              		.eabi_attribute 30, 1
+   9              		.eabi_attribute 34, 0
+  10              		.eabi_attribute 18, 4
+  11              		.file	"hw_rtc.c"
+  12              		.text
+  13              	.Ltext0:
+  14              		.cfi_sections	.debug_frame
+  15              		.section	.text.HW_RTC_SetConfig,"ax",%progbits
+  16              		.align	1
+  17              		.syntax unified
+  18              		.code	16
+  19              		.thumb_func
+  20              		.fpu softvfp
+  22              	HW_RTC_SetConfig:
+  23              	.LFB41:
+  24              		.file 1 "Src/hw_rtc.c"
+   1:Src/hw_rtc.c  **** /*
+   2:Src/hw_rtc.c  ****  / _____)             _              | |
+   3:Src/hw_rtc.c  **** ( (____  _____ ____ _| |_ _____  ____| |__
+   4:Src/hw_rtc.c  ****  \____ \| ___ |    (_   _) ___ |/ ___)  _ \
+   5:Src/hw_rtc.c  ****  _____) ) ____| | | || |_| ____( (___| | | |
+   6:Src/hw_rtc.c  **** (______/|_____)_|_|_| \__)_____)\____)_| |_|
+   7:Src/hw_rtc.c  ****     (C)2013 Semtech
+   8:Src/hw_rtc.c  **** 
+   9:Src/hw_rtc.c  **** Description: MCU RTC timer
+  10:Src/hw_rtc.c  **** 
+  11:Src/hw_rtc.c  **** License: Revised BSD License, see LICENSE.TXT file include in the project
+  12:Src/hw_rtc.c  **** 
+  13:Src/hw_rtc.c  **** Maintainer: Miguel Luis and Gregory Cristian
+  14:Src/hw_rtc.c  **** */
+  15:Src/hw_rtc.c  ****  /*******************************************************************************
+  16:Src/hw_rtc.c  ****   * @file    hw_rtc.c
+  17:Src/hw_rtc.c  ****   * @author  MCD Application Team
+  18:Src/hw_rtc.c  ****   * @version V1.1.5
+  19:Src/hw_rtc.c  ****   * @date    30-March-2018
+  20:Src/hw_rtc.c  ****   * @brief   driver for RTC
+  21:Src/hw_rtc.c  ****   ******************************************************************************
+  22:Src/hw_rtc.c  ****   * @attention
+  23:Src/hw_rtc.c  ****   *
+  24:Src/hw_rtc.c  ****   * <h2><center>&copy; Copyright (c) 2017 STMicroelectronics International N.V. 
+  25:Src/hw_rtc.c  ****   * All rights reserved.</center></h2>
+  26:Src/hw_rtc.c  ****   *
+  27:Src/hw_rtc.c  ****   * Redistribution and use in source and binary forms, with or without 
+  28:Src/hw_rtc.c  ****   * modification, are permitted, provided that the following conditions are met:
+  29:Src/hw_rtc.c  ****   *
+  30:Src/hw_rtc.c  ****   * 1. Redistribution of source code must retain the above copyright notice, 
+  31:Src/hw_rtc.c  ****   *    this list of conditions and the following disclaimer.
+  32:Src/hw_rtc.c  ****   * 2. Redistributions in binary form must reproduce the above copyright notice,
+  33:Src/hw_rtc.c  ****   *    this list of conditions and the following disclaimer in the documentation
+  34:Src/hw_rtc.c  ****   *    and/or other materials provided with the distribution.
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//cciAWxUP.s 			page 2
+
+
+  35:Src/hw_rtc.c  ****   * 3. Neither the name of STMicroelectronics nor the names of other 
+  36:Src/hw_rtc.c  ****   *    contributors to this software may be used to endorse or promote products 
+  37:Src/hw_rtc.c  ****   *    derived from this software without specific written permission.
+  38:Src/hw_rtc.c  ****   * 4. This software, including modifications and/or derivative works of this 
+  39:Src/hw_rtc.c  ****   *    software, must execute solely and exclusively on microcontroller or
+  40:Src/hw_rtc.c  ****   *    microprocessor devices manufactured by or for STMicroelectronics.
+  41:Src/hw_rtc.c  ****   * 5. Redistribution and use of this software other than as permitted under 
+  42:Src/hw_rtc.c  ****   *    this license is void and will automatically terminate your rights under 
+  43:Src/hw_rtc.c  ****   *    this license. 
+  44:Src/hw_rtc.c  ****   *
+  45:Src/hw_rtc.c  ****   * THIS SOFTWARE IS PROVIDED BY STMICROELECTRONICS AND CONTRIBUTORS "AS IS" 
+  46:Src/hw_rtc.c  ****   * AND ANY EXPRESS, IMPLIED OR STATUTORY WARRANTIES, INCLUDING, BUT NOT 
+  47:Src/hw_rtc.c  ****   * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A 
+  48:Src/hw_rtc.c  ****   * PARTICULAR PURPOSE AND NON-INFRINGEMENT OF THIRD PARTY INTELLECTUAL PROPERTY
+  49:Src/hw_rtc.c  ****   * RIGHTS ARE DISCLAIMED TO THE FULLEST EXTENT PERMITTED BY LAW. IN NO EVENT 
+  50:Src/hw_rtc.c  ****   * SHALL STMICROELECTRONICS OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+  51:Src/hw_rtc.c  ****   * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+  52:Src/hw_rtc.c  ****   * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, 
+  53:Src/hw_rtc.c  ****   * OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF 
+  54:Src/hw_rtc.c  ****   * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING 
+  55:Src/hw_rtc.c  ****   * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+  56:Src/hw_rtc.c  ****   * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+  57:Src/hw_rtc.c  ****   *
+  58:Src/hw_rtc.c  ****   ******************************************************************************
+  59:Src/hw_rtc.c  ****   */
+  60:Src/hw_rtc.c  **** 
+  61:Src/hw_rtc.c  **** /* Includes ------------------------------------------------------------------*/
+  62:Src/hw_rtc.c  **** #include "hw.h"
+  63:Src/hw_rtc.c  **** #include "low_power_manager.h"
+  64:Src/hw_rtc.c  **** 
+  65:Src/hw_rtc.c  **** /* Private typedef -----------------------------------------------------------*/
+  66:Src/hw_rtc.c  **** typedef struct
+  67:Src/hw_rtc.c  **** {
+  68:Src/hw_rtc.c  ****   TimerTime_t Rtc_Time; /* Reference time */
+  69:Src/hw_rtc.c  ****   
+  70:Src/hw_rtc.c  ****   RTC_TimeTypeDef RTC_Calndr_Time; /* Reference time in calendar format */
+  71:Src/hw_rtc.c  **** 
+  72:Src/hw_rtc.c  ****   RTC_DateTypeDef RTC_Calndr_Date; /* Reference date in calendar format */
+  73:Src/hw_rtc.c  ****   
+  74:Src/hw_rtc.c  **** } RtcTimerContext_t;
+  75:Src/hw_rtc.c  **** 
+  76:Src/hw_rtc.c  **** /* Private define ------------------------------------------------------------*/
+  77:Src/hw_rtc.c  **** 
+  78:Src/hw_rtc.c  **** /* MCU Wake Up Time */
+  79:Src/hw_rtc.c  **** #define MIN_ALARM_DELAY               3 /* in ticks */
+  80:Src/hw_rtc.c  **** 
+  81:Src/hw_rtc.c  **** /* subsecond number of bits */
+  82:Src/hw_rtc.c  **** #define N_PREDIV_S                 10
+  83:Src/hw_rtc.c  **** 
+  84:Src/hw_rtc.c  **** /* Synchonuous prediv  */
+  85:Src/hw_rtc.c  **** #define PREDIV_S                  ((1<<N_PREDIV_S)-1)
+  86:Src/hw_rtc.c  **** 
+  87:Src/hw_rtc.c  **** /* Asynchonuous prediv   */
+  88:Src/hw_rtc.c  **** #define PREDIV_A                  (1<<(15-N_PREDIV_S))-1
+  89:Src/hw_rtc.c  **** 
+  90:Src/hw_rtc.c  **** /* Sub-second mask definition  */
+  91:Src/hw_rtc.c  **** #if  (N_PREDIV_S == 10)
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//cciAWxUP.s 			page 3
+
+
+  92:Src/hw_rtc.c  **** #define HW_RTC_ALARMSUBSECONDMASK RTC_ALARMSUBSECONDMASK_SS14_10
+  93:Src/hw_rtc.c  **** #else
+  94:Src/hw_rtc.c  **** #error "Please define HW_RTC_ALARMSUBSECONDMASK"
+  95:Src/hw_rtc.c  **** #endif
+  96:Src/hw_rtc.c  **** 
+  97:Src/hw_rtc.c  **** /* RTC Time base in us */
+  98:Src/hw_rtc.c  **** #define USEC_NUMBER               1000000
+  99:Src/hw_rtc.c  **** #define MSEC_NUMBER               (USEC_NUMBER/1000)
+ 100:Src/hw_rtc.c  **** #define RTC_ALARM_TIME_BASE       (USEC_NUMBER>>N_PREDIV_S)
+ 101:Src/hw_rtc.c  **** 
+ 102:Src/hw_rtc.c  **** #define COMMON_FACTOR        3
+ 103:Src/hw_rtc.c  **** #define CONV_NUMER                (MSEC_NUMBER>>COMMON_FACTOR)
+ 104:Src/hw_rtc.c  **** #define CONV_DENOM                (1<<(N_PREDIV_S-COMMON_FACTOR))
+ 105:Src/hw_rtc.c  **** 
+ 106:Src/hw_rtc.c  **** #define  DAYS_IN_LEAP_YEAR (uint32_t) 366
+ 107:Src/hw_rtc.c  **** 
+ 108:Src/hw_rtc.c  **** #define  DAYS_IN_YEAR      (uint32_t) 365
+ 109:Src/hw_rtc.c  **** 
+ 110:Src/hw_rtc.c  **** #define  SECONDS_IN_1DAY   (uint32_t) 86400
+ 111:Src/hw_rtc.c  **** 
+ 112:Src/hw_rtc.c  **** #define  SECONDS_IN_1HOUR   (uint32_t) 3600
+ 113:Src/hw_rtc.c  **** 
+ 114:Src/hw_rtc.c  **** #define  SECONDS_IN_1MINUTE   (uint32_t) 60
+ 115:Src/hw_rtc.c  **** 
+ 116:Src/hw_rtc.c  **** #define  MINUTES_IN_1HOUR    (uint32_t) 60
+ 117:Src/hw_rtc.c  **** 
+ 118:Src/hw_rtc.c  **** #define  HOURS_IN_1DAY      (uint32_t) 24
+ 119:Src/hw_rtc.c  **** 
+ 120:Src/hw_rtc.c  **** #define  DAYS_IN_MONTH_CORRECTION_NORM     ((uint32_t) 0x99AAA0 )
+ 121:Src/hw_rtc.c  **** #define  DAYS_IN_MONTH_CORRECTION_LEAP     ((uint32_t) 0x445550 )
+ 122:Src/hw_rtc.c  **** 
+ 123:Src/hw_rtc.c  **** 
+ 124:Src/hw_rtc.c  **** /* Calculates ceiling(X/N) */
+ 125:Src/hw_rtc.c  **** #define DIVC(X,N)   ( ( (X) + (N) -1 ) / (N) )
+ 126:Src/hw_rtc.c  **** 
+ 127:Src/hw_rtc.c  **** 
+ 128:Src/hw_rtc.c  **** /* Private macro -------------------------------------------------------------*/
+ 129:Src/hw_rtc.c  **** /* Private variables ---------------------------------------------------------*/
+ 130:Src/hw_rtc.c  **** /*!
+ 131:Src/hw_rtc.c  ****  * \brief Indicates if the RTC is already Initalized or not
+ 132:Src/hw_rtc.c  ****  */
+ 133:Src/hw_rtc.c  **** static bool HW_RTC_Initalized = false;
+ 134:Src/hw_rtc.c  **** 
+ 135:Src/hw_rtc.c  **** /*!
+ 136:Src/hw_rtc.c  ****  * \brief compensates MCU wakeup time
+ 137:Src/hw_rtc.c  ****  */
+ 138:Src/hw_rtc.c  ****  
+ 139:Src/hw_rtc.c  **** static bool McuWakeUpTimeInitialized = false;
+ 140:Src/hw_rtc.c  **** 
+ 141:Src/hw_rtc.c  **** /*!
+ 142:Src/hw_rtc.c  ****  * \brief compensates MCU wakeup time
+ 143:Src/hw_rtc.c  ****  */
+ 144:Src/hw_rtc.c  ****  
+ 145:Src/hw_rtc.c  **** static int16_t McuWakeUpTimeCal = 0;
+ 146:Src/hw_rtc.c  **** 
+ 147:Src/hw_rtc.c  **** /*!
+ 148:Src/hw_rtc.c  ****  * Number of days in each month on a normal year
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//cciAWxUP.s 			page 4
+
+
+ 149:Src/hw_rtc.c  ****  */
+ 150:Src/hw_rtc.c  **** static const uint8_t DaysInMonth[] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+ 151:Src/hw_rtc.c  **** 
+ 152:Src/hw_rtc.c  **** /*!
+ 153:Src/hw_rtc.c  ****  * Number of days in each month on a leap year
+ 154:Src/hw_rtc.c  ****  */
+ 155:Src/hw_rtc.c  **** static const uint8_t DaysInMonthLeapYear[] = { 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+ 156:Src/hw_rtc.c  **** 
+ 157:Src/hw_rtc.c  **** static RTC_HandleTypeDef RtcHandle={0};
+ 158:Src/hw_rtc.c  **** 
+ 159:Src/hw_rtc.c  **** static RTC_AlarmTypeDef RTC_AlarmStructure;
+ 160:Src/hw_rtc.c  **** 
+ 161:Src/hw_rtc.c  **** /*!
+ 162:Src/hw_rtc.c  ****  * Keep the value of the RTC timer when the RTC alarm is set
+ 163:Src/hw_rtc.c  ****  * Set with the HW_RTC_SetTimerContext function
+ 164:Src/hw_rtc.c  ****  * Value is kept as a Reference to calculate alarm
+ 165:Src/hw_rtc.c  ****  */
+ 166:Src/hw_rtc.c  **** static RtcTimerContext_t RtcTimerContext;
+ 167:Src/hw_rtc.c  **** 
+ 168:Src/hw_rtc.c  **** /* Private function prototypes -----------------------------------------------*/
+ 169:Src/hw_rtc.c  **** 
+ 170:Src/hw_rtc.c  **** static void HW_RTC_SetConfig( void );
+ 171:Src/hw_rtc.c  **** 
+ 172:Src/hw_rtc.c  **** static void HW_RTC_SetAlarmConfig( void );
+ 173:Src/hw_rtc.c  **** 
+ 174:Src/hw_rtc.c  **** static void HW_RTC_StartWakeUpAlarm( uint32_t timeoutValue );
+ 175:Src/hw_rtc.c  **** 
+ 176:Src/hw_rtc.c  **** static TimerTime_t HW_RTC_GetCalendarValue(  RTC_DateTypeDef* RTC_DateStruct, RTC_TimeTypeDef* RTC_
+ 177:Src/hw_rtc.c  **** 
+ 178:Src/hw_rtc.c  **** /* Exported functions ---------------------------------------------------------*/
+ 179:Src/hw_rtc.c  **** 
+ 180:Src/hw_rtc.c  **** /*!
+ 181:Src/hw_rtc.c  ****  * @brief Initializes the RTC timer
+ 182:Src/hw_rtc.c  ****  * @note The timer is based on the RTC
+ 183:Src/hw_rtc.c  ****  * @param none
+ 184:Src/hw_rtc.c  ****  * @retval none
+ 185:Src/hw_rtc.c  ****  */
+ 186:Src/hw_rtc.c  **** void HW_RTC_Init( void )
+ 187:Src/hw_rtc.c  **** {
+ 188:Src/hw_rtc.c  ****   if( HW_RTC_Initalized == false )
+ 189:Src/hw_rtc.c  ****   {
+ 190:Src/hw_rtc.c  ****     HW_RTC_SetConfig( );
+ 191:Src/hw_rtc.c  ****     HW_RTC_SetAlarmConfig( );
+ 192:Src/hw_rtc.c  ****     HW_RTC_SetTimerContext( );
+ 193:Src/hw_rtc.c  ****     HW_RTC_Initalized = true;
+ 194:Src/hw_rtc.c  ****   }
+ 195:Src/hw_rtc.c  **** }
+ 196:Src/hw_rtc.c  **** 
+ 197:Src/hw_rtc.c  **** /*!
+ 198:Src/hw_rtc.c  ****  * @brief Configures the RTC timer
+ 199:Src/hw_rtc.c  ****  * @note The timer is based on the RTC
+ 200:Src/hw_rtc.c  ****  * @param none
+ 201:Src/hw_rtc.c  ****  * @retval none
+ 202:Src/hw_rtc.c  ****  */
+ 203:Src/hw_rtc.c  **** static void HW_RTC_SetConfig( void )
+ 204:Src/hw_rtc.c  **** {
+  25              		.loc 1 204 0
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//cciAWxUP.s 			page 5
+
+
+  26              		.cfi_startproc
+  27              		@ args = 0, pretend = 0, frame = 24
+  28              		@ frame_needed = 0, uses_anonymous_args = 0
+  29 0000 30B5     		push	{r4, r5, lr}
+  30              	.LCFI0:
+  31              		.cfi_def_cfa_offset 12
+  32              		.cfi_offset 4, -12
+  33              		.cfi_offset 5, -8
+  34              		.cfi_offset 14, -4
+  35 0002 87B0     		sub	sp, sp, #28
+  36              	.LCFI1:
+  37              		.cfi_def_cfa_offset 40
+ 205:Src/hw_rtc.c  ****   RTC_TimeTypeDef RTC_TimeStruct;
+ 206:Src/hw_rtc.c  ****   RTC_DateTypeDef RTC_DateStruct;
+ 207:Src/hw_rtc.c  **** 
+ 208:Src/hw_rtc.c  ****   RtcHandle.Instance = RTC;
+  38              		.loc 1 208 0
+  39 0004 154D     		ldr	r5, .L2
+  40 0006 164B     		ldr	r3, .L2+4
+  41 0008 2B60     		str	r3, [r5]
+ 209:Src/hw_rtc.c  **** 
+ 210:Src/hw_rtc.c  ****   RtcHandle.Init.HourFormat = RTC_HOURFORMAT_24;
+  42              		.loc 1 210 0
+  43 000a 0024     		movs	r4, #0
+  44 000c 6C60     		str	r4, [r5, #4]
+ 211:Src/hw_rtc.c  ****   RtcHandle.Init.AsynchPrediv = PREDIV_A; /* RTC_ASYNCH_PREDIV; */
+  45              		.loc 1 211 0
+  46 000e 1F23     		movs	r3, #31
+  47 0010 AB60     		str	r3, [r5, #8]
+ 212:Src/hw_rtc.c  ****   RtcHandle.Init.SynchPrediv = PREDIV_S; /* RTC_SYNCH_PREDIV; */
+  48              		.loc 1 212 0
+  49 0012 144B     		ldr	r3, .L2+8
+  50 0014 EB60     		str	r3, [r5, #12]
+ 213:Src/hw_rtc.c  ****   RtcHandle.Init.OutPut = RTC_OUTPUT;
+  51              		.loc 1 213 0
+  52 0016 2C61     		str	r4, [r5, #16]
+ 214:Src/hw_rtc.c  ****   RtcHandle.Init.OutPutPolarity = RTC_OUTPUT_POLARITY_HIGH;
+  53              		.loc 1 214 0
+  54 0018 AC61     		str	r4, [r5, #24]
+ 215:Src/hw_rtc.c  ****   RtcHandle.Init.OutPutType = RTC_OUTPUT_TYPE_OPENDRAIN;
+  55              		.loc 1 215 0
+  56 001a EC61     		str	r4, [r5, #28]
+ 216:Src/hw_rtc.c  **** 
+ 217:Src/hw_rtc.c  ****   HAL_RTC_Init( &RtcHandle );
+  57              		.loc 1 217 0
+  58 001c 2800     		movs	r0, r5
+  59 001e FFF7FEFF 		bl	HAL_RTC_Init
+  60              	.LVL0:
+ 218:Src/hw_rtc.c  ****   
+ 219:Src/hw_rtc.c  ****   /*Monday 1st January 2016*/
+ 220:Src/hw_rtc.c  ****   RTC_DateStruct.Year = 0;
+  61              		.loc 1 220 0
+  62 0022 6B46     		mov	r3, sp
+  63 0024 DC70     		strb	r4, [r3, #3]
+ 221:Src/hw_rtc.c  ****   RTC_DateStruct.Month = RTC_MONTH_JANUARY;
+  64              		.loc 1 221 0
+  65 0026 0123     		movs	r3, #1
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//cciAWxUP.s 			page 6
+
+
+  66 0028 6A46     		mov	r2, sp
+  67 002a 5370     		strb	r3, [r2, #1]
+ 222:Src/hw_rtc.c  ****   RTC_DateStruct.Date = 1;
+  68              		.loc 1 222 0
+  69 002c 9370     		strb	r3, [r2, #2]
+ 223:Src/hw_rtc.c  ****   RTC_DateStruct.WeekDay = RTC_WEEKDAY_MONDAY;
+  70              		.loc 1 223 0
+  71 002e 1370     		strb	r3, [r2]
+ 224:Src/hw_rtc.c  ****   HAL_RTC_SetDate(&RtcHandle , &RTC_DateStruct, RTC_FORMAT_BIN);
+  72              		.loc 1 224 0
+  73 0030 0022     		movs	r2, #0
+  74 0032 6946     		mov	r1, sp
+  75 0034 2800     		movs	r0, r5
+  76 0036 FFF7FEFF 		bl	HAL_RTC_SetDate
+  77              	.LVL1:
+ 225:Src/hw_rtc.c  ****   
+ 226:Src/hw_rtc.c  ****   /*at 0:0:0*/
+ 227:Src/hw_rtc.c  ****   RTC_TimeStruct.Hours = 0;
+  78              		.loc 1 227 0
+  79 003a 01A9     		add	r1, sp, #4
+  80 003c 0C70     		strb	r4, [r1]
+ 228:Src/hw_rtc.c  ****   RTC_TimeStruct.Minutes = 0;
+  81              		.loc 1 228 0
+  82 003e 4C70     		strb	r4, [r1, #1]
+ 229:Src/hw_rtc.c  **** 
+ 230:Src/hw_rtc.c  ****   RTC_TimeStruct.Seconds = 0;
+  83              		.loc 1 230 0
+  84 0040 8C70     		strb	r4, [r1, #2]
+ 231:Src/hw_rtc.c  ****   RTC_TimeStruct.TimeFormat = 0;
+  85              		.loc 1 231 0
+  86 0042 CC70     		strb	r4, [r1, #3]
+ 232:Src/hw_rtc.c  ****   RTC_TimeStruct.SubSeconds = 0;
+  87              		.loc 1 232 0
+  88 0044 4C60     		str	r4, [r1, #4]
+ 233:Src/hw_rtc.c  ****   RTC_TimeStruct.StoreOperation = RTC_DAYLIGHTSAVING_NONE;
+  89              		.loc 1 233 0
+  90 0046 0C61     		str	r4, [r1, #16]
+ 234:Src/hw_rtc.c  ****   RTC_TimeStruct.DayLightSaving = RTC_STOREOPERATION_RESET;
+  91              		.loc 1 234 0
+  92 0048 CC60     		str	r4, [r1, #12]
+ 235:Src/hw_rtc.c  ****   
+ 236:Src/hw_rtc.c  ****   HAL_RTC_SetTime(&RtcHandle , &RTC_TimeStruct, RTC_FORMAT_BIN);
+  93              		.loc 1 236 0
+  94 004a 0022     		movs	r2, #0
+  95 004c 2800     		movs	r0, r5
+  96 004e FFF7FEFF 		bl	HAL_RTC_SetTime
+  97              	.LVL2:
+ 237:Src/hw_rtc.c  ****   
+ 238:Src/hw_rtc.c  ****  /*Enable Direct Read of the calendar registers (not through Shadow) */
+ 239:Src/hw_rtc.c  ****   HAL_RTCEx_EnableBypassShadow(&RtcHandle);
+  98              		.loc 1 239 0
+  99 0052 2800     		movs	r0, r5
+ 100 0054 FFF7FEFF 		bl	HAL_RTCEx_EnableBypassShadow
+ 101              	.LVL3:
+ 240:Src/hw_rtc.c  **** }
+ 102              		.loc 1 240 0
+ 103 0058 07B0     		add	sp, sp, #28
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//cciAWxUP.s 			page 7
+
+
+ 104              		@ sp needed
+ 105 005a 30BD     		pop	{r4, r5, pc}
+ 106              	.L3:
+ 107              		.align	2
+ 108              	.L2:
+ 109 005c 00000000 		.word	.LANCHOR0
+ 110 0060 00280040 		.word	1073752064
+ 111 0064 FF030000 		.word	1023
+ 112              		.cfi_endproc
+ 113              	.LFE41:
+ 115              		.section	.text.HW_RTC_SetAlarmConfig,"ax",%progbits
+ 116              		.align	1
+ 117              		.syntax unified
+ 118              		.code	16
+ 119              		.thumb_func
+ 120              		.fpu softvfp
+ 122              	HW_RTC_SetAlarmConfig:
+ 123              	.LFB55:
+ 241:Src/hw_rtc.c  **** 
+ 242:Src/hw_rtc.c  **** /*!
+ 243:Src/hw_rtc.c  ****  * @brief calculates the wake up time between wake up and mcu start
+ 244:Src/hw_rtc.c  ****  * @note resulotion in RTC_ALARM_TIME_BASE in timer ticks
+ 245:Src/hw_rtc.c  ****  * @param none
+ 246:Src/hw_rtc.c  ****  * @retval none
+ 247:Src/hw_rtc.c  ****  */
+ 248:Src/hw_rtc.c  **** void HW_RTC_setMcuWakeUpTime( void )
+ 249:Src/hw_rtc.c  **** {
+ 250:Src/hw_rtc.c  ****   RTC_TimeTypeDef RTC_TimeStruct;
+ 251:Src/hw_rtc.c  ****   RTC_DateTypeDef RTC_DateStruct;
+ 252:Src/hw_rtc.c  ****   
+ 253:Src/hw_rtc.c  ****   TimerTime_t now, hit;
+ 254:Src/hw_rtc.c  ****   int16_t McuWakeUpTime;
+ 255:Src/hw_rtc.c  ****   
+ 256:Src/hw_rtc.c  ****   if ((McuWakeUpTimeInitialized == false) &&
+ 257:Src/hw_rtc.c  ****       ( HAL_NVIC_GetPendingIRQ( RTC_Alarm_IRQn ) == 1))
+ 258:Src/hw_rtc.c  ****   { /* warning: works ok if now is below 30 days
+ 259:Src/hw_rtc.c  ****        it is ok since it's done once at first alarm wake-up*/
+ 260:Src/hw_rtc.c  ****     McuWakeUpTimeInitialized = true;
+ 261:Src/hw_rtc.c  ****     now = HW_RTC_GetCalendarValue( &RTC_DateStruct, &RTC_TimeStruct );
+ 262:Src/hw_rtc.c  **** 
+ 263:Src/hw_rtc.c  ****     DBG_GPIO_SET(GPIOB, GPIO_PIN_13);
+ 264:Src/hw_rtc.c  ****     DBG_GPIO_RST(GPIOB, GPIO_PIN_13);
+ 265:Src/hw_rtc.c  ****     HAL_RTC_GetAlarm(&RtcHandle, &RTC_AlarmStructure, RTC_ALARM_A, RTC_FORMAT_BIN );
+ 266:Src/hw_rtc.c  ****     hit = RTC_AlarmStructure.AlarmTime.Seconds+
+ 267:Src/hw_rtc.c  ****           60*(RTC_AlarmStructure.AlarmTime.Minutes+
+ 268:Src/hw_rtc.c  ****           60*(RTC_AlarmStructure.AlarmTime.Hours+
+ 269:Src/hw_rtc.c  ****           24*(RTC_AlarmStructure.AlarmDateWeekDay)));
+ 270:Src/hw_rtc.c  ****     hit = ( hit << N_PREDIV_S ) + (PREDIV_S - RTC_AlarmStructure.AlarmTime.SubSeconds);
+ 271:Src/hw_rtc.c  ****       
+ 272:Src/hw_rtc.c  ****     McuWakeUpTime = (int16_t) ((now-hit));
+ 273:Src/hw_rtc.c  ****     McuWakeUpTimeCal += McuWakeUpTime;
+ 274:Src/hw_rtc.c  ****     DBG_PRINTF("Cal=%d, %d\n\r",McuWakeUpTimeCal, McuWakeUpTime);
+ 275:Src/hw_rtc.c  ****   }
+ 276:Src/hw_rtc.c  **** }
+ 277:Src/hw_rtc.c  **** 
+ 278:Src/hw_rtc.c  **** int16_t HW_RTC_getMcuWakeUpTime( void )
+ 279:Src/hw_rtc.c  **** {
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//cciAWxUP.s 			page 8
+
+
+ 280:Src/hw_rtc.c  ****   return McuWakeUpTimeCal;
+ 281:Src/hw_rtc.c  **** }
+ 282:Src/hw_rtc.c  **** 
+ 283:Src/hw_rtc.c  **** /*!
+ 284:Src/hw_rtc.c  ****  * @brief returns the wake up time in ticks
+ 285:Src/hw_rtc.c  ****  * @param none
+ 286:Src/hw_rtc.c  ****  * @retval wake up time in ticks
+ 287:Src/hw_rtc.c  ****  */
+ 288:Src/hw_rtc.c  **** uint32_t HW_RTC_GetMinimumTimeout( void )
+ 289:Src/hw_rtc.c  **** {
+ 290:Src/hw_rtc.c  ****   return( MIN_ALARM_DELAY );
+ 291:Src/hw_rtc.c  **** }
+ 292:Src/hw_rtc.c  **** 
+ 293:Src/hw_rtc.c  **** /*!
+ 294:Src/hw_rtc.c  ****  * @brief converts time in ms to time in ticks
+ 295:Src/hw_rtc.c  ****  * @param [IN] time in milliseconds
+ 296:Src/hw_rtc.c  ****  * @retval returns time in timer ticks
+ 297:Src/hw_rtc.c  ****  */
+ 298:Src/hw_rtc.c  **** uint32_t HW_RTC_ms2Tick( TimerTime_t timeMicroSec )
+ 299:Src/hw_rtc.c  **** {
+ 300:Src/hw_rtc.c  **** /*return( ( timeMicroSec / RTC_ALARM_TIME_BASE ) ); */
+ 301:Src/hw_rtc.c  ****   return ( uint32_t) ( ( ((uint64_t)timeMicroSec) * CONV_DENOM ) / CONV_NUMER );
+ 302:Src/hw_rtc.c  **** }
+ 303:Src/hw_rtc.c  **** 
+ 304:Src/hw_rtc.c  **** /*!
+ 305:Src/hw_rtc.c  ****  * @brief converts time in ticks to time in ms
+ 306:Src/hw_rtc.c  ****  * @param [IN] time in timer ticks
+ 307:Src/hw_rtc.c  ****  * @retval returns time in milliseconds
+ 308:Src/hw_rtc.c  ****  */
+ 309:Src/hw_rtc.c  **** TimerTime_t HW_RTC_Tick2ms( uint32_t tick )
+ 310:Src/hw_rtc.c  **** {
+ 311:Src/hw_rtc.c  **** /*return( ( timeMicroSec * RTC_ALARM_TIME_BASE ) ); */
+ 312:Src/hw_rtc.c  ****   return  ( ( (uint64_t)( tick )* CONV_NUMER ) / CONV_DENOM );
+ 313:Src/hw_rtc.c  **** }
+ 314:Src/hw_rtc.c  **** 
+ 315:Src/hw_rtc.c  **** /*!
+ 316:Src/hw_rtc.c  ****  * @brief Set the alarm
+ 317:Src/hw_rtc.c  ****  * @note The alarm is set at now (read in this funtion) + timeout
+ 318:Src/hw_rtc.c  ****  * @param timeout Duration of the Timer ticks
+ 319:Src/hw_rtc.c  ****  */
+ 320:Src/hw_rtc.c  **** void HW_RTC_SetAlarm( uint32_t timeout )
+ 321:Src/hw_rtc.c  **** {
+ 322:Src/hw_rtc.c  ****   /* we don't go in Low Power mode for timeout below MIN_ALARM_DELAY */
+ 323:Src/hw_rtc.c  ****   if ( (MIN_ALARM_DELAY + McuWakeUpTimeCal ) < ((timeout - HW_RTC_GetTimerElapsedTime( ) )) )
+ 324:Src/hw_rtc.c  ****   {
+ 325:Src/hw_rtc.c  ****     LPM_SetStopMode(LPM_RTC_Id , LPM_Enable );
+ 326:Src/hw_rtc.c  ****   }
+ 327:Src/hw_rtc.c  ****   else
+ 328:Src/hw_rtc.c  ****   {
+ 329:Src/hw_rtc.c  ****     LPM_SetStopMode(LPM_RTC_Id , LPM_Disable );
+ 330:Src/hw_rtc.c  ****   }
+ 331:Src/hw_rtc.c  **** 
+ 332:Src/hw_rtc.c  ****   /*In case stop mode is required */
+ 333:Src/hw_rtc.c  ****   if( LPM_GetMode() == LPM_StopMode )
+ 334:Src/hw_rtc.c  ****   {
+ 335:Src/hw_rtc.c  ****     timeout = timeout -  McuWakeUpTimeCal;
+ 336:Src/hw_rtc.c  ****   }
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//cciAWxUP.s 			page 9
+
+
+ 337:Src/hw_rtc.c  **** 
+ 338:Src/hw_rtc.c  ****   HW_RTC_StartWakeUpAlarm( timeout );
+ 339:Src/hw_rtc.c  **** }
+ 340:Src/hw_rtc.c  **** 
+ 341:Src/hw_rtc.c  **** /*!
+ 342:Src/hw_rtc.c  ****  * @brief Get the RTC timer elapsed time since the last Alarm was set
+ 343:Src/hw_rtc.c  ****  * @param none
+ 344:Src/hw_rtc.c  ****  * @retval RTC Elapsed time in ticks
+ 345:Src/hw_rtc.c  ****  */
+ 346:Src/hw_rtc.c  **** uint32_t HW_RTC_GetTimerElapsedTime( void )
+ 347:Src/hw_rtc.c  **** {
+ 348:Src/hw_rtc.c  ****   RTC_TimeTypeDef RTC_TimeStruct;
+ 349:Src/hw_rtc.c  ****   RTC_DateTypeDef RTC_DateStruct;
+ 350:Src/hw_rtc.c  ****   
+ 351:Src/hw_rtc.c  ****   TimerTime_t CalendarValue = HW_RTC_GetCalendarValue(&RTC_DateStruct, &RTC_TimeStruct );
+ 352:Src/hw_rtc.c  **** 
+ 353:Src/hw_rtc.c  ****   return( ( uint32_t )( CalendarValue - RtcTimerContext.Rtc_Time ));
+ 354:Src/hw_rtc.c  **** }
+ 355:Src/hw_rtc.c  **** 
+ 356:Src/hw_rtc.c  **** /*!
+ 357:Src/hw_rtc.c  ****  * @brief Get the RTC timer value
+ 358:Src/hw_rtc.c  ****  * @param none
+ 359:Src/hw_rtc.c  ****  * @retval RTC Timer value in ticks
+ 360:Src/hw_rtc.c  ****  */
+ 361:Src/hw_rtc.c  **** uint32_t HW_RTC_GetTimerValue( void )
+ 362:Src/hw_rtc.c  **** {
+ 363:Src/hw_rtc.c  ****   RTC_TimeTypeDef RTC_TimeStruct;
+ 364:Src/hw_rtc.c  ****   RTC_DateTypeDef RTC_DateStruct;
+ 365:Src/hw_rtc.c  ****   
+ 366:Src/hw_rtc.c  ****   uint32_t CalendarValue = (uint32_t) HW_RTC_GetCalendarValue(&RTC_DateStruct, &RTC_TimeStruct );
+ 367:Src/hw_rtc.c  **** 
+ 368:Src/hw_rtc.c  ****   return( CalendarValue );
+ 369:Src/hw_rtc.c  **** }
+ 370:Src/hw_rtc.c  **** 
+ 371:Src/hw_rtc.c  **** /*!
+ 372:Src/hw_rtc.c  ****  * @brief Stop the Alarm
+ 373:Src/hw_rtc.c  ****  * @param none
+ 374:Src/hw_rtc.c  ****  * @retval none
+ 375:Src/hw_rtc.c  ****  */
+ 376:Src/hw_rtc.c  **** void HW_RTC_StopAlarm( void )
+ 377:Src/hw_rtc.c  **** {
+ 378:Src/hw_rtc.c  ****   /* Disable the Alarm A interrupt */
+ 379:Src/hw_rtc.c  ****   HAL_RTC_DeactivateAlarm(&RtcHandle, RTC_ALARM_A );
+ 380:Src/hw_rtc.c  ****   /* Clear RTC Alarm Flag */
+ 381:Src/hw_rtc.c  ****   __HAL_RTC_ALARM_CLEAR_FLAG( &RtcHandle, RTC_FLAG_ALRAF);
+ 382:Src/hw_rtc.c  ****   /* Clear the EXTI's line Flag for RTC Alarm */  
+ 383:Src/hw_rtc.c  ****   __HAL_RTC_ALARM_EXTI_CLEAR_FLAG();
+ 384:Src/hw_rtc.c  **** }
+ 385:Src/hw_rtc.c  **** 
+ 386:Src/hw_rtc.c  **** /*!
+ 387:Src/hw_rtc.c  ****  * @brief RTC IRQ Handler on the RTC Alarm
+ 388:Src/hw_rtc.c  ****  * @param none
+ 389:Src/hw_rtc.c  ****  * @retval none
+ 390:Src/hw_rtc.c  ****  */
+ 391:Src/hw_rtc.c  **** void HW_RTC_IrqHandler ( void )
+ 392:Src/hw_rtc.c  **** {
+ 393:Src/hw_rtc.c  ****   RTC_HandleTypeDef* hrtc=&RtcHandle;
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//cciAWxUP.s 			page 10
+
+
+ 394:Src/hw_rtc.c  ****   /* enable low power at irq*/
+ 395:Src/hw_rtc.c  ****   LPM_SetStopMode(LPM_RTC_Id , LPM_Enable );
+ 396:Src/hw_rtc.c  ****   
+ 397:Src/hw_rtc.c  ****   /* Clear the EXTI's line Flag for RTC Alarm */
+ 398:Src/hw_rtc.c  ****   __HAL_RTC_ALARM_EXTI_CLEAR_FLAG();
+ 399:Src/hw_rtc.c  ****   
+ 400:Src/hw_rtc.c  ****     /* Get the AlarmA interrupt source enable status */
+ 401:Src/hw_rtc.c  ****   if(__HAL_RTC_ALARM_GET_IT_SOURCE(hrtc, RTC_IT_ALRA) != RESET)
+ 402:Src/hw_rtc.c  ****   {
+ 403:Src/hw_rtc.c  ****     /* Get the pending status of the AlarmA Interrupt */
+ 404:Src/hw_rtc.c  ****     if(__HAL_RTC_ALARM_GET_FLAG(hrtc, RTC_FLAG_ALRAF) != RESET)
+ 405:Src/hw_rtc.c  ****     {
+ 406:Src/hw_rtc.c  ****       /* Clear the AlarmA interrupt pending bit */
+ 407:Src/hw_rtc.c  ****       __HAL_RTC_ALARM_CLEAR_FLAG(hrtc, RTC_FLAG_ALRAF); 
+ 408:Src/hw_rtc.c  ****       /* AlarmA callback */
+ 409:Src/hw_rtc.c  ****       HAL_RTC_AlarmAEventCallback(hrtc);
+ 410:Src/hw_rtc.c  ****     }
+ 411:Src/hw_rtc.c  ****   }
+ 412:Src/hw_rtc.c  **** }
+ 413:Src/hw_rtc.c  **** 
+ 414:Src/hw_rtc.c  **** 
+ 415:Src/hw_rtc.c  **** /*!
+ 416:Src/hw_rtc.c  ****  * @brief a delay of delay ms by polling RTC
+ 417:Src/hw_rtc.c  ****  * @param delay in ms
+ 418:Src/hw_rtc.c  ****  * @retval none
+ 419:Src/hw_rtc.c  ****  */
+ 420:Src/hw_rtc.c  **** void HW_RTC_DelayMs( uint32_t delay )
+ 421:Src/hw_rtc.c  **** {
+ 422:Src/hw_rtc.c  ****   TimerTime_t delayValue = 0;
+ 423:Src/hw_rtc.c  ****   TimerTime_t timeout = 0;
+ 424:Src/hw_rtc.c  **** 
+ 425:Src/hw_rtc.c  ****   delayValue = HW_RTC_ms2Tick( delay );
+ 426:Src/hw_rtc.c  **** 
+ 427:Src/hw_rtc.c  ****   /* Wait delay ms */
+ 428:Src/hw_rtc.c  ****   timeout = HW_RTC_GetTimerValue( );
+ 429:Src/hw_rtc.c  ****   while( ( ( HW_RTC_GetTimerValue( ) - timeout ) ) < delayValue )
+ 430:Src/hw_rtc.c  ****   {
+ 431:Src/hw_rtc.c  ****     __NOP( );
+ 432:Src/hw_rtc.c  ****   }
+ 433:Src/hw_rtc.c  **** }
+ 434:Src/hw_rtc.c  **** 
+ 435:Src/hw_rtc.c  **** /*!
+ 436:Src/hw_rtc.c  ****  * @brief set Time Reference set also the RTC_DateStruct and RTC_TimeStruct
+ 437:Src/hw_rtc.c  ****  * @param none
+ 438:Src/hw_rtc.c  ****  * @retval Timer Value
+ 439:Src/hw_rtc.c  ****  */
+ 440:Src/hw_rtc.c  **** uint32_t HW_RTC_SetTimerContext( void )
+ 441:Src/hw_rtc.c  **** {
+ 442:Src/hw_rtc.c  ****   RtcTimerContext.Rtc_Time = HW_RTC_GetCalendarValue( &RtcTimerContext.RTC_Calndr_Date, &RtcTimerCo
+ 443:Src/hw_rtc.c  ****   return ( uint32_t ) RtcTimerContext.Rtc_Time;
+ 444:Src/hw_rtc.c  **** }
+ 445:Src/hw_rtc.c  **** 
+ 446:Src/hw_rtc.c  **** /*!
+ 447:Src/hw_rtc.c  ****  * @brief Get the RTC timer Reference
+ 448:Src/hw_rtc.c  ****  * @param none
+ 449:Src/hw_rtc.c  ****  * @retval Timer Value in  Ticks
+ 450:Src/hw_rtc.c  ****  */
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//cciAWxUP.s 			page 11
+
+
+ 451:Src/hw_rtc.c  **** uint32_t HW_RTC_GetTimerContext( void )
+ 452:Src/hw_rtc.c  **** {
+ 453:Src/hw_rtc.c  ****   return (uint32_t) RtcTimerContext.Rtc_Time;
+ 454:Src/hw_rtc.c  **** }
+ 455:Src/hw_rtc.c  **** /* Private functions ---------------------------------------------------------*/
+ 456:Src/hw_rtc.c  **** 
+ 457:Src/hw_rtc.c  **** /*!
+ 458:Src/hw_rtc.c  ****  * @brief configure alarm at init
+ 459:Src/hw_rtc.c  ****  * @param none
+ 460:Src/hw_rtc.c  ****  * @retval none
+ 461:Src/hw_rtc.c  ****  */
+ 462:Src/hw_rtc.c  **** static void HW_RTC_SetAlarmConfig( void )
+ 463:Src/hw_rtc.c  **** {
+ 124              		.loc 1 463 0
+ 125              		.cfi_startproc
+ 126              		@ args = 0, pretend = 0, frame = 0
+ 127              		@ frame_needed = 0, uses_anonymous_args = 0
+ 128 0000 10B5     		push	{r4, lr}
+ 129              	.LCFI2:
+ 130              		.cfi_def_cfa_offset 8
+ 131              		.cfi_offset 4, -8
+ 132              		.cfi_offset 14, -4
+ 464:Src/hw_rtc.c  ****   HAL_RTC_DeactivateAlarm(&RtcHandle, RTC_ALARM_A);
+ 133              		.loc 1 464 0
+ 134 0002 8021     		movs	r1, #128
+ 135 0004 4900     		lsls	r1, r1, #1
+ 136 0006 0248     		ldr	r0, .L5
+ 137 0008 FFF7FEFF 		bl	HAL_RTC_DeactivateAlarm
+ 138              	.LVL4:
+ 465:Src/hw_rtc.c  **** }
+ 139              		.loc 1 465 0
+ 140              		@ sp needed
+ 141 000c 10BD     		pop	{r4, pc}
+ 142              	.L6:
+ 143 000e C046     		.align	2
+ 144              	.L5:
+ 145 0010 00000000 		.word	.LANCHOR0
+ 146              		.cfi_endproc
+ 147              	.LFE55:
+ 149              		.section	.text.HW_RTC_GetCalendarValue,"ax",%progbits
+ 150              		.align	1
+ 151              		.syntax unified
+ 152              		.code	16
+ 153              		.thumb_func
+ 154              		.fpu softvfp
+ 156              	HW_RTC_GetCalendarValue:
+ 157              	.LFB57:
+ 466:Src/hw_rtc.c  **** 
+ 467:Src/hw_rtc.c  **** /*!
+ 468:Src/hw_rtc.c  ****  * @brief start wake up alarm
+ 469:Src/hw_rtc.c  ****  * @note  alarm in RtcTimerContext.Rtc_Time + timeoutValue
+ 470:Src/hw_rtc.c  ****  * @param timeoutValue in ticks
+ 471:Src/hw_rtc.c  ****  * @retval none
+ 472:Src/hw_rtc.c  ****  */
+ 473:Src/hw_rtc.c  **** static void HW_RTC_StartWakeUpAlarm( uint32_t timeoutValue )
+ 474:Src/hw_rtc.c  **** {
+ 475:Src/hw_rtc.c  ****   uint16_t rtcAlarmSubSeconds = 0;
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//cciAWxUP.s 			page 12
+
+
+ 476:Src/hw_rtc.c  ****   uint16_t rtcAlarmSeconds = 0;
+ 477:Src/hw_rtc.c  ****   uint16_t rtcAlarmMinutes = 0;
+ 478:Src/hw_rtc.c  ****   uint16_t rtcAlarmHours = 0;
+ 479:Src/hw_rtc.c  ****   uint16_t rtcAlarmDays = 0;
+ 480:Src/hw_rtc.c  ****   RTC_TimeTypeDef RTC_TimeStruct = RtcTimerContext.RTC_Calndr_Time;
+ 481:Src/hw_rtc.c  ****   RTC_DateTypeDef RTC_DateStruct = RtcTimerContext.RTC_Calndr_Date;
+ 482:Src/hw_rtc.c  **** 
+ 483:Src/hw_rtc.c  ****   HW_RTC_StopAlarm( );
+ 484:Src/hw_rtc.c  ****   DBG_GPIO_SET(GPIOB, GPIO_PIN_13);
+ 485:Src/hw_rtc.c  ****   
+ 486:Src/hw_rtc.c  ****   /*reverse counter */
+ 487:Src/hw_rtc.c  ****   rtcAlarmSubSeconds =  PREDIV_S - RTC_TimeStruct.SubSeconds;
+ 488:Src/hw_rtc.c  ****   rtcAlarmSubSeconds += ( timeoutValue & PREDIV_S);
+ 489:Src/hw_rtc.c  ****   /* convert timeout  to seconds */
+ 490:Src/hw_rtc.c  ****   timeoutValue >>= N_PREDIV_S;  /* convert timeout  in seconds */
+ 491:Src/hw_rtc.c  ****   
+ 492:Src/hw_rtc.c  ****   /*convert microsecs to RTC format and add to 'Now' */
+ 493:Src/hw_rtc.c  ****   rtcAlarmDays =  RTC_DateStruct.Date;
+ 494:Src/hw_rtc.c  ****   while (timeoutValue >= SECONDS_IN_1DAY)
+ 495:Src/hw_rtc.c  ****   {
+ 496:Src/hw_rtc.c  ****     timeoutValue -= SECONDS_IN_1DAY;
+ 497:Src/hw_rtc.c  ****     rtcAlarmDays++;
+ 498:Src/hw_rtc.c  ****   }
+ 499:Src/hw_rtc.c  ****   
+ 500:Src/hw_rtc.c  ****   /* calc hours */
+ 501:Src/hw_rtc.c  ****   rtcAlarmHours = RTC_TimeStruct.Hours;
+ 502:Src/hw_rtc.c  ****   while (timeoutValue >= SECONDS_IN_1HOUR)
+ 503:Src/hw_rtc.c  ****   {
+ 504:Src/hw_rtc.c  ****     timeoutValue -= SECONDS_IN_1HOUR;
+ 505:Src/hw_rtc.c  ****     rtcAlarmHours++;
+ 506:Src/hw_rtc.c  ****   }
+ 507:Src/hw_rtc.c  ****   
+ 508:Src/hw_rtc.c  ****   /* calc minutes */
+ 509:Src/hw_rtc.c  ****   rtcAlarmMinutes = RTC_TimeStruct.Minutes;
+ 510:Src/hw_rtc.c  ****   while (timeoutValue >= SECONDS_IN_1MINUTE)
+ 511:Src/hw_rtc.c  ****   {
+ 512:Src/hw_rtc.c  ****     timeoutValue -= SECONDS_IN_1MINUTE;
+ 513:Src/hw_rtc.c  ****     rtcAlarmMinutes++;
+ 514:Src/hw_rtc.c  ****   }
+ 515:Src/hw_rtc.c  ****    
+ 516:Src/hw_rtc.c  ****   /* calc seconds */
+ 517:Src/hw_rtc.c  ****   rtcAlarmSeconds =  RTC_TimeStruct.Seconds + timeoutValue;
+ 518:Src/hw_rtc.c  **** 
+ 519:Src/hw_rtc.c  ****   /***** correct for modulo********/
+ 520:Src/hw_rtc.c  ****   while (rtcAlarmSubSeconds >= (PREDIV_S+1))
+ 521:Src/hw_rtc.c  ****   {
+ 522:Src/hw_rtc.c  ****     rtcAlarmSubSeconds -= (PREDIV_S+1);
+ 523:Src/hw_rtc.c  ****     rtcAlarmSeconds++;
+ 524:Src/hw_rtc.c  ****   }
+ 525:Src/hw_rtc.c  ****   
+ 526:Src/hw_rtc.c  ****   while (rtcAlarmSeconds >= SECONDS_IN_1MINUTE)
+ 527:Src/hw_rtc.c  ****   { 
+ 528:Src/hw_rtc.c  ****     rtcAlarmSeconds -= SECONDS_IN_1MINUTE;
+ 529:Src/hw_rtc.c  ****     rtcAlarmMinutes++;
+ 530:Src/hw_rtc.c  ****   }
+ 531:Src/hw_rtc.c  **** 
+ 532:Src/hw_rtc.c  ****   while (rtcAlarmMinutes >= MINUTES_IN_1HOUR)
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//cciAWxUP.s 			page 13
+
+
+ 533:Src/hw_rtc.c  ****   {
+ 534:Src/hw_rtc.c  ****     rtcAlarmMinutes -= MINUTES_IN_1HOUR;
+ 535:Src/hw_rtc.c  ****     rtcAlarmHours++;
+ 536:Src/hw_rtc.c  ****   }
+ 537:Src/hw_rtc.c  ****   
+ 538:Src/hw_rtc.c  ****   while (rtcAlarmHours >= HOURS_IN_1DAY)
+ 539:Src/hw_rtc.c  ****   {
+ 540:Src/hw_rtc.c  ****     rtcAlarmHours -= HOURS_IN_1DAY;
+ 541:Src/hw_rtc.c  ****     rtcAlarmDays++;
+ 542:Src/hw_rtc.c  ****   }
+ 543:Src/hw_rtc.c  **** 
+ 544:Src/hw_rtc.c  ****   if( RTC_DateStruct.Year % 4 == 0 ) 
+ 545:Src/hw_rtc.c  ****   {
+ 546:Src/hw_rtc.c  ****     if( rtcAlarmDays > DaysInMonthLeapYear[ RTC_DateStruct.Month - 1 ] )    
+ 547:Src/hw_rtc.c  ****     {
+ 548:Src/hw_rtc.c  ****       rtcAlarmDays = rtcAlarmDays % DaysInMonthLeapYear[ RTC_DateStruct.Month - 1 ];
+ 549:Src/hw_rtc.c  ****     }
+ 550:Src/hw_rtc.c  ****   }
+ 551:Src/hw_rtc.c  ****   else
+ 552:Src/hw_rtc.c  ****   {
+ 553:Src/hw_rtc.c  ****     if( rtcAlarmDays > DaysInMonth[ RTC_DateStruct.Month - 1 ] )    
+ 554:Src/hw_rtc.c  ****     {   
+ 555:Src/hw_rtc.c  ****       rtcAlarmDays = rtcAlarmDays % DaysInMonth[ RTC_DateStruct.Month - 1 ];
+ 556:Src/hw_rtc.c  ****     }
+ 557:Src/hw_rtc.c  ****   }
+ 558:Src/hw_rtc.c  **** 
+ 559:Src/hw_rtc.c  ****   /* Set RTC_AlarmStructure with calculated values*/
+ 560:Src/hw_rtc.c  ****   RTC_AlarmStructure.AlarmTime.SubSeconds = PREDIV_S-rtcAlarmSubSeconds;
+ 561:Src/hw_rtc.c  ****   RTC_AlarmStructure.AlarmSubSecondMask  = HW_RTC_ALARMSUBSECONDMASK; 
+ 562:Src/hw_rtc.c  ****   RTC_AlarmStructure.AlarmTime.Seconds = rtcAlarmSeconds;
+ 563:Src/hw_rtc.c  ****   RTC_AlarmStructure.AlarmTime.Minutes = rtcAlarmMinutes;
+ 564:Src/hw_rtc.c  ****   RTC_AlarmStructure.AlarmTime.Hours   = rtcAlarmHours;
+ 565:Src/hw_rtc.c  ****   RTC_AlarmStructure.AlarmDateWeekDay    = ( uint8_t )rtcAlarmDays;
+ 566:Src/hw_rtc.c  ****   RTC_AlarmStructure.AlarmTime.TimeFormat   = RTC_TimeStruct.TimeFormat;
+ 567:Src/hw_rtc.c  ****   RTC_AlarmStructure.AlarmDateWeekDaySel   = RTC_ALARMDATEWEEKDAYSEL_DATE; 
+ 568:Src/hw_rtc.c  ****   RTC_AlarmStructure.AlarmMask       = RTC_ALARMMASK_NONE;
+ 569:Src/hw_rtc.c  ****   RTC_AlarmStructure.Alarm = RTC_ALARM_A;
+ 570:Src/hw_rtc.c  ****   RTC_AlarmStructure.AlarmTime.DayLightSaving = RTC_DAYLIGHTSAVING_NONE;
+ 571:Src/hw_rtc.c  ****   RTC_AlarmStructure.AlarmTime.StoreOperation = RTC_STOREOPERATION_RESET;
+ 572:Src/hw_rtc.c  ****   
+ 573:Src/hw_rtc.c  ****   /* Set RTC_Alarm */
+ 574:Src/hw_rtc.c  ****   HAL_RTC_SetAlarm_IT( &RtcHandle, &RTC_AlarmStructure, RTC_FORMAT_BIN );
+ 575:Src/hw_rtc.c  ****   
+ 576:Src/hw_rtc.c  ****   /* Debug Printf*/
+ 577:Src/hw_rtc.c  ****   DBG( HW_RTC_GetCalendarValue( &RTC_DateStruct, &RTC_TimeStruct ); );
+ 578:Src/hw_rtc.c  ****   DBG_PRINTF("it's %d:%d:%d:%d ", RTC_TimeStruct.Hours, RTC_TimeStruct.Minutes, RTC_TimeStruct.Seco
+ 579:Src/hw_rtc.c  ****   DBG_PRINTF("WU@ %d:%d:%d:%d\n\r", rtcAlarmHours, rtcAlarmMinutes, rtcAlarmSeconds, (rtcAlarmSubSe
+ 580:Src/hw_rtc.c  ****   
+ 581:Src/hw_rtc.c  ****   DBG_GPIO_RST(GPIOB, GPIO_PIN_13);
+ 582:Src/hw_rtc.c  **** }
+ 583:Src/hw_rtc.c  **** 
+ 584:Src/hw_rtc.c  **** 
+ 585:Src/hw_rtc.c  **** /*!
+ 586:Src/hw_rtc.c  ****  * @brief get current time from calendar in ticks
+ 587:Src/hw_rtc.c  ****  * @param pointer to RTC_DateStruct
+ 588:Src/hw_rtc.c  ****  * @param pointer to RTC_TimeStruct
+ 589:Src/hw_rtc.c  ****  * @retval time in ticks
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//cciAWxUP.s 			page 14
+
+
+ 590:Src/hw_rtc.c  ****  */
+ 591:Src/hw_rtc.c  **** static TimerTime_t HW_RTC_GetCalendarValue( RTC_DateTypeDef* RTC_DateStruct, RTC_TimeTypeDef* RTC_T
+ 592:Src/hw_rtc.c  **** {
+ 158              		.loc 1 592 0
+ 159              		.cfi_startproc
+ 160              		@ args = 0, pretend = 0, frame = 0
+ 161              		@ frame_needed = 0, uses_anonymous_args = 0
+ 162              	.LVL5:
+ 163 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+ 164              	.LCFI3:
+ 165              		.cfi_def_cfa_offset 24
+ 166              		.cfi_offset 3, -24
+ 167              		.cfi_offset 4, -20
+ 168              		.cfi_offset 5, -16
+ 169              		.cfi_offset 6, -12
+ 170              		.cfi_offset 7, -8
+ 171              		.cfi_offset 14, -4
+ 172 0002 0600     		movs	r6, r0
+ 173 0004 0C00     		movs	r4, r1
+ 174              	.LVL6:
+ 593:Src/hw_rtc.c  ****   TimerTime_t calendarValue = 0;
+ 594:Src/hw_rtc.c  ****   uint32_t first_read;
+ 595:Src/hw_rtc.c  ****   uint32_t correction;
+ 596:Src/hw_rtc.c  ****   
+ 597:Src/hw_rtc.c  ****   /* Get Time and Date*/
+ 598:Src/hw_rtc.c  ****   HAL_RTC_GetTime( &RtcHandle, RTC_TimeStruct, RTC_FORMAT_BIN );
+ 175              		.loc 1 598 0
+ 176 0006 0022     		movs	r2, #0
+ 177 0008 2448     		ldr	r0, .L12
+ 178              	.LVL7:
+ 179 000a FFF7FEFF 		bl	HAL_RTC_GetTime
+ 180              	.LVL8:
+ 181              	.L8:
+ 599:Src/hw_rtc.c  ****  
+ 600:Src/hw_rtc.c  ****    /* make sure it is correct due to asynchronus nature of RTC*/
+ 601:Src/hw_rtc.c  ****   do {
+ 602:Src/hw_rtc.c  ****     first_read = RTC_TimeStruct->SubSeconds;
+ 182              		.loc 1 602 0 discriminator 1
+ 183 000e 6768     		ldr	r7, [r4, #4]
+ 184              	.LVL9:
+ 603:Src/hw_rtc.c  ****     HAL_RTC_GetDate( &RtcHandle, RTC_DateStruct, RTC_FORMAT_BIN );
+ 185              		.loc 1 603 0 discriminator 1
+ 186 0010 224D     		ldr	r5, .L12
+ 187 0012 0022     		movs	r2, #0
+ 188 0014 3100     		movs	r1, r6
+ 189 0016 2800     		movs	r0, r5
+ 190 0018 FFF7FEFF 		bl	HAL_RTC_GetDate
+ 191              	.LVL10:
+ 604:Src/hw_rtc.c  ****     HAL_RTC_GetTime( &RtcHandle, RTC_TimeStruct, RTC_FORMAT_BIN );
+ 192              		.loc 1 604 0 discriminator 1
+ 193 001c 0022     		movs	r2, #0
+ 194 001e 2100     		movs	r1, r4
+ 195 0020 2800     		movs	r0, r5
+ 196 0022 FFF7FEFF 		bl	HAL_RTC_GetTime
+ 197              	.LVL11:
+ 605:Src/hw_rtc.c  ****   } while (first_read != RTC_TimeStruct->SubSeconds);
+ 198              		.loc 1 605 0 discriminator 1
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//cciAWxUP.s 			page 15
+
+
+ 199 0026 6268     		ldr	r2, [r4, #4]
+ 200 0028 BA42     		cmp	r2, r7
+ 201 002a F0D1     		bne	.L8
+ 606:Src/hw_rtc.c  ****  
+ 607:Src/hw_rtc.c  ****   /* calculte amount of elapsed days since 01/01/2000 */
+ 608:Src/hw_rtc.c  ****   calendarValue= DIVC( (DAYS_IN_YEAR*3 + DAYS_IN_LEAP_YEAR)* RTC_DateStruct->Year , 4);
+ 202              		.loc 1 608 0
+ 203 002c F178     		ldrb	r1, [r6, #3]
+ 204 002e 1C4B     		ldr	r3, .L12+4
+ 205 0030 4B43     		muls	r3, r1
+ 206 0032 0333     		adds	r3, r3, #3
+ 207 0034 9D08     		lsrs	r5, r3, #2
+ 208              	.LVL12:
+ 609:Src/hw_rtc.c  **** 
+ 610:Src/hw_rtc.c  ****   correction = ( (RTC_DateStruct->Year % 4) == 0 ) ? DAYS_IN_MONTH_CORRECTION_LEAP : DAYS_IN_MONTH_
+ 209              		.loc 1 610 0
+ 210 0036 8B07     		lsls	r3, r1, #30
+ 211 0038 2ED0     		beq	.L11
+ 212 003a 1A4F     		ldr	r7, .L12+8
+ 213              	.LVL13:
+ 214              	.L9:
+ 611:Src/hw_rtc.c  ****  
+ 612:Src/hw_rtc.c  ****   calendarValue +=( DIVC( (RTC_DateStruct->Month-1)*(30+31) ,2 ) - (((correction>> ((RTC_DateStruct
+ 215              		.loc 1 612 0 discriminator 4
+ 216 003c 7078     		ldrb	r0, [r6, #1]
+ 217 003e 0138     		subs	r0, r0, #1
+ 218 0040 0301     		lsls	r3, r0, #4
+ 219 0042 1B1A     		subs	r3, r3, r0
+ 220 0044 9B00     		lsls	r3, r3, #2
+ 221 0046 1B18     		adds	r3, r3, r0
+ 222 0048 0133     		adds	r3, r3, #1
+ 223 004a D90F     		lsrs	r1, r3, #31
+ 224 004c C918     		adds	r1, r1, r3
+ 225 004e 4910     		asrs	r1, r1, #1
+ 226 0050 4000     		lsls	r0, r0, #1
+ 227 0052 C740     		lsrs	r7, r7, r0
+ 228              	.LVL14:
+ 229 0054 0323     		movs	r3, #3
+ 230 0056 3B40     		ands	r3, r7
+ 231 0058 CB1A     		subs	r3, r1, r3
+ 232 005a 5B19     		adds	r3, r3, r5
+ 233              	.LVL15:
+ 613:Src/hw_rtc.c  **** 
+ 614:Src/hw_rtc.c  ****   calendarValue += (RTC_DateStruct->Date -1);
+ 234              		.loc 1 614 0 discriminator 4
+ 235 005c B178     		ldrb	r1, [r6, #2]
+ 236 005e CB18     		adds	r3, r1, r3
+ 237              	.LVL16:
+ 238 0060 013B     		subs	r3, r3, #1
+ 239              	.LVL17:
+ 615:Src/hw_rtc.c  ****   
+ 616:Src/hw_rtc.c  ****   /* convert from days to seconds */
+ 617:Src/hw_rtc.c  ****   calendarValue *= SECONDS_IN_1DAY; 
+ 240              		.loc 1 617 0 discriminator 4
+ 241 0062 5900     		lsls	r1, r3, #1
+ 242 0064 CB18     		adds	r3, r1, r3
+ 243              	.LVL18:
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//cciAWxUP.s 			page 16
+
+
+ 244 0066 1901     		lsls	r1, r3, #4
+ 245 0068 CB1A     		subs	r3, r1, r3
+ 246 006a 1901     		lsls	r1, r3, #4
+ 247 006c C91A     		subs	r1, r1, r3
+ 248 006e CE01     		lsls	r6, r1, #7
+ 249              	.LVL19:
+ 618:Src/hw_rtc.c  **** 
+ 619:Src/hw_rtc.c  ****   calendarValue += ( ( uint32_t )RTC_TimeStruct->Seconds + 
+ 250              		.loc 1 619 0 discriminator 4
+ 251 0070 A778     		ldrb	r7, [r4, #2]
+ 620:Src/hw_rtc.c  ****                      ( ( uint32_t )RTC_TimeStruct->Minutes * SECONDS_IN_1MINUTE ) +
+ 621:Src/hw_rtc.c  ****                      ( ( uint32_t )RTC_TimeStruct->Hours * SECONDS_IN_1HOUR ) ) ;
+ 252              		.loc 1 621 0 discriminator 4
+ 253 0072 2578     		ldrb	r5, [r4]
+ 254 0074 2901     		lsls	r1, r5, #4
+ 255 0076 4D1B     		subs	r5, r1, r5
+ 256 0078 2901     		lsls	r1, r5, #4
+ 257 007a 491B     		subs	r1, r1, r5
+ 258 007c 0B01     		lsls	r3, r1, #4
+ 620:Src/hw_rtc.c  ****                      ( ( uint32_t )RTC_TimeStruct->Minutes * SECONDS_IN_1MINUTE ) +
+ 259              		.loc 1 620 0 discriminator 4
+ 260 007e 6078     		ldrb	r0, [r4, #1]
+ 261 0080 0101     		lsls	r1, r0, #4
+ 262 0082 091A     		subs	r1, r1, r0
+ 263 0084 8800     		lsls	r0, r1, #2
+ 264 0086 1818     		adds	r0, r3, r0
+ 265 0088 C019     		adds	r0, r0, r7
+ 619:Src/hw_rtc.c  ****                      ( ( uint32_t )RTC_TimeStruct->Minutes * SECONDS_IN_1MINUTE ) +
+ 266              		.loc 1 619 0 discriminator 4
+ 267 008a 8019     		adds	r0, r0, r6
+ 268              	.LVL20:
+ 622:Src/hw_rtc.c  **** 
+ 623:Src/hw_rtc.c  **** 
+ 624:Src/hw_rtc.c  ****   
+ 625:Src/hw_rtc.c  ****   calendarValue = (calendarValue<<N_PREDIV_S) + ( PREDIV_S - RTC_TimeStruct->SubSeconds);
+ 269              		.loc 1 625 0 discriminator 4
+ 270 008c 8002     		lsls	r0, r0, #10
+ 271              	.LVL21:
+ 272 008e 801A     		subs	r0, r0, r2
+ 273 0090 054B     		ldr	r3, .L12+12
+ 274              	.LVL22:
+ 275 0092 9C46     		mov	ip, r3
+ 276 0094 6044     		add	r0, r0, ip
+ 277              	.LVL23:
+ 626:Src/hw_rtc.c  **** 
+ 627:Src/hw_rtc.c  ****   return( calendarValue );
+ 628:Src/hw_rtc.c  **** }
+ 278              		.loc 1 628 0 discriminator 4
+ 279              		@ sp needed
+ 280              	.LVL24:
+ 281 0096 F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 282              	.LVL25:
+ 283              	.L11:
+ 610:Src/hw_rtc.c  ****  
+ 284              		.loc 1 610 0
+ 285 0098 044F     		ldr	r7, .L12+16
+ 286              	.LVL26:
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//cciAWxUP.s 			page 17
+
+
+ 287 009a CFE7     		b	.L9
+ 288              	.L13:
+ 289              		.align	2
+ 290              	.L12:
+ 291 009c 00000000 		.word	.LANCHOR0
+ 292 00a0 B5050000 		.word	1461
+ 293 00a4 A0AA9900 		.word	10070688
+ 294 00a8 FF030000 		.word	1023
+ 295 00ac 50554400 		.word	4478288
+ 296              		.cfi_endproc
+ 297              	.LFE57:
+ 299              		.section	.text.HW_RTC_setMcuWakeUpTime,"ax",%progbits
+ 300              		.align	1
+ 301              		.global	HW_RTC_setMcuWakeUpTime
+ 302              		.syntax unified
+ 303              		.code	16
+ 304              		.thumb_func
+ 305              		.fpu softvfp
+ 307              	HW_RTC_setMcuWakeUpTime:
+ 308              	.LFB42:
+ 249:Src/hw_rtc.c  ****   RTC_TimeTypeDef RTC_TimeStruct;
+ 309              		.loc 1 249 0
+ 310              		.cfi_startproc
+ 311              		@ args = 0, pretend = 0, frame = 24
+ 312              		@ frame_needed = 0, uses_anonymous_args = 0
+ 313 0000 70B5     		push	{r4, r5, r6, lr}
+ 314              	.LCFI4:
+ 315              		.cfi_def_cfa_offset 16
+ 316              		.cfi_offset 4, -16
+ 317              		.cfi_offset 5, -12
+ 318              		.cfi_offset 6, -8
+ 319              		.cfi_offset 14, -4
+ 320 0002 86B0     		sub	sp, sp, #24
+ 321              	.LCFI5:
+ 322              		.cfi_def_cfa_offset 40
+ 256:Src/hw_rtc.c  ****       ( HAL_NVIC_GetPendingIRQ( RTC_Alarm_IRQn ) == 1))
+ 323              		.loc 1 256 0
+ 324 0004 1E4A     		ldr	r2, .L17
+ 325 0006 2423     		movs	r3, #36
+ 326 0008 D35C     		ldrb	r3, [r2, r3]
+ 327 000a 002B     		cmp	r3, #0
+ 328 000c 01D0     		beq	.L16
+ 329              	.L14:
+ 276:Src/hw_rtc.c  **** 
+ 330              		.loc 1 276 0
+ 331 000e 06B0     		add	sp, sp, #24
+ 332              		@ sp needed
+ 333 0010 70BD     		pop	{r4, r5, r6, pc}
+ 334              	.L16:
+ 257:Src/hw_rtc.c  ****   { /* warning: works ok if now is below 30 days
+ 335              		.loc 1 257 0 discriminator 1
+ 336 0012 0220     		movs	r0, #2
+ 337 0014 FFF7FEFF 		bl	HAL_NVIC_GetPendingIRQ
+ 338              	.LVL27:
+ 256:Src/hw_rtc.c  ****       ( HAL_NVIC_GetPendingIRQ( RTC_Alarm_IRQn ) == 1))
+ 339              		.loc 1 256 0 discriminator 1
+ 340 0018 0128     		cmp	r0, #1
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//cciAWxUP.s 			page 18
+
+
+ 341 001a F8D1     		bne	.L14
+ 260:Src/hw_rtc.c  ****     now = HW_RTC_GetCalendarValue( &RTC_DateStruct, &RTC_TimeStruct );
+ 342              		.loc 1 260 0
+ 343 001c 184C     		ldr	r4, .L17
+ 344 001e 2423     		movs	r3, #36
+ 345 0020 0122     		movs	r2, #1
+ 346 0022 E254     		strb	r2, [r4, r3]
+ 261:Src/hw_rtc.c  **** 
+ 347              		.loc 1 261 0
+ 348 0024 01A9     		add	r1, sp, #4
+ 349 0026 6846     		mov	r0, sp
+ 350 0028 FFF7FEFF 		bl	HW_RTC_GetCalendarValue
+ 351              	.LVL28:
+ 352 002c 0500     		movs	r5, r0
+ 353              	.LVL29:
+ 265:Src/hw_rtc.c  ****     hit = RTC_AlarmStructure.AlarmTime.Seconds+
+ 354              		.loc 1 265 0
+ 355 002e 8022     		movs	r2, #128
+ 356 0030 2600     		movs	r6, r4
+ 357 0032 2836     		adds	r6, r6, #40
+ 358 0034 0023     		movs	r3, #0
+ 359 0036 5200     		lsls	r2, r2, #1
+ 360 0038 3100     		movs	r1, r6
+ 361 003a 2000     		movs	r0, r4
+ 362              	.LVL30:
+ 363 003c FFF7FEFF 		bl	HAL_RTC_GetAlarm
+ 364              	.LVL31:
+ 266:Src/hw_rtc.c  ****           60*(RTC_AlarmStructure.AlarmTime.Minutes+
+ 365              		.loc 1 266 0
+ 366 0040 B078     		ldrb	r0, [r6, #2]
+ 267:Src/hw_rtc.c  ****           60*(RTC_AlarmStructure.AlarmTime.Hours+
+ 367              		.loc 1 267 0
+ 368 0042 7378     		ldrb	r3, [r6, #1]
+ 268:Src/hw_rtc.c  ****           24*(RTC_AlarmStructure.AlarmDateWeekDay)));
+ 369              		.loc 1 268 0
+ 370 0044 2822     		movs	r2, #40
+ 371 0046 A15C     		ldrb	r1, [r4, r2]
+ 269:Src/hw_rtc.c  ****     hit = ( hit << N_PREDIV_S ) + (PREDIV_S - RTC_AlarmStructure.AlarmTime.SubSeconds);
+ 372              		.loc 1 269 0
+ 373 0048 2200     		movs	r2, r4
+ 374 004a 4832     		adds	r2, r2, #72
+ 375 004c 1278     		ldrb	r2, [r2]
+ 376 004e 5600     		lsls	r6, r2, #1
+ 377 0050 B618     		adds	r6, r6, r2
+ 378 0052 F200     		lsls	r2, r6, #3
+ 268:Src/hw_rtc.c  ****           24*(RTC_AlarmStructure.AlarmDateWeekDay)));
+ 379              		.loc 1 268 0
+ 380 0054 8A18     		adds	r2, r1, r2
+ 381 0056 1101     		lsls	r1, r2, #4
+ 382 0058 891A     		subs	r1, r1, r2
+ 383 005a 8A00     		lsls	r2, r1, #2
+ 267:Src/hw_rtc.c  ****           60*(RTC_AlarmStructure.AlarmTime.Hours+
+ 384              		.loc 1 267 0
+ 385 005c 9A18     		adds	r2, r3, r2
+ 386 005e 1301     		lsls	r3, r2, #4
+ 387 0060 9B1A     		subs	r3, r3, r2
+ 388 0062 9A00     		lsls	r2, r3, #2
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//cciAWxUP.s 			page 19
+
+
+ 266:Src/hw_rtc.c  ****           60*(RTC_AlarmStructure.AlarmTime.Minutes+
+ 389              		.loc 1 266 0
+ 390 0064 8018     		adds	r0, r0, r2
+ 391              	.LVL32:
+ 270:Src/hw_rtc.c  ****       
+ 392              		.loc 1 270 0
+ 393 0066 8002     		lsls	r0, r0, #10
+ 394              	.LVL33:
+ 395 0068 E36A     		ldr	r3, [r4, #44]
+ 396 006a C01A     		subs	r0, r0, r3
+ 397 006c 054B     		ldr	r3, .L17+4
+ 398 006e 9C46     		mov	ip, r3
+ 399 0070 6044     		add	r0, r0, ip
+ 400              	.LVL34:
+ 272:Src/hw_rtc.c  ****     McuWakeUpTimeCal += McuWakeUpTime;
+ 401              		.loc 1 272 0
+ 402 0072 281A     		subs	r0, r5, r0
+ 403              	.LVL35:
+ 404 0074 80B2     		uxth	r0, r0
+ 405              	.LVL36:
+ 273:Src/hw_rtc.c  ****     DBG_PRINTF("Cal=%d, %d\n\r",McuWakeUpTimeCal, McuWakeUpTime);
+ 406              		.loc 1 273 0
+ 407 0076 5023     		movs	r3, #80
+ 408              	.LVL37:
+ 409 0078 E55A     		ldrh	r5, [r4, r3]
+ 410              	.LVL38:
+ 411 007a 4019     		adds	r0, r0, r5
+ 412              	.LVL39:
+ 413 007c E052     		strh	r0, [r4, r3]
+ 414              	.LVL40:
+ 276:Src/hw_rtc.c  **** 
+ 415              		.loc 1 276 0
+ 416 007e C6E7     		b	.L14
+ 417              	.L18:
+ 418              		.align	2
+ 419              	.L17:
+ 420 0080 00000000 		.word	.LANCHOR0
+ 421 0084 FF030000 		.word	1023
+ 422              		.cfi_endproc
+ 423              	.LFE42:
+ 425              		.section	.text.HW_RTC_getMcuWakeUpTime,"ax",%progbits
+ 426              		.align	1
+ 427              		.global	HW_RTC_getMcuWakeUpTime
+ 428              		.syntax unified
+ 429              		.code	16
+ 430              		.thumb_func
+ 431              		.fpu softvfp
+ 433              	HW_RTC_getMcuWakeUpTime:
+ 434              	.LFB43:
+ 279:Src/hw_rtc.c  ****   return McuWakeUpTimeCal;
+ 435              		.loc 1 279 0
+ 436              		.cfi_startproc
+ 437              		@ args = 0, pretend = 0, frame = 0
+ 438              		@ frame_needed = 0, uses_anonymous_args = 0
+ 439              		@ link register save eliminated.
+ 280:Src/hw_rtc.c  **** }
+ 440              		.loc 1 280 0
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//cciAWxUP.s 			page 20
+
+
+ 441 0000 014A     		ldr	r2, .L20
+ 442 0002 5023     		movs	r3, #80
+ 443 0004 D05E     		ldrsh	r0, [r2, r3]
+ 281:Src/hw_rtc.c  **** 
+ 444              		.loc 1 281 0
+ 445              		@ sp needed
+ 446 0006 7047     		bx	lr
+ 447              	.L21:
+ 448              		.align	2
+ 449              	.L20:
+ 450 0008 00000000 		.word	.LANCHOR0
+ 451              		.cfi_endproc
+ 452              	.LFE43:
+ 454              		.section	.text.HW_RTC_GetMinimumTimeout,"ax",%progbits
+ 455              		.align	1
+ 456              		.global	HW_RTC_GetMinimumTimeout
+ 457              		.syntax unified
+ 458              		.code	16
+ 459              		.thumb_func
+ 460              		.fpu softvfp
+ 462              	HW_RTC_GetMinimumTimeout:
+ 463              	.LFB44:
+ 289:Src/hw_rtc.c  ****   return( MIN_ALARM_DELAY );
+ 464              		.loc 1 289 0
+ 465              		.cfi_startproc
+ 466              		@ args = 0, pretend = 0, frame = 0
+ 467              		@ frame_needed = 0, uses_anonymous_args = 0
+ 468              		@ link register save eliminated.
+ 291:Src/hw_rtc.c  **** 
+ 469              		.loc 1 291 0
+ 470 0000 0320     		movs	r0, #3
+ 471              		@ sp needed
+ 472 0002 7047     		bx	lr
+ 473              		.cfi_endproc
+ 474              	.LFE44:
+ 476              		.global	__aeabi_uldivmod
+ 477              		.section	.text.HW_RTC_ms2Tick,"ax",%progbits
+ 478              		.align	1
+ 479              		.global	HW_RTC_ms2Tick
+ 480              		.syntax unified
+ 481              		.code	16
+ 482              		.thumb_func
+ 483              		.fpu softvfp
+ 485              	HW_RTC_ms2Tick:
+ 486              	.LFB45:
+ 299:Src/hw_rtc.c  **** /*return( ( timeMicroSec / RTC_ALARM_TIME_BASE ) ); */
+ 487              		.loc 1 299 0
+ 488              		.cfi_startproc
+ 489              		@ args = 0, pretend = 0, frame = 0
+ 490              		@ frame_needed = 0, uses_anonymous_args = 0
+ 491              	.LVL41:
+ 492 0000 10B5     		push	{r4, lr}
+ 493              	.LCFI6:
+ 494              		.cfi_def_cfa_offset 8
+ 495              		.cfi_offset 4, -8
+ 496              		.cfi_offset 14, -4
+ 301:Src/hw_rtc.c  **** }
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//cciAWxUP.s 			page 21
+
+
+ 497              		.loc 1 301 0
+ 498 0002 410E     		lsrs	r1, r0, #25
+ 499 0004 C001     		lsls	r0, r0, #7
+ 500              	.LVL42:
+ 501 0006 7D22     		movs	r2, #125
+ 502 0008 0023     		movs	r3, #0
+ 503 000a FFF7FEFF 		bl	__aeabi_uldivmod
+ 504              	.LVL43:
+ 302:Src/hw_rtc.c  **** 
+ 505              		.loc 1 302 0
+ 506              		@ sp needed
+ 507 000e 10BD     		pop	{r4, pc}
+ 508              		.cfi_endproc
+ 509              	.LFE45:
+ 511              		.section	.text.HW_RTC_Tick2ms,"ax",%progbits
+ 512              		.align	1
+ 513              		.global	HW_RTC_Tick2ms
+ 514              		.syntax unified
+ 515              		.code	16
+ 516              		.thumb_func
+ 517              		.fpu softvfp
+ 519              	HW_RTC_Tick2ms:
+ 520              	.LFB46:
+ 310:Src/hw_rtc.c  **** /*return( ( timeMicroSec * RTC_ALARM_TIME_BASE ) ); */
+ 521              		.loc 1 310 0
+ 522              		.cfi_startproc
+ 523              		@ args = 0, pretend = 0, frame = 0
+ 524              		@ frame_needed = 0, uses_anonymous_args = 0
+ 525              	.LVL44:
+ 526 0000 70B5     		push	{r4, r5, r6, lr}
+ 527              	.LCFI7:
+ 528              		.cfi_def_cfa_offset 16
+ 529              		.cfi_offset 4, -16
+ 530              		.cfi_offset 5, -12
+ 531              		.cfi_offset 6, -8
+ 532              		.cfi_offset 14, -4
+ 312:Src/hw_rtc.c  **** }
+ 533              		.loc 1 312 0
+ 534 0002 0400     		movs	r4, r0
+ 535 0004 0025     		movs	r5, #0
+ 536 0006 C30E     		lsrs	r3, r0, #27
+ 537 0008 4201     		lsls	r2, r0, #5
+ 538 000a 121B     		subs	r2, r2, r4
+ 539 000c AB41     		sbcs	r3, r3, r5
+ 540 000e 960F     		lsrs	r6, r2, #30
+ 541 0010 9900     		lsls	r1, r3, #2
+ 542 0012 3143     		orrs	r1, r6
+ 543 0014 9000     		lsls	r0, r2, #2
+ 544              	.LVL45:
+ 545 0016 0019     		adds	r0, r0, r4
+ 546 0018 6941     		adcs	r1, r1, r5
+ 547 001a 4B06     		lsls	r3, r1, #25
+ 548 001c C009     		lsrs	r0, r0, #7
+ 549 001e 1843     		orrs	r0, r3
+ 313:Src/hw_rtc.c  **** 
+ 550              		.loc 1 313 0
+ 551              		@ sp needed
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//cciAWxUP.s 			page 22
+
+
+ 552              	.LVL46:
+ 553 0020 70BD     		pop	{r4, r5, r6, pc}
+ 554              		.cfi_endproc
+ 555              	.LFE46:
+ 557              		.section	.text.HW_RTC_GetTimerElapsedTime,"ax",%progbits
+ 558              		.align	1
+ 559              		.global	HW_RTC_GetTimerElapsedTime
+ 560              		.syntax unified
+ 561              		.code	16
+ 562              		.thumb_func
+ 563              		.fpu softvfp
+ 565              	HW_RTC_GetTimerElapsedTime:
+ 566              	.LFB48:
+ 347:Src/hw_rtc.c  ****   RTC_TimeTypeDef RTC_TimeStruct;
+ 567              		.loc 1 347 0
+ 568              		.cfi_startproc
+ 569              		@ args = 0, pretend = 0, frame = 24
+ 570              		@ frame_needed = 0, uses_anonymous_args = 0
+ 571 0000 00B5     		push	{lr}
+ 572              	.LCFI8:
+ 573              		.cfi_def_cfa_offset 4
+ 574              		.cfi_offset 14, -4
+ 575 0002 87B0     		sub	sp, sp, #28
+ 576              	.LCFI9:
+ 577              		.cfi_def_cfa_offset 32
+ 351:Src/hw_rtc.c  **** 
+ 578              		.loc 1 351 0
+ 579 0004 01A9     		add	r1, sp, #4
+ 580 0006 6846     		mov	r0, sp
+ 581 0008 FFF7FEFF 		bl	HW_RTC_GetCalendarValue
+ 582              	.LVL47:
+ 353:Src/hw_rtc.c  **** }
+ 583              		.loc 1 353 0
+ 584 000c 024B     		ldr	r3, .L26
+ 585 000e 5B6D     		ldr	r3, [r3, #84]
+ 586 0010 C01A     		subs	r0, r0, r3
+ 587              	.LVL48:
+ 354:Src/hw_rtc.c  **** 
+ 588              		.loc 1 354 0
+ 589 0012 07B0     		add	sp, sp, #28
+ 590              		@ sp needed
+ 591 0014 00BD     		pop	{pc}
+ 592              	.L27:
+ 593 0016 C046     		.align	2
+ 594              	.L26:
+ 595 0018 00000000 		.word	.LANCHOR0
+ 596              		.cfi_endproc
+ 597              	.LFE48:
+ 599              		.section	.text.HW_RTC_GetTimerValue,"ax",%progbits
+ 600              		.align	1
+ 601              		.global	HW_RTC_GetTimerValue
+ 602              		.syntax unified
+ 603              		.code	16
+ 604              		.thumb_func
+ 605              		.fpu softvfp
+ 607              	HW_RTC_GetTimerValue:
+ 608              	.LFB49:
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//cciAWxUP.s 			page 23
+
+
+ 362:Src/hw_rtc.c  ****   RTC_TimeTypeDef RTC_TimeStruct;
+ 609              		.loc 1 362 0
+ 610              		.cfi_startproc
+ 611              		@ args = 0, pretend = 0, frame = 24
+ 612              		@ frame_needed = 0, uses_anonymous_args = 0
+ 613 0000 00B5     		push	{lr}
+ 614              	.LCFI10:
+ 615              		.cfi_def_cfa_offset 4
+ 616              		.cfi_offset 14, -4
+ 617 0002 87B0     		sub	sp, sp, #28
+ 618              	.LCFI11:
+ 619              		.cfi_def_cfa_offset 32
+ 366:Src/hw_rtc.c  **** 
+ 620              		.loc 1 366 0
+ 621 0004 01A9     		add	r1, sp, #4
+ 622 0006 6846     		mov	r0, sp
+ 623 0008 FFF7FEFF 		bl	HW_RTC_GetCalendarValue
+ 624              	.LVL49:
+ 369:Src/hw_rtc.c  **** 
+ 625              		.loc 1 369 0
+ 626 000c 07B0     		add	sp, sp, #28
+ 627              		@ sp needed
+ 628 000e 00BD     		pop	{pc}
+ 629              		.cfi_endproc
+ 630              	.LFE49:
+ 632              		.section	.text.HW_RTC_StopAlarm,"ax",%progbits
+ 633              		.align	1
+ 634              		.global	HW_RTC_StopAlarm
+ 635              		.syntax unified
+ 636              		.code	16
+ 637              		.thumb_func
+ 638              		.fpu softvfp
+ 640              	HW_RTC_StopAlarm:
+ 641              	.LFB50:
+ 377:Src/hw_rtc.c  ****   /* Disable the Alarm A interrupt */
+ 642              		.loc 1 377 0
+ 643              		.cfi_startproc
+ 644              		@ args = 0, pretend = 0, frame = 0
+ 645              		@ frame_needed = 0, uses_anonymous_args = 0
+ 646 0000 10B5     		push	{r4, lr}
+ 647              	.LCFI12:
+ 648              		.cfi_def_cfa_offset 8
+ 649              		.cfi_offset 4, -8
+ 650              		.cfi_offset 14, -4
+ 379:Src/hw_rtc.c  ****   /* Clear RTC Alarm Flag */
+ 651              		.loc 1 379 0
+ 652 0002 8021     		movs	r1, #128
+ 653 0004 084C     		ldr	r4, .L30
+ 654 0006 4900     		lsls	r1, r1, #1
+ 655 0008 2000     		movs	r0, r4
+ 656 000a FFF7FEFF 		bl	HAL_RTC_DeactivateAlarm
+ 657              	.LVL50:
+ 381:Src/hw_rtc.c  ****   /* Clear the EXTI's line Flag for RTC Alarm */  
+ 658              		.loc 1 381 0
+ 659 000e 2168     		ldr	r1, [r4]
+ 660 0010 CA68     		ldr	r2, [r1, #12]
+ 661 0012 FF23     		movs	r3, #255
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//cciAWxUP.s 			page 24
+
+
+ 662 0014 1A40     		ands	r2, r3
+ 663 0016 054B     		ldr	r3, .L30+4
+ 664 0018 1343     		orrs	r3, r2
+ 665 001a CB60     		str	r3, [r1, #12]
+ 383:Src/hw_rtc.c  **** }
+ 666              		.loc 1 383 0
+ 667 001c 044B     		ldr	r3, .L30+8
+ 668 001e 8022     		movs	r2, #128
+ 669 0020 9202     		lsls	r2, r2, #10
+ 670 0022 5A61     		str	r2, [r3, #20]
+ 384:Src/hw_rtc.c  **** 
+ 671              		.loc 1 384 0
+ 672              		@ sp needed
+ 673 0024 10BD     		pop	{r4, pc}
+ 674              	.L31:
+ 675 0026 C046     		.align	2
+ 676              	.L30:
+ 677 0028 00000000 		.word	.LANCHOR0
+ 678 002c 7FFEFFFF 		.word	-385
+ 679 0030 00040140 		.word	1073808384
+ 680              		.cfi_endproc
+ 681              	.LFE50:
+ 683              		.global	__aeabi_idivmod
+ 684              		.section	.text.HW_RTC_StartWakeUpAlarm,"ax",%progbits
+ 685              		.align	1
+ 686              		.syntax unified
+ 687              		.code	16
+ 688              		.thumb_func
+ 689              		.fpu softvfp
+ 691              	HW_RTC_StartWakeUpAlarm:
+ 692              	.LFB56:
+ 474:Src/hw_rtc.c  ****   uint16_t rtcAlarmSubSeconds = 0;
+ 693              		.loc 1 474 0
+ 694              		.cfi_startproc
+ 695              		@ args = 0, pretend = 0, frame = 24
+ 696              		@ frame_needed = 0, uses_anonymous_args = 0
+ 697              	.LVL51:
+ 698 0000 F0B5     		push	{r4, r5, r6, r7, lr}
+ 699              	.LCFI13:
+ 700              		.cfi_def_cfa_offset 20
+ 701              		.cfi_offset 4, -20
+ 702              		.cfi_offset 5, -16
+ 703              		.cfi_offset 6, -12
+ 704              		.cfi_offset 7, -8
+ 705              		.cfi_offset 14, -4
+ 706 0002 87B0     		sub	sp, sp, #28
+ 707              	.LCFI14:
+ 708              		.cfi_def_cfa_offset 48
+ 709 0004 0400     		movs	r4, r0
+ 710              	.LVL52:
+ 480:Src/hw_rtc.c  ****   RTC_DateTypeDef RTC_DateStruct = RtcTimerContext.RTC_Calndr_Date;
+ 711              		.loc 1 480 0
+ 712 0006 01AD     		add	r5, sp, #4
+ 713 0008 4A49     		ldr	r1, .L49
+ 714 000a 2A00     		movs	r2, r5
+ 715 000c 0B00     		movs	r3, r1
+ 716 000e 5833     		adds	r3, r3, #88
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//cciAWxUP.s 			page 25
+
+
+ 717 0010 C1CB     		ldmia	r3!, {r0, r6, r7}
+ 718 0012 C1C2     		stmia	r2!, {r0, r6, r7}
+ 719              	.LVL53:
+ 720 0014 41CB     		ldmia	r3!, {r0, r6}
+ 721 0016 41C2     		stmia	r2!, {r0, r6}
+ 481:Src/hw_rtc.c  **** 
+ 722              		.loc 1 481 0
+ 723 0018 CB6E     		ldr	r3, [r1, #108]
+ 724 001a 0093     		str	r3, [sp]
+ 483:Src/hw_rtc.c  ****   DBG_GPIO_SET(GPIOB, GPIO_PIN_13);
+ 725              		.loc 1 483 0
+ 726 001c FFF7FEFF 		bl	HW_RTC_StopAlarm
+ 727              	.LVL54:
+ 487:Src/hw_rtc.c  ****   rtcAlarmSubSeconds += ( timeoutValue & PREDIV_S);
+ 728              		.loc 1 487 0
+ 729 0020 AB88     		ldrh	r3, [r5, #4]
+ 730 0022 454F     		ldr	r7, .L49+4
+ 731 0024 FB1A     		subs	r3, r7, r3
+ 732 0026 9BB2     		uxth	r3, r3
+ 733              	.LVL55:
+ 488:Src/hw_rtc.c  ****   /* convert timeout  to seconds */
+ 734              		.loc 1 488 0
+ 735 0028 A705     		lsls	r7, r4, #22
+ 736 002a BF0D     		lsrs	r7, r7, #22
+ 737 002c FF18     		adds	r7, r7, r3
+ 738 002e BFB2     		uxth	r7, r7
+ 739              	.LVL56:
+ 490:Src/hw_rtc.c  ****   
+ 740              		.loc 1 490 0
+ 741 0030 A30A     		lsrs	r3, r4, #10
+ 742              	.LVL57:
+ 493:Src/hw_rtc.c  ****   while (timeoutValue >= SECONDS_IN_1DAY)
+ 743              		.loc 1 493 0
+ 744 0032 6A46     		mov	r2, sp
+ 745 0034 9278     		ldrb	r2, [r2, #2]
+ 746              	.LVL58:
+ 494:Src/hw_rtc.c  ****   {
+ 747              		.loc 1 494 0
+ 748 0036 04E0     		b	.L33
+ 749              	.L34:
+ 496:Src/hw_rtc.c  ****     rtcAlarmDays++;
+ 750              		.loc 1 496 0
+ 751 0038 4049     		ldr	r1, .L49+8
+ 752 003a 8C46     		mov	ip, r1
+ 753 003c 6344     		add	r3, r3, ip
+ 754              	.LVL59:
+ 497:Src/hw_rtc.c  ****   }
+ 755              		.loc 1 497 0
+ 756 003e 0132     		adds	r2, r2, #1
+ 757              	.LVL60:
+ 758 0040 92B2     		uxth	r2, r2
+ 759              	.LVL61:
+ 760              	.L33:
+ 494:Src/hw_rtc.c  ****   {
+ 761              		.loc 1 494 0
+ 762 0042 3F49     		ldr	r1, .L49+12
+ 763 0044 8B42     		cmp	r3, r1
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//cciAWxUP.s 			page 26
+
+
+ 764 0046 F7D8     		bhi	.L34
+ 501:Src/hw_rtc.c  ****   while (timeoutValue >= SECONDS_IN_1HOUR)
+ 765              		.loc 1 501 0
+ 766 0048 01A9     		add	r1, sp, #4
+ 767 004a 0C78     		ldrb	r4, [r1]
+ 768              	.LVL62:
+ 502:Src/hw_rtc.c  ****   {
+ 769              		.loc 1 502 0
+ 770 004c 04E0     		b	.L35
+ 771              	.L36:
+ 504:Src/hw_rtc.c  ****     rtcAlarmHours++;
+ 772              		.loc 1 504 0
+ 773 004e 3D49     		ldr	r1, .L49+16
+ 774 0050 8C46     		mov	ip, r1
+ 775 0052 6344     		add	r3, r3, ip
+ 776              	.LVL63:
+ 505:Src/hw_rtc.c  ****   }
+ 777              		.loc 1 505 0
+ 778 0054 0134     		adds	r4, r4, #1
+ 779              	.LVL64:
+ 780 0056 A4B2     		uxth	r4, r4
+ 781              	.LVL65:
+ 782              	.L35:
+ 502:Src/hw_rtc.c  ****   {
+ 783              		.loc 1 502 0
+ 784 0058 3B49     		ldr	r1, .L49+20
+ 785 005a 8B42     		cmp	r3, r1
+ 786 005c F7D8     		bhi	.L36
+ 509:Src/hw_rtc.c  ****   while (timeoutValue >= SECONDS_IN_1MINUTE)
+ 787              		.loc 1 509 0
+ 788 005e 01A9     		add	r1, sp, #4
+ 789 0060 4D78     		ldrb	r5, [r1, #1]
+ 790              	.LVL66:
+ 510:Src/hw_rtc.c  ****   {
+ 791              		.loc 1 510 0
+ 792 0062 02E0     		b	.L37
+ 793              	.L38:
+ 512:Src/hw_rtc.c  ****     rtcAlarmMinutes++;
+ 794              		.loc 1 512 0
+ 795 0064 3C3B     		subs	r3, r3, #60
+ 796              	.LVL67:
+ 513:Src/hw_rtc.c  ****   }
+ 797              		.loc 1 513 0
+ 798 0066 0135     		adds	r5, r5, #1
+ 799              	.LVL68:
+ 800 0068 ADB2     		uxth	r5, r5
+ 801              	.LVL69:
+ 802              	.L37:
+ 510:Src/hw_rtc.c  ****   {
+ 803              		.loc 1 510 0
+ 804 006a 3B2B     		cmp	r3, #59
+ 805 006c FAD8     		bhi	.L38
+ 517:Src/hw_rtc.c  **** 
+ 806              		.loc 1 517 0
+ 807 006e 01A9     		add	r1, sp, #4
+ 808 0070 8E78     		ldrb	r6, [r1, #2]
+ 809 0072 9BB2     		uxth	r3, r3
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//cciAWxUP.s 			page 27
+
+
+ 810              	.LVL70:
+ 811 0074 F618     		adds	r6, r6, r3
+ 812 0076 B6B2     		uxth	r6, r6
+ 813              	.LVL71:
+ 520:Src/hw_rtc.c  ****   {
+ 814              		.loc 1 520 0
+ 815 0078 05E0     		b	.L39
+ 816              	.L40:
+ 522:Src/hw_rtc.c  ****     rtcAlarmSeconds++;
+ 817              		.loc 1 522 0
+ 818 007a 344B     		ldr	r3, .L49+24
+ 819 007c 9C46     		mov	ip, r3
+ 820 007e 6744     		add	r7, r7, ip
+ 821              	.LVL72:
+ 822 0080 BFB2     		uxth	r7, r7
+ 823              	.LVL73:
+ 523:Src/hw_rtc.c  ****   }
+ 824              		.loc 1 523 0
+ 825 0082 0136     		adds	r6, r6, #1
+ 826              	.LVL74:
+ 827 0084 B6B2     		uxth	r6, r6
+ 828              	.LVL75:
+ 829              	.L39:
+ 520:Src/hw_rtc.c  ****   {
+ 830              		.loc 1 520 0
+ 831 0086 2C4B     		ldr	r3, .L49+4
+ 832 0088 9F42     		cmp	r7, r3
+ 833 008a F6D8     		bhi	.L40
+ 834 008c 03E0     		b	.L41
+ 835              	.L42:
+ 528:Src/hw_rtc.c  ****     rtcAlarmMinutes++;
+ 836              		.loc 1 528 0
+ 837 008e 3C3E     		subs	r6, r6, #60
+ 838              	.LVL76:
+ 839 0090 B6B2     		uxth	r6, r6
+ 840              	.LVL77:
+ 529:Src/hw_rtc.c  ****   }
+ 841              		.loc 1 529 0
+ 842 0092 0135     		adds	r5, r5, #1
+ 843              	.LVL78:
+ 844 0094 ADB2     		uxth	r5, r5
+ 845              	.LVL79:
+ 846              	.L41:
+ 526:Src/hw_rtc.c  ****   { 
+ 847              		.loc 1 526 0
+ 848 0096 3B2E     		cmp	r6, #59
+ 849 0098 F9D8     		bhi	.L42
+ 850 009a 03E0     		b	.L43
+ 851              	.L44:
+ 534:Src/hw_rtc.c  ****     rtcAlarmHours++;
+ 852              		.loc 1 534 0
+ 853 009c 3C3D     		subs	r5, r5, #60
+ 854              	.LVL80:
+ 855 009e ADB2     		uxth	r5, r5
+ 856              	.LVL81:
+ 535:Src/hw_rtc.c  ****   }
+ 857              		.loc 1 535 0
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//cciAWxUP.s 			page 28
+
+
+ 858 00a0 0134     		adds	r4, r4, #1
+ 859              	.LVL82:
+ 860 00a2 A4B2     		uxth	r4, r4
+ 861              	.LVL83:
+ 862              	.L43:
+ 532:Src/hw_rtc.c  ****   {
+ 863              		.loc 1 532 0
+ 864 00a4 3B2D     		cmp	r5, #59
+ 865 00a6 F9D8     		bhi	.L44
+ 866 00a8 03E0     		b	.L45
+ 867              	.L46:
+ 540:Src/hw_rtc.c  ****     rtcAlarmDays++;
+ 868              		.loc 1 540 0
+ 869 00aa 183C     		subs	r4, r4, #24
+ 870              	.LVL84:
+ 871 00ac A4B2     		uxth	r4, r4
+ 872              	.LVL85:
+ 541:Src/hw_rtc.c  ****   }
+ 873              		.loc 1 541 0
+ 874 00ae 0132     		adds	r2, r2, #1
+ 875              	.LVL86:
+ 876 00b0 92B2     		uxth	r2, r2
+ 877              	.LVL87:
+ 878              	.L45:
+ 538:Src/hw_rtc.c  ****   {
+ 879              		.loc 1 538 0
+ 880 00b2 172C     		cmp	r4, #23
+ 881 00b4 F9D8     		bhi	.L46
+ 544:Src/hw_rtc.c  ****   {
+ 882              		.loc 1 544 0
+ 883 00b6 6B46     		mov	r3, sp
+ 884 00b8 DB78     		ldrb	r3, [r3, #3]
+ 885 00ba 9B07     		lsls	r3, r3, #30
+ 886 00bc 0CD1     		bne	.L47
+ 546:Src/hw_rtc.c  ****     {
+ 887              		.loc 1 546 0
+ 888 00be 6B46     		mov	r3, sp
+ 889 00c0 5B78     		ldrb	r3, [r3, #1]
+ 890 00c2 013B     		subs	r3, r3, #1
+ 891 00c4 2249     		ldr	r1, .L49+28
+ 892 00c6 C95C     		ldrb	r1, [r1, r3]
+ 893 00c8 8BB2     		uxth	r3, r1
+ 894 00ca 9342     		cmp	r3, r2
+ 895 00cc 11D2     		bcs	.L48
+ 548:Src/hw_rtc.c  ****     }
+ 896              		.loc 1 548 0
+ 897 00ce 1000     		movs	r0, r2
+ 898 00d0 FFF7FEFF 		bl	__aeabi_idivmod
+ 899              	.LVL88:
+ 900 00d4 8AB2     		uxth	r2, r1
+ 901              	.LVL89:
+ 902 00d6 0CE0     		b	.L48
+ 903              	.L47:
+ 553:Src/hw_rtc.c  ****     {   
+ 904              		.loc 1 553 0
+ 905 00d8 6B46     		mov	r3, sp
+ 906 00da 5978     		ldrb	r1, [r3, #1]
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//cciAWxUP.s 			page 29
+
+
+ 907 00dc 0139     		subs	r1, r1, #1
+ 908 00de 1C4B     		ldr	r3, .L49+28
+ 909 00e0 5B18     		adds	r3, r3, r1
+ 910 00e2 197B     		ldrb	r1, [r3, #12]
+ 911 00e4 8BB2     		uxth	r3, r1
+ 912 00e6 9342     		cmp	r3, r2
+ 913 00e8 03D2     		bcs	.L48
+ 555:Src/hw_rtc.c  ****     }
+ 914              		.loc 1 555 0
+ 915 00ea 1000     		movs	r0, r2
+ 916 00ec FFF7FEFF 		bl	__aeabi_idivmod
+ 917              	.LVL90:
+ 918 00f0 8AB2     		uxth	r2, r1
+ 919              	.LVL91:
+ 920              	.L48:
+ 560:Src/hw_rtc.c  ****   RTC_AlarmStructure.AlarmSubSecondMask  = HW_RTC_ALARMSUBSECONDMASK; 
+ 921              		.loc 1 560 0
+ 922 00f2 114B     		ldr	r3, .L49+4
+ 923 00f4 DF1B     		subs	r7, r3, r7
+ 924              	.LVL92:
+ 925 00f6 0F48     		ldr	r0, .L49
+ 926 00f8 C762     		str	r7, [r0, #44]
+ 561:Src/hw_rtc.c  ****   RTC_AlarmStructure.AlarmTime.Seconds = rtcAlarmSeconds;
+ 927              		.loc 1 561 0
+ 928 00fa A023     		movs	r3, #160
+ 929 00fc 1B05     		lsls	r3, r3, #20
+ 930 00fe 0364     		str	r3, [r0, #64]
+ 562:Src/hw_rtc.c  ****   RTC_AlarmStructure.AlarmTime.Minutes = rtcAlarmMinutes;
+ 931              		.loc 1 562 0
+ 932 0100 0100     		movs	r1, r0
+ 933 0102 2831     		adds	r1, r1, #40
+ 934 0104 8E70     		strb	r6, [r1, #2]
+ 563:Src/hw_rtc.c  ****   RTC_AlarmStructure.AlarmTime.Hours   = rtcAlarmHours;
+ 935              		.loc 1 563 0
+ 936 0106 4D70     		strb	r5, [r1, #1]
+ 564:Src/hw_rtc.c  ****   RTC_AlarmStructure.AlarmDateWeekDay    = ( uint8_t )rtcAlarmDays;
+ 937              		.loc 1 564 0
+ 938 0108 2823     		movs	r3, #40
+ 939 010a C454     		strb	r4, [r0, r3]
+ 565:Src/hw_rtc.c  ****   RTC_AlarmStructure.AlarmTime.TimeFormat   = RTC_TimeStruct.TimeFormat;
+ 940              		.loc 1 565 0
+ 941 010c 0400     		movs	r4, r0
+ 942              	.LVL93:
+ 943 010e 4834     		adds	r4, r4, #72
+ 944 0110 2270     		strb	r2, [r4]
+ 566:Src/hw_rtc.c  ****   RTC_AlarmStructure.AlarmDateWeekDaySel   = RTC_ALARMDATEWEEKDAYSEL_DATE; 
+ 945              		.loc 1 566 0
+ 946 0112 01AA     		add	r2, sp, #4
+ 947              	.LVL94:
+ 948 0114 D278     		ldrb	r2, [r2, #3]
+ 949 0116 CA70     		strb	r2, [r1, #3]
+ 567:Src/hw_rtc.c  ****   RTC_AlarmStructure.AlarmMask       = RTC_ALARMMASK_NONE;
+ 950              		.loc 1 567 0
+ 951 0118 0023     		movs	r3, #0
+ 952 011a 4364     		str	r3, [r0, #68]
+ 568:Src/hw_rtc.c  ****   RTC_AlarmStructure.Alarm = RTC_ALARM_A;
+ 953              		.loc 1 568 0
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//cciAWxUP.s 			page 30
+
+
+ 954 011c C363     		str	r3, [r0, #60]
+ 569:Src/hw_rtc.c  ****   RTC_AlarmStructure.AlarmTime.DayLightSaving = RTC_DAYLIGHTSAVING_NONE;
+ 955              		.loc 1 569 0
+ 956 011e 8022     		movs	r2, #128
+ 957 0120 5200     		lsls	r2, r2, #1
+ 958 0122 C264     		str	r2, [r0, #76]
+ 570:Src/hw_rtc.c  ****   RTC_AlarmStructure.AlarmTime.StoreOperation = RTC_STOREOPERATION_RESET;
+ 959              		.loc 1 570 0
+ 960 0124 4363     		str	r3, [r0, #52]
+ 571:Src/hw_rtc.c  ****   
+ 961              		.loc 1 571 0
+ 962 0126 8363     		str	r3, [r0, #56]
+ 574:Src/hw_rtc.c  ****   
+ 963              		.loc 1 574 0
+ 964 0128 0022     		movs	r2, #0
+ 965 012a FFF7FEFF 		bl	HAL_RTC_SetAlarm_IT
+ 966              	.LVL95:
+ 582:Src/hw_rtc.c  **** 
+ 967              		.loc 1 582 0
+ 968 012e 07B0     		add	sp, sp, #28
+ 969              		@ sp needed
+ 970              	.LVL96:
+ 971              	.LVL97:
+ 972 0130 F0BD     		pop	{r4, r5, r6, r7, pc}
+ 973              	.L50:
+ 974 0132 C046     		.align	2
+ 975              	.L49:
+ 976 0134 00000000 		.word	.LANCHOR0
+ 977 0138 FF030000 		.word	1023
+ 978 013c 80AEFEFF 		.word	-86400
+ 979 0140 7F510100 		.word	86399
+ 980 0144 F0F1FFFF 		.word	-3600
+ 981 0148 0F0E0000 		.word	3599
+ 982 014c 00FCFFFF 		.word	-1024
+ 983 0150 00000000 		.word	.LANCHOR1
+ 984              		.cfi_endproc
+ 985              	.LFE56:
+ 987              		.section	.text.HW_RTC_SetAlarm,"ax",%progbits
+ 988              		.align	1
+ 989              		.global	HW_RTC_SetAlarm
+ 990              		.syntax unified
+ 991              		.code	16
+ 992              		.thumb_func
+ 993              		.fpu softvfp
+ 995              	HW_RTC_SetAlarm:
+ 996              	.LFB47:
+ 321:Src/hw_rtc.c  ****   /* we don't go in Low Power mode for timeout below MIN_ALARM_DELAY */
+ 997              		.loc 1 321 0
+ 998              		.cfi_startproc
+ 999              		@ args = 0, pretend = 0, frame = 0
+ 1000              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1001              	.LVL98:
+ 1002 0000 70B5     		push	{r4, r5, r6, lr}
+ 1003              	.LCFI15:
+ 1004              		.cfi_def_cfa_offset 16
+ 1005              		.cfi_offset 4, -16
+ 1006              		.cfi_offset 5, -12
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//cciAWxUP.s 			page 31
+
+
+ 1007              		.cfi_offset 6, -8
+ 1008              		.cfi_offset 14, -4
+ 1009 0002 0500     		movs	r5, r0
+ 323:Src/hw_rtc.c  ****   {
+ 1010              		.loc 1 323 0
+ 1011 0004 0F4A     		ldr	r2, .L56
+ 1012 0006 5023     		movs	r3, #80
+ 1013 0008 D45E     		ldrsh	r4, [r2, r3]
+ 1014 000a 0334     		adds	r4, r4, #3
+ 1015 000c FFF7FEFF 		bl	HW_RTC_GetTimerElapsedTime
+ 1016              	.LVL99:
+ 1017 0010 281A     		subs	r0, r5, r0
+ 1018 0012 8442     		cmp	r4, r0
+ 1019 0014 0BD2     		bcs	.L52
+ 325:Src/hw_rtc.c  ****   }
+ 1020              		.loc 1 325 0
+ 1021 0016 0021     		movs	r1, #0
+ 1022 0018 0420     		movs	r0, #4
+ 1023 001a FFF7FEFF 		bl	LPM_SetStopMode
+ 1024              	.LVL100:
+ 1025              	.L53:
+ 333:Src/hw_rtc.c  ****   {
+ 1026              		.loc 1 333 0
+ 1027 001e FFF7FEFF 		bl	LPM_GetMode
+ 1028              	.LVL101:
+ 1029 0022 0128     		cmp	r0, #1
+ 1030 0024 08D0     		beq	.L55
+ 1031              	.L54:
+ 338:Src/hw_rtc.c  **** }
+ 1032              		.loc 1 338 0
+ 1033 0026 2800     		movs	r0, r5
+ 1034 0028 FFF7FEFF 		bl	HW_RTC_StartWakeUpAlarm
+ 1035              	.LVL102:
+ 339:Src/hw_rtc.c  **** 
+ 1036              		.loc 1 339 0
+ 1037              		@ sp needed
+ 1038              	.LVL103:
+ 1039 002c 70BD     		pop	{r4, r5, r6, pc}
+ 1040              	.LVL104:
+ 1041              	.L52:
+ 329:Src/hw_rtc.c  ****   }
+ 1042              		.loc 1 329 0
+ 1043 002e 0121     		movs	r1, #1
+ 1044 0030 0420     		movs	r0, #4
+ 1045 0032 FFF7FEFF 		bl	LPM_SetStopMode
+ 1046              	.LVL105:
+ 1047 0036 F2E7     		b	.L53
+ 1048              	.L55:
+ 335:Src/hw_rtc.c  ****   }
+ 1049              		.loc 1 335 0
+ 1050 0038 024A     		ldr	r2, .L56
+ 1051 003a 5023     		movs	r3, #80
+ 1052 003c D35E     		ldrsh	r3, [r2, r3]
+ 1053 003e ED1A     		subs	r5, r5, r3
+ 1054              	.LVL106:
+ 1055 0040 F1E7     		b	.L54
+ 1056              	.L57:
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//cciAWxUP.s 			page 32
+
+
+ 1057 0042 C046     		.align	2
+ 1058              	.L56:
+ 1059 0044 00000000 		.word	.LANCHOR0
+ 1060              		.cfi_endproc
+ 1061              	.LFE47:
+ 1063              		.section	.text.HW_RTC_IrqHandler,"ax",%progbits
+ 1064              		.align	1
+ 1065              		.global	HW_RTC_IrqHandler
+ 1066              		.syntax unified
+ 1067              		.code	16
+ 1068              		.thumb_func
+ 1069              		.fpu softvfp
+ 1071              	HW_RTC_IrqHandler:
+ 1072              	.LFB51:
+ 392:Src/hw_rtc.c  ****   RTC_HandleTypeDef* hrtc=&RtcHandle;
+ 1073              		.loc 1 392 0
+ 1074              		.cfi_startproc
+ 1075              		@ args = 0, pretend = 0, frame = 0
+ 1076              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1077 0000 10B5     		push	{r4, lr}
+ 1078              	.LCFI16:
+ 1079              		.cfi_def_cfa_offset 8
+ 1080              		.cfi_offset 4, -8
+ 1081              		.cfi_offset 14, -4
+ 1082              	.LVL107:
+ 395:Src/hw_rtc.c  ****   
+ 1083              		.loc 1 395 0
+ 1084 0002 0021     		movs	r1, #0
+ 1085 0004 0420     		movs	r0, #4
+ 1086 0006 FFF7FEFF 		bl	LPM_SetStopMode
+ 1087              	.LVL108:
+ 398:Src/hw_rtc.c  ****   
+ 1088              		.loc 1 398 0
+ 1089 000a 0B4B     		ldr	r3, .L61
+ 1090 000c 8022     		movs	r2, #128
+ 1091 000e 9202     		lsls	r2, r2, #10
+ 1092 0010 5A61     		str	r2, [r3, #20]
+ 401:Src/hw_rtc.c  ****   {
+ 1093              		.loc 1 401 0
+ 1094 0012 0A4B     		ldr	r3, .L61+4
+ 1095 0014 1B68     		ldr	r3, [r3]
+ 1096 0016 9A68     		ldr	r2, [r3, #8]
+ 1097 0018 D204     		lsls	r2, r2, #19
+ 1098 001a 02D5     		bpl	.L58
+ 404:Src/hw_rtc.c  ****     {
+ 1099              		.loc 1 404 0
+ 1100 001c DA68     		ldr	r2, [r3, #12]
+ 1101 001e D205     		lsls	r2, r2, #23
+ 1102 0020 00D4     		bmi	.L60
+ 1103              	.L58:
+ 412:Src/hw_rtc.c  **** 
+ 1104              		.loc 1 412 0
+ 1105              		@ sp needed
+ 1106 0022 10BD     		pop	{r4, pc}
+ 1107              	.L60:
+ 407:Src/hw_rtc.c  ****       /* AlarmA callback */
+ 1108              		.loc 1 407 0
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//cciAWxUP.s 			page 33
+
+
+ 1109 0024 D968     		ldr	r1, [r3, #12]
+ 1110 0026 FF22     		movs	r2, #255
+ 1111 0028 1140     		ands	r1, r2
+ 1112 002a 054A     		ldr	r2, .L61+8
+ 1113 002c 0A43     		orrs	r2, r1
+ 1114 002e DA60     		str	r2, [r3, #12]
+ 409:Src/hw_rtc.c  ****     }
+ 1115              		.loc 1 409 0
+ 1116 0030 0248     		ldr	r0, .L61+4
+ 1117 0032 FFF7FEFF 		bl	HAL_RTC_AlarmAEventCallback
+ 1118              	.LVL109:
+ 412:Src/hw_rtc.c  **** 
+ 1119              		.loc 1 412 0
+ 1120 0036 F4E7     		b	.L58
+ 1121              	.L62:
+ 1122              		.align	2
+ 1123              	.L61:
+ 1124 0038 00040140 		.word	1073808384
+ 1125 003c 00000000 		.word	.LANCHOR0
+ 1126 0040 7FFEFFFF 		.word	-385
+ 1127              		.cfi_endproc
+ 1128              	.LFE51:
+ 1130              		.section	.text.HW_RTC_DelayMs,"ax",%progbits
+ 1131              		.align	1
+ 1132              		.global	HW_RTC_DelayMs
+ 1133              		.syntax unified
+ 1134              		.code	16
+ 1135              		.thumb_func
+ 1136              		.fpu softvfp
+ 1138              	HW_RTC_DelayMs:
+ 1139              	.LFB52:
+ 421:Src/hw_rtc.c  ****   TimerTime_t delayValue = 0;
+ 1140              		.loc 1 421 0
+ 1141              		.cfi_startproc
+ 1142              		@ args = 0, pretend = 0, frame = 0
+ 1143              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1144              	.LVL110:
+ 1145 0000 70B5     		push	{r4, r5, r6, lr}
+ 1146              	.LCFI17:
+ 1147              		.cfi_def_cfa_offset 16
+ 1148              		.cfi_offset 4, -16
+ 1149              		.cfi_offset 5, -12
+ 1150              		.cfi_offset 6, -8
+ 1151              		.cfi_offset 14, -4
+ 1152              	.LVL111:
+ 425:Src/hw_rtc.c  **** 
+ 1153              		.loc 1 425 0
+ 1154 0002 FFF7FEFF 		bl	HW_RTC_ms2Tick
+ 1155              	.LVL112:
+ 1156 0006 0500     		movs	r5, r0
+ 1157              	.LVL113:
+ 428:Src/hw_rtc.c  ****   while( ( ( HW_RTC_GetTimerValue( ) - timeout ) ) < delayValue )
+ 1158              		.loc 1 428 0
+ 1159 0008 FFF7FEFF 		bl	HW_RTC_GetTimerValue
+ 1160              	.LVL114:
+ 1161 000c 0400     		movs	r4, r0
+ 1162              	.LVL115:
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//cciAWxUP.s 			page 34
+
+
+ 429:Src/hw_rtc.c  ****   {
+ 1163              		.loc 1 429 0
+ 1164 000e 00E0     		b	.L64
+ 1165              	.LVL116:
+ 1166              	.L65:
+ 1167              	.LBB4:
+ 1168              	.LBB5:
+ 1169              		.file 2 "Drivers/CMSIS/Include/cmsis_gcc.h"
+   1:Drivers/CMSIS/Include/cmsis_gcc.h **** /**************************************************************************//**
+   2:Drivers/CMSIS/Include/cmsis_gcc.h ****  * @file     cmsis_gcc.h
+   3:Drivers/CMSIS/Include/cmsis_gcc.h ****  * @brief    CMSIS Cortex-M Core Function/Instruction Header File
+   4:Drivers/CMSIS/Include/cmsis_gcc.h ****  * @version  V4.30
+   5:Drivers/CMSIS/Include/cmsis_gcc.h ****  * @date     20. October 2015
+   6:Drivers/CMSIS/Include/cmsis_gcc.h ****  ******************************************************************************/
+   7:Drivers/CMSIS/Include/cmsis_gcc.h **** /* Copyright (c) 2009 - 2015 ARM LIMITED
+   8:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+   9:Drivers/CMSIS/Include/cmsis_gcc.h ****    All rights reserved.
+  10:Drivers/CMSIS/Include/cmsis_gcc.h ****    Redistribution and use in source and binary forms, with or without
+  11:Drivers/CMSIS/Include/cmsis_gcc.h ****    modification, are permitted provided that the following conditions are met:
+  12:Drivers/CMSIS/Include/cmsis_gcc.h ****    - Redistributions of source code must retain the above copyright
+  13:Drivers/CMSIS/Include/cmsis_gcc.h ****      notice, this list of conditions and the following disclaimer.
+  14:Drivers/CMSIS/Include/cmsis_gcc.h ****    - Redistributions in binary form must reproduce the above copyright
+  15:Drivers/CMSIS/Include/cmsis_gcc.h ****      notice, this list of conditions and the following disclaimer in the
+  16:Drivers/CMSIS/Include/cmsis_gcc.h ****      documentation and/or other materials provided with the distribution.
+  17:Drivers/CMSIS/Include/cmsis_gcc.h ****    - Neither the name of ARM nor the names of its contributors may be used
+  18:Drivers/CMSIS/Include/cmsis_gcc.h ****      to endorse or promote products derived from this software without
+  19:Drivers/CMSIS/Include/cmsis_gcc.h ****      specific prior written permission.
+  20:Drivers/CMSIS/Include/cmsis_gcc.h ****    *
+  21:Drivers/CMSIS/Include/cmsis_gcc.h ****    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  22:Drivers/CMSIS/Include/cmsis_gcc.h ****    AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+  23:Drivers/CMSIS/Include/cmsis_gcc.h ****    IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+  24:Drivers/CMSIS/Include/cmsis_gcc.h ****    ARE DISCLAIMED. IN NO EVENT SHALL COPYRIGHT HOLDERS AND CONTRIBUTORS BE
+  25:Drivers/CMSIS/Include/cmsis_gcc.h ****    LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+  26:Drivers/CMSIS/Include/cmsis_gcc.h ****    CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+  27:Drivers/CMSIS/Include/cmsis_gcc.h ****    SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+  28:Drivers/CMSIS/Include/cmsis_gcc.h ****    INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+  29:Drivers/CMSIS/Include/cmsis_gcc.h ****    CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+  30:Drivers/CMSIS/Include/cmsis_gcc.h ****    ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+  31:Drivers/CMSIS/Include/cmsis_gcc.h ****    POSSIBILITY OF SUCH DAMAGE.
+  32:Drivers/CMSIS/Include/cmsis_gcc.h ****    ---------------------------------------------------------------------------*/
+  33:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+  34:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+  35:Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef __CMSIS_GCC_H
+  36:Drivers/CMSIS/Include/cmsis_gcc.h **** #define __CMSIS_GCC_H
+  37:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+  38:Drivers/CMSIS/Include/cmsis_gcc.h **** /* ignore some GCC warnings */
+  39:Drivers/CMSIS/Include/cmsis_gcc.h **** #if defined ( __GNUC__ )
+  40:Drivers/CMSIS/Include/cmsis_gcc.h **** #pragma GCC diagnostic push
+  41:Drivers/CMSIS/Include/cmsis_gcc.h **** #pragma GCC diagnostic ignored "-Wsign-conversion"
+  42:Drivers/CMSIS/Include/cmsis_gcc.h **** #pragma GCC diagnostic ignored "-Wconversion"
+  43:Drivers/CMSIS/Include/cmsis_gcc.h **** #pragma GCC diagnostic ignored "-Wunused-parameter"
+  44:Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
+  45:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+  46:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+  47:Drivers/CMSIS/Include/cmsis_gcc.h **** /* ###########################  Core Function Access  ########################### */
+  48:Drivers/CMSIS/Include/cmsis_gcc.h **** /** \ingroup  CMSIS_Core_FunctionInterface
+  49:Drivers/CMSIS/Include/cmsis_gcc.h ****     \defgroup CMSIS_Core_RegAccFunctions CMSIS Core Register Access Functions
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//cciAWxUP.s 			page 35
+
+
+  50:Drivers/CMSIS/Include/cmsis_gcc.h ****   @{
+  51:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
+  52:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+  53:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
+  54:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Enable IRQ Interrupts
+  55:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Enables IRQ interrupts by clearing the I-bit in the CPSR.
+  56:Drivers/CMSIS/Include/cmsis_gcc.h ****            Can only be executed in Privileged modes.
+  57:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
+  58:Drivers/CMSIS/Include/cmsis_gcc.h **** __attribute__( ( always_inline ) ) __STATIC_INLINE void __enable_irq(void)
+  59:Drivers/CMSIS/Include/cmsis_gcc.h **** {
+  60:Drivers/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("cpsie i" : : : "memory");
+  61:Drivers/CMSIS/Include/cmsis_gcc.h **** }
+  62:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+  63:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+  64:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
+  65:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Disable IRQ Interrupts
+  66:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Disables IRQ interrupts by setting the I-bit in the CPSR.
+  67:Drivers/CMSIS/Include/cmsis_gcc.h ****   Can only be executed in Privileged modes.
+  68:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
+  69:Drivers/CMSIS/Include/cmsis_gcc.h **** __attribute__( ( always_inline ) ) __STATIC_INLINE void __disable_irq(void)
+  70:Drivers/CMSIS/Include/cmsis_gcc.h **** {
+  71:Drivers/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("cpsid i" : : : "memory");
+  72:Drivers/CMSIS/Include/cmsis_gcc.h **** }
+  73:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+  74:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+  75:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
+  76:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Get Control Register
+  77:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Returns the content of the Control Register.
+  78:Drivers/CMSIS/Include/cmsis_gcc.h ****   \return               Control Register value
+  79:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
+  80:Drivers/CMSIS/Include/cmsis_gcc.h **** __attribute__( ( always_inline ) ) __STATIC_INLINE uint32_t __get_CONTROL(void)
+  81:Drivers/CMSIS/Include/cmsis_gcc.h **** {
+  82:Drivers/CMSIS/Include/cmsis_gcc.h ****   uint32_t result;
+  83:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+  84:Drivers/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("MRS %0, control" : "=r" (result) );
+  85:Drivers/CMSIS/Include/cmsis_gcc.h ****   return(result);
+  86:Drivers/CMSIS/Include/cmsis_gcc.h **** }
+  87:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+  88:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+  89:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
+  90:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Set Control Register
+  91:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Writes the given value to the Control Register.
+  92:Drivers/CMSIS/Include/cmsis_gcc.h ****   \param [in]    control  Control Register value to set
+  93:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
+  94:Drivers/CMSIS/Include/cmsis_gcc.h **** __attribute__( ( always_inline ) ) __STATIC_INLINE void __set_CONTROL(uint32_t control)
+  95:Drivers/CMSIS/Include/cmsis_gcc.h **** {
+  96:Drivers/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("MSR control, %0" : : "r" (control) : "memory");
+  97:Drivers/CMSIS/Include/cmsis_gcc.h **** }
+  98:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+  99:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 100:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
+ 101:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Get IPSR Register
+ 102:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Returns the content of the IPSR Register.
+ 103:Drivers/CMSIS/Include/cmsis_gcc.h ****   \return               IPSR Register value
+ 104:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
+ 105:Drivers/CMSIS/Include/cmsis_gcc.h **** __attribute__( ( always_inline ) ) __STATIC_INLINE uint32_t __get_IPSR(void)
+ 106:Drivers/CMSIS/Include/cmsis_gcc.h **** {
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//cciAWxUP.s 			page 36
+
+
+ 107:Drivers/CMSIS/Include/cmsis_gcc.h ****   uint32_t result;
+ 108:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 109:Drivers/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("MRS %0, ipsr" : "=r" (result) );
+ 110:Drivers/CMSIS/Include/cmsis_gcc.h ****   return(result);
+ 111:Drivers/CMSIS/Include/cmsis_gcc.h **** }
+ 112:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 113:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 114:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
+ 115:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Get APSR Register
+ 116:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Returns the content of the APSR Register.
+ 117:Drivers/CMSIS/Include/cmsis_gcc.h ****   \return               APSR Register value
+ 118:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
+ 119:Drivers/CMSIS/Include/cmsis_gcc.h **** __attribute__( ( always_inline ) ) __STATIC_INLINE uint32_t __get_APSR(void)
+ 120:Drivers/CMSIS/Include/cmsis_gcc.h **** {
+ 121:Drivers/CMSIS/Include/cmsis_gcc.h ****   uint32_t result;
+ 122:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 123:Drivers/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("MRS %0, apsr" : "=r" (result) );
+ 124:Drivers/CMSIS/Include/cmsis_gcc.h ****   return(result);
+ 125:Drivers/CMSIS/Include/cmsis_gcc.h **** }
+ 126:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 127:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 128:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
+ 129:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Get xPSR Register
+ 130:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Returns the content of the xPSR Register.
+ 131:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 132:Drivers/CMSIS/Include/cmsis_gcc.h ****     \return               xPSR Register value
+ 133:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
+ 134:Drivers/CMSIS/Include/cmsis_gcc.h **** __attribute__( ( always_inline ) ) __STATIC_INLINE uint32_t __get_xPSR(void)
+ 135:Drivers/CMSIS/Include/cmsis_gcc.h **** {
+ 136:Drivers/CMSIS/Include/cmsis_gcc.h ****   uint32_t result;
+ 137:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 138:Drivers/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("MRS %0, xpsr" : "=r" (result) );
+ 139:Drivers/CMSIS/Include/cmsis_gcc.h ****   return(result);
+ 140:Drivers/CMSIS/Include/cmsis_gcc.h **** }
+ 141:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 142:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 143:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
+ 144:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Get Process Stack Pointer
+ 145:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Returns the current value of the Process Stack Pointer (PSP).
+ 146:Drivers/CMSIS/Include/cmsis_gcc.h ****   \return               PSP Register value
+ 147:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
+ 148:Drivers/CMSIS/Include/cmsis_gcc.h **** __attribute__( ( always_inline ) ) __STATIC_INLINE uint32_t __get_PSP(void)
+ 149:Drivers/CMSIS/Include/cmsis_gcc.h **** {
+ 150:Drivers/CMSIS/Include/cmsis_gcc.h ****   register uint32_t result;
+ 151:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 152:Drivers/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("MRS %0, psp\n"  : "=r" (result) );
+ 153:Drivers/CMSIS/Include/cmsis_gcc.h ****   return(result);
+ 154:Drivers/CMSIS/Include/cmsis_gcc.h **** }
+ 155:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 156:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 157:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
+ 158:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Set Process Stack Pointer
+ 159:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Assigns the given value to the Process Stack Pointer (PSP).
+ 160:Drivers/CMSIS/Include/cmsis_gcc.h ****   \param [in]    topOfProcStack  Process Stack Pointer value to set
+ 161:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
+ 162:Drivers/CMSIS/Include/cmsis_gcc.h **** __attribute__( ( always_inline ) ) __STATIC_INLINE void __set_PSP(uint32_t topOfProcStack)
+ 163:Drivers/CMSIS/Include/cmsis_gcc.h **** {
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//cciAWxUP.s 			page 37
+
+
+ 164:Drivers/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("MSR psp, %0\n" : : "r" (topOfProcStack) : "sp");
+ 165:Drivers/CMSIS/Include/cmsis_gcc.h **** }
+ 166:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 167:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 168:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
+ 169:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Get Main Stack Pointer
+ 170:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Returns the current value of the Main Stack Pointer (MSP).
+ 171:Drivers/CMSIS/Include/cmsis_gcc.h ****   \return               MSP Register value
+ 172:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
+ 173:Drivers/CMSIS/Include/cmsis_gcc.h **** __attribute__( ( always_inline ) ) __STATIC_INLINE uint32_t __get_MSP(void)
+ 174:Drivers/CMSIS/Include/cmsis_gcc.h **** {
+ 175:Drivers/CMSIS/Include/cmsis_gcc.h ****   register uint32_t result;
+ 176:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 177:Drivers/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("MRS %0, msp\n" : "=r" (result) );
+ 178:Drivers/CMSIS/Include/cmsis_gcc.h ****   return(result);
+ 179:Drivers/CMSIS/Include/cmsis_gcc.h **** }
+ 180:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 181:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 182:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
+ 183:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Set Main Stack Pointer
+ 184:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Assigns the given value to the Main Stack Pointer (MSP).
+ 185:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 186:Drivers/CMSIS/Include/cmsis_gcc.h ****     \param [in]    topOfMainStack  Main Stack Pointer value to set
+ 187:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
+ 188:Drivers/CMSIS/Include/cmsis_gcc.h **** __attribute__( ( always_inline ) ) __STATIC_INLINE void __set_MSP(uint32_t topOfMainStack)
+ 189:Drivers/CMSIS/Include/cmsis_gcc.h **** {
+ 190:Drivers/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("MSR msp, %0\n" : : "r" (topOfMainStack) : "sp");
+ 191:Drivers/CMSIS/Include/cmsis_gcc.h **** }
+ 192:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 193:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 194:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
+ 195:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Get Priority Mask
+ 196:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Returns the current state of the priority mask bit from the Priority Mask Register.
+ 197:Drivers/CMSIS/Include/cmsis_gcc.h ****   \return               Priority Mask value
+ 198:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
+ 199:Drivers/CMSIS/Include/cmsis_gcc.h **** __attribute__( ( always_inline ) ) __STATIC_INLINE uint32_t __get_PRIMASK(void)
+ 200:Drivers/CMSIS/Include/cmsis_gcc.h **** {
+ 201:Drivers/CMSIS/Include/cmsis_gcc.h ****   uint32_t result;
+ 202:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 203:Drivers/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("MRS %0, primask" : "=r" (result) );
+ 204:Drivers/CMSIS/Include/cmsis_gcc.h ****   return(result);
+ 205:Drivers/CMSIS/Include/cmsis_gcc.h **** }
+ 206:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 207:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 208:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
+ 209:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Set Priority Mask
+ 210:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Assigns the given value to the Priority Mask Register.
+ 211:Drivers/CMSIS/Include/cmsis_gcc.h ****   \param [in]    priMask  Priority Mask
+ 212:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
+ 213:Drivers/CMSIS/Include/cmsis_gcc.h **** __attribute__( ( always_inline ) ) __STATIC_INLINE void __set_PRIMASK(uint32_t priMask)
+ 214:Drivers/CMSIS/Include/cmsis_gcc.h **** {
+ 215:Drivers/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("MSR primask, %0" : : "r" (priMask) : "memory");
+ 216:Drivers/CMSIS/Include/cmsis_gcc.h **** }
+ 217:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 218:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 219:Drivers/CMSIS/Include/cmsis_gcc.h **** #if       (__CORTEX_M >= 0x03U)
+ 220:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//cciAWxUP.s 			page 38
+
+
+ 221:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
+ 222:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Enable FIQ
+ 223:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Enables FIQ interrupts by clearing the F-bit in the CPSR.
+ 224:Drivers/CMSIS/Include/cmsis_gcc.h ****            Can only be executed in Privileged modes.
+ 225:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
+ 226:Drivers/CMSIS/Include/cmsis_gcc.h **** __attribute__( ( always_inline ) ) __STATIC_INLINE void __enable_fault_irq(void)
+ 227:Drivers/CMSIS/Include/cmsis_gcc.h **** {
+ 228:Drivers/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("cpsie f" : : : "memory");
+ 229:Drivers/CMSIS/Include/cmsis_gcc.h **** }
+ 230:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 231:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 232:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
+ 233:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Disable FIQ
+ 234:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Disables FIQ interrupts by setting the F-bit in the CPSR.
+ 235:Drivers/CMSIS/Include/cmsis_gcc.h ****            Can only be executed in Privileged modes.
+ 236:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
+ 237:Drivers/CMSIS/Include/cmsis_gcc.h **** __attribute__( ( always_inline ) ) __STATIC_INLINE void __disable_fault_irq(void)
+ 238:Drivers/CMSIS/Include/cmsis_gcc.h **** {
+ 239:Drivers/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("cpsid f" : : : "memory");
+ 240:Drivers/CMSIS/Include/cmsis_gcc.h **** }
+ 241:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 242:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 243:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
+ 244:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Get Base Priority
+ 245:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Returns the current value of the Base Priority register.
+ 246:Drivers/CMSIS/Include/cmsis_gcc.h ****   \return               Base Priority register value
+ 247:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
+ 248:Drivers/CMSIS/Include/cmsis_gcc.h **** __attribute__( ( always_inline ) ) __STATIC_INLINE uint32_t __get_BASEPRI(void)
+ 249:Drivers/CMSIS/Include/cmsis_gcc.h **** {
+ 250:Drivers/CMSIS/Include/cmsis_gcc.h ****   uint32_t result;
+ 251:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 252:Drivers/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("MRS %0, basepri" : "=r" (result) );
+ 253:Drivers/CMSIS/Include/cmsis_gcc.h ****   return(result);
+ 254:Drivers/CMSIS/Include/cmsis_gcc.h **** }
+ 255:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 256:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 257:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
+ 258:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Set Base Priority
+ 259:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Assigns the given value to the Base Priority register.
+ 260:Drivers/CMSIS/Include/cmsis_gcc.h ****   \param [in]    basePri  Base Priority value to set
+ 261:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
+ 262:Drivers/CMSIS/Include/cmsis_gcc.h **** __attribute__( ( always_inline ) ) __STATIC_INLINE void __set_BASEPRI(uint32_t value)
+ 263:Drivers/CMSIS/Include/cmsis_gcc.h **** {
+ 264:Drivers/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("MSR basepri, %0" : : "r" (value) : "memory");
+ 265:Drivers/CMSIS/Include/cmsis_gcc.h **** }
+ 266:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 267:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 268:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
+ 269:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Set Base Priority with condition
+ 270:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Assigns the given value to the Base Priority register only if BASEPRI masking is disable
+ 271:Drivers/CMSIS/Include/cmsis_gcc.h ****            or the new value increases the BASEPRI priority level.
+ 272:Drivers/CMSIS/Include/cmsis_gcc.h ****   \param [in]    basePri  Base Priority value to set
+ 273:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
+ 274:Drivers/CMSIS/Include/cmsis_gcc.h **** __attribute__( ( always_inline ) ) __STATIC_INLINE void __set_BASEPRI_MAX(uint32_t value)
+ 275:Drivers/CMSIS/Include/cmsis_gcc.h **** {
+ 276:Drivers/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("MSR basepri_max, %0" : : "r" (value) : "memory");
+ 277:Drivers/CMSIS/Include/cmsis_gcc.h **** }
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//cciAWxUP.s 			page 39
+
+
+ 278:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 279:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 280:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
+ 281:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Get Fault Mask
+ 282:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Returns the current value of the Fault Mask register.
+ 283:Drivers/CMSIS/Include/cmsis_gcc.h ****   \return               Fault Mask register value
+ 284:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
+ 285:Drivers/CMSIS/Include/cmsis_gcc.h **** __attribute__( ( always_inline ) ) __STATIC_INLINE uint32_t __get_FAULTMASK(void)
+ 286:Drivers/CMSIS/Include/cmsis_gcc.h **** {
+ 287:Drivers/CMSIS/Include/cmsis_gcc.h ****   uint32_t result;
+ 288:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 289:Drivers/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("MRS %0, faultmask" : "=r" (result) );
+ 290:Drivers/CMSIS/Include/cmsis_gcc.h ****   return(result);
+ 291:Drivers/CMSIS/Include/cmsis_gcc.h **** }
+ 292:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 293:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 294:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
+ 295:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Set Fault Mask
+ 296:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Assigns the given value to the Fault Mask register.
+ 297:Drivers/CMSIS/Include/cmsis_gcc.h ****   \param [in]    faultMask  Fault Mask value to set
+ 298:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
+ 299:Drivers/CMSIS/Include/cmsis_gcc.h **** __attribute__( ( always_inline ) ) __STATIC_INLINE void __set_FAULTMASK(uint32_t faultMask)
+ 300:Drivers/CMSIS/Include/cmsis_gcc.h **** {
+ 301:Drivers/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("MSR faultmask, %0" : : "r" (faultMask) : "memory");
+ 302:Drivers/CMSIS/Include/cmsis_gcc.h **** }
+ 303:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 304:Drivers/CMSIS/Include/cmsis_gcc.h **** #endif /* (__CORTEX_M >= 0x03U) */
+ 305:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 306:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 307:Drivers/CMSIS/Include/cmsis_gcc.h **** #if       (__CORTEX_M == 0x04U) || (__CORTEX_M == 0x07U)
+ 308:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 309:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
+ 310:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Get FPSCR
+ 311:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Returns the current value of the Floating Point Status/Control register.
+ 312:Drivers/CMSIS/Include/cmsis_gcc.h ****   \return               Floating Point Status/Control register value
+ 313:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
+ 314:Drivers/CMSIS/Include/cmsis_gcc.h **** __attribute__( ( always_inline ) ) __STATIC_INLINE uint32_t __get_FPSCR(void)
+ 315:Drivers/CMSIS/Include/cmsis_gcc.h **** {
+ 316:Drivers/CMSIS/Include/cmsis_gcc.h **** #if (__FPU_PRESENT == 1U) && (__FPU_USED == 1U)
+ 317:Drivers/CMSIS/Include/cmsis_gcc.h ****   uint32_t result;
+ 318:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 319:Drivers/CMSIS/Include/cmsis_gcc.h ****   /* Empty asm statement works as a scheduling barrier */
+ 320:Drivers/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("");
+ 321:Drivers/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("VMRS %0, fpscr" : "=r" (result) );
+ 322:Drivers/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("");
+ 323:Drivers/CMSIS/Include/cmsis_gcc.h ****   return(result);
+ 324:Drivers/CMSIS/Include/cmsis_gcc.h **** #else
+ 325:Drivers/CMSIS/Include/cmsis_gcc.h ****    return(0);
+ 326:Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
+ 327:Drivers/CMSIS/Include/cmsis_gcc.h **** }
+ 328:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 329:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 330:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
+ 331:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Set FPSCR
+ 332:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Assigns the given value to the Floating Point Status/Control register.
+ 333:Drivers/CMSIS/Include/cmsis_gcc.h ****   \param [in]    fpscr  Floating Point Status/Control value to set
+ 334:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//cciAWxUP.s 			page 40
+
+
+ 335:Drivers/CMSIS/Include/cmsis_gcc.h **** __attribute__( ( always_inline ) ) __STATIC_INLINE void __set_FPSCR(uint32_t fpscr)
+ 336:Drivers/CMSIS/Include/cmsis_gcc.h **** {
+ 337:Drivers/CMSIS/Include/cmsis_gcc.h **** #if (__FPU_PRESENT == 1U) && (__FPU_USED == 1U)
+ 338:Drivers/CMSIS/Include/cmsis_gcc.h ****   /* Empty asm statement works as a scheduling barrier */
+ 339:Drivers/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("");
+ 340:Drivers/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("VMSR fpscr, %0" : : "r" (fpscr) : "vfpcc");
+ 341:Drivers/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("");
+ 342:Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
+ 343:Drivers/CMSIS/Include/cmsis_gcc.h **** }
+ 344:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 345:Drivers/CMSIS/Include/cmsis_gcc.h **** #endif /* (__CORTEX_M == 0x04U) || (__CORTEX_M == 0x07U) */
+ 346:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 347:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 348:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 349:Drivers/CMSIS/Include/cmsis_gcc.h **** /*@} end of CMSIS_Core_RegAccFunctions */
+ 350:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 351:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 352:Drivers/CMSIS/Include/cmsis_gcc.h **** /* ##########################  Core Instruction Access  ######################### */
+ 353:Drivers/CMSIS/Include/cmsis_gcc.h **** /** \defgroup CMSIS_Core_InstructionInterface CMSIS Core Instruction Interface
+ 354:Drivers/CMSIS/Include/cmsis_gcc.h ****   Access to dedicated instructions
+ 355:Drivers/CMSIS/Include/cmsis_gcc.h ****   @{
+ 356:Drivers/CMSIS/Include/cmsis_gcc.h **** */
+ 357:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 358:Drivers/CMSIS/Include/cmsis_gcc.h **** /* Define macros for porting to both thumb1 and thumb2.
+ 359:Drivers/CMSIS/Include/cmsis_gcc.h ****  * For thumb1, use low register (r0-r7), specified by constraint "l"
+ 360:Drivers/CMSIS/Include/cmsis_gcc.h ****  * Otherwise, use general registers, specified by constraint "r" */
+ 361:Drivers/CMSIS/Include/cmsis_gcc.h **** #if defined (__thumb__) && !defined (__thumb2__)
+ 362:Drivers/CMSIS/Include/cmsis_gcc.h **** #define __CMSIS_GCC_OUT_REG(r) "=l" (r)
+ 363:Drivers/CMSIS/Include/cmsis_gcc.h **** #define __CMSIS_GCC_USE_REG(r) "l" (r)
+ 364:Drivers/CMSIS/Include/cmsis_gcc.h **** #else
+ 365:Drivers/CMSIS/Include/cmsis_gcc.h **** #define __CMSIS_GCC_OUT_REG(r) "=r" (r)
+ 366:Drivers/CMSIS/Include/cmsis_gcc.h **** #define __CMSIS_GCC_USE_REG(r) "r" (r)
+ 367:Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
+ 368:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 369:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
+ 370:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   No Operation
+ 371:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details No Operation does nothing. This instruction can be used for code alignment purposes.
+ 372:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
+ 373:Drivers/CMSIS/Include/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE void __NOP(void)
+ 374:Drivers/CMSIS/Include/cmsis_gcc.h **** {
+ 375:Drivers/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("nop");
+ 1170              		.loc 2 375 0
+ 1171              		.syntax divided
+ 1172              	@ 375 "Drivers/CMSIS/Include/cmsis_gcc.h" 1
+ 1173 0010 C046     		nop
+ 1174              	@ 0 "" 2
+ 1175              		.thumb
+ 1176              		.syntax unified
+ 1177              	.L64:
+ 1178              	.LBE5:
+ 1179              	.LBE4:
+ 429:Src/hw_rtc.c  ****   {
+ 1180              		.loc 1 429 0
+ 1181 0012 FFF7FEFF 		bl	HW_RTC_GetTimerValue
+ 1182              	.LVL117:
+ 1183 0016 001B     		subs	r0, r0, r4
+ 1184 0018 A842     		cmp	r0, r5
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//cciAWxUP.s 			page 41
+
+
+ 1185 001a F9D3     		bcc	.L65
+ 433:Src/hw_rtc.c  **** 
+ 1186              		.loc 1 433 0
+ 1187              		@ sp needed
+ 1188              	.LVL118:
+ 1189              	.LVL119:
+ 1190 001c 70BD     		pop	{r4, r5, r6, pc}
+ 1191              		.cfi_endproc
+ 1192              	.LFE52:
+ 1194              		.section	.text.HW_RTC_SetTimerContext,"ax",%progbits
+ 1195              		.align	1
+ 1196              		.global	HW_RTC_SetTimerContext
+ 1197              		.syntax unified
+ 1198              		.code	16
+ 1199              		.thumb_func
+ 1200              		.fpu softvfp
+ 1202              	HW_RTC_SetTimerContext:
+ 1203              	.LFB53:
+ 441:Src/hw_rtc.c  ****   RtcTimerContext.Rtc_Time = HW_RTC_GetCalendarValue( &RtcTimerContext.RTC_Calndr_Date, &RtcTimerCo
+ 1204              		.loc 1 441 0
+ 1205              		.cfi_startproc
+ 1206              		@ args = 0, pretend = 0, frame = 0
+ 1207              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1208 0000 10B5     		push	{r4, lr}
+ 1209              	.LCFI18:
+ 1210              		.cfi_def_cfa_offset 8
+ 1211              		.cfi_offset 4, -8
+ 1212              		.cfi_offset 14, -4
+ 442:Src/hw_rtc.c  ****   return ( uint32_t ) RtcTimerContext.Rtc_Time;
+ 1213              		.loc 1 442 0
+ 1214 0002 044C     		ldr	r4, .L67
+ 1215 0004 2100     		movs	r1, r4
+ 1216 0006 5831     		adds	r1, r1, #88
+ 1217 0008 2000     		movs	r0, r4
+ 1218 000a 6C30     		adds	r0, r0, #108
+ 1219 000c FFF7FEFF 		bl	HW_RTC_GetCalendarValue
+ 1220              	.LVL120:
+ 1221 0010 6065     		str	r0, [r4, #84]
+ 444:Src/hw_rtc.c  **** 
+ 1222              		.loc 1 444 0
+ 1223              		@ sp needed
+ 1224 0012 10BD     		pop	{r4, pc}
+ 1225              	.L68:
+ 1226              		.align	2
+ 1227              	.L67:
+ 1228 0014 00000000 		.word	.LANCHOR0
+ 1229              		.cfi_endproc
+ 1230              	.LFE53:
+ 1232              		.section	.text.HW_RTC_Init,"ax",%progbits
+ 1233              		.align	1
+ 1234              		.global	HW_RTC_Init
+ 1235              		.syntax unified
+ 1236              		.code	16
+ 1237              		.thumb_func
+ 1238              		.fpu softvfp
+ 1240              	HW_RTC_Init:
+ 1241              	.LFB40:
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//cciAWxUP.s 			page 42
+
+
+ 187:Src/hw_rtc.c  ****   if( HW_RTC_Initalized == false )
+ 1242              		.loc 1 187 0
+ 1243              		.cfi_startproc
+ 1244              		@ args = 0, pretend = 0, frame = 0
+ 1245              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1246 0000 10B5     		push	{r4, lr}
+ 1247              	.LCFI19:
+ 1248              		.cfi_def_cfa_offset 8
+ 1249              		.cfi_offset 4, -8
+ 1250              		.cfi_offset 14, -4
+ 188:Src/hw_rtc.c  ****   {
+ 1251              		.loc 1 188 0
+ 1252 0002 084A     		ldr	r2, .L72
+ 1253 0004 7023     		movs	r3, #112
+ 1254 0006 D35C     		ldrb	r3, [r2, r3]
+ 1255 0008 002B     		cmp	r3, #0
+ 1256 000a 00D0     		beq	.L71
+ 1257              	.L69:
+ 195:Src/hw_rtc.c  **** 
+ 1258              		.loc 1 195 0
+ 1259              		@ sp needed
+ 1260 000c 10BD     		pop	{r4, pc}
+ 1261              	.L71:
+ 190:Src/hw_rtc.c  ****     HW_RTC_SetAlarmConfig( );
+ 1262              		.loc 1 190 0
+ 1263 000e FFF7FEFF 		bl	HW_RTC_SetConfig
+ 1264              	.LVL121:
+ 191:Src/hw_rtc.c  ****     HW_RTC_SetTimerContext( );
+ 1265              		.loc 1 191 0
+ 1266 0012 FFF7FEFF 		bl	HW_RTC_SetAlarmConfig
+ 1267              	.LVL122:
+ 192:Src/hw_rtc.c  ****     HW_RTC_Initalized = true;
+ 1268              		.loc 1 192 0
+ 1269 0016 FFF7FEFF 		bl	HW_RTC_SetTimerContext
+ 1270              	.LVL123:
+ 193:Src/hw_rtc.c  ****   }
+ 1271              		.loc 1 193 0
+ 1272 001a 024A     		ldr	r2, .L72
+ 1273 001c 7023     		movs	r3, #112
+ 1274 001e 0121     		movs	r1, #1
+ 1275 0020 D154     		strb	r1, [r2, r3]
+ 195:Src/hw_rtc.c  **** 
+ 1276              		.loc 1 195 0
+ 1277 0022 F3E7     		b	.L69
+ 1278              	.L73:
+ 1279              		.align	2
+ 1280              	.L72:
+ 1281 0024 00000000 		.word	.LANCHOR0
+ 1282              		.cfi_endproc
+ 1283              	.LFE40:
+ 1285              		.section	.text.HW_RTC_GetTimerContext,"ax",%progbits
+ 1286              		.align	1
+ 1287              		.global	HW_RTC_GetTimerContext
+ 1288              		.syntax unified
+ 1289              		.code	16
+ 1290              		.thumb_func
+ 1291              		.fpu softvfp
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//cciAWxUP.s 			page 43
+
+
+ 1293              	HW_RTC_GetTimerContext:
+ 1294              	.LFB54:
+ 452:Src/hw_rtc.c  ****   return (uint32_t) RtcTimerContext.Rtc_Time;
+ 1295              		.loc 1 452 0
+ 1296              		.cfi_startproc
+ 1297              		@ args = 0, pretend = 0, frame = 0
+ 1298              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1299              		@ link register save eliminated.
+ 453:Src/hw_rtc.c  **** }
+ 1300              		.loc 1 453 0
+ 1301 0000 014B     		ldr	r3, .L75
+ 1302 0002 586D     		ldr	r0, [r3, #84]
+ 454:Src/hw_rtc.c  **** /* Private functions ---------------------------------------------------------*/
+ 1303              		.loc 1 454 0
+ 1304              		@ sp needed
+ 1305 0004 7047     		bx	lr
+ 1306              	.L76:
+ 1307 0006 C046     		.align	2
+ 1308              	.L75:
+ 1309 0008 00000000 		.word	.LANCHOR0
+ 1310              		.cfi_endproc
+ 1311              	.LFE54:
+ 1313              		.section	.rodata
+ 1314              		.align	2
+ 1315              		.set	.LANCHOR1,. + 0
+ 1318              	DaysInMonthLeapYear:
+ 1319 0000 1F       		.byte	31
+ 1320 0001 1D       		.byte	29
+ 1321 0002 1F       		.byte	31
+ 1322 0003 1E       		.byte	30
+ 1323 0004 1F       		.byte	31
+ 1324 0005 1E       		.byte	30
+ 1325 0006 1F       		.byte	31
+ 1326 0007 1F       		.byte	31
+ 1327 0008 1E       		.byte	30
+ 1328 0009 1F       		.byte	31
+ 1329 000a 1E       		.byte	30
+ 1330 000b 1F       		.byte	31
+ 1333              	DaysInMonth:
+ 1334 000c 1F       		.byte	31
+ 1335 000d 1C       		.byte	28
+ 1336 000e 1F       		.byte	31
+ 1337 000f 1E       		.byte	30
+ 1338 0010 1F       		.byte	31
+ 1339 0011 1E       		.byte	30
+ 1340 0012 1F       		.byte	31
+ 1341 0013 1F       		.byte	31
+ 1342 0014 1E       		.byte	30
+ 1343 0015 1F       		.byte	31
+ 1344 0016 1E       		.byte	30
+ 1345 0017 1F       		.byte	31
+ 1346              		.bss
+ 1347              		.align	2
+ 1348              		.set	.LANCHOR0,. + 0
+ 1351              	RtcHandle:
+ 1352 0000 00000000 		.space	36
+ 1352      00000000 
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//cciAWxUP.s 			page 44
+
+
+ 1352      00000000 
+ 1352      00000000 
+ 1352      00000000 
+ 1355              	McuWakeUpTimeInitialized:
+ 1356 0024 00       		.space	1
+ 1357 0025 000000   		.space	3
+ 1360              	RTC_AlarmStructure:
+ 1361 0028 00000000 		.space	40
+ 1361      00000000 
+ 1361      00000000 
+ 1361      00000000 
+ 1361      00000000 
+ 1364              	McuWakeUpTimeCal:
+ 1365 0050 0000     		.space	2
+ 1366 0052 0000     		.space	2
+ 1369              	RtcTimerContext:
+ 1370 0054 00000000 		.space	28
+ 1370      00000000 
+ 1370      00000000 
+ 1370      00000000 
+ 1370      00000000 
+ 1373              	HW_RTC_Initalized:
+ 1374 0070 00       		.space	1
+ 1375              		.text
+ 1376              	.Letext0:
+ 1377              		.file 3 "/opt/gcc-arm-none-eabi-7-2017-q4-major/arm-none-eabi/include/machine/_default_types.h"
+ 1378              		.file 4 "/opt/gcc-arm-none-eabi-7-2017-q4-major/arm-none-eabi/include/sys/lock.h"
+ 1379              		.file 5 "/opt/gcc-arm-none-eabi-7-2017-q4-major/arm-none-eabi/include/sys/_types.h"
+ 1380              		.file 6 "/opt/gcc-arm-none-eabi-7-2017-q4-major/lib/gcc/arm-none-eabi/7.2.1/include/stddef.h"
+ 1381              		.file 7 "/opt/gcc-arm-none-eabi-7-2017-q4-major/arm-none-eabi/include/sys/reent.h"
+ 1382              		.file 8 "/opt/gcc-arm-none-eabi-7-2017-q4-major/arm-none-eabi/include/math.h"
+ 1383              		.file 9 "/opt/gcc-arm-none-eabi-7-2017-q4-major/arm-none-eabi/include/sys/_stdint.h"
+ 1384              		.file 10 "Drivers/CMSIS/Device/ST/STM32L0xx/Include/system_stm32l0xx.h"
+ 1385              		.file 11 "Drivers/CMSIS/Device/ST/STM32L0xx/Include/stm32l072xx.h"
+ 1386              		.file 12 "Drivers/CMSIS/Device/ST/STM32L0xx/Include/stm32l0xx.h"
+ 1387              		.file 13 "Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_hal_def.h"
+ 1388              		.file 14 "Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_hal_rtc.h"
+ 1389              		.file 15 "/opt/gcc-arm-none-eabi-7-2017-q4-major/arm-none-eabi/include/stdlib.h"
+ 1390              		.file 16 "Middlewares/Third_Party/Lora/Utilities/utilities.h"
+ 1391              		.file 17 "Inc/utilities_conf.h"
+ 1392              		.file 18 "Middlewares/Third_Party/Lora/Utilities/low_power_manager.h"
+ 1393              		.file 19 "Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_hal_cortex.h"
+ 1394              		.file 20 "Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_hal_rtc_ex.h"
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//cciAWxUP.s 			page 45
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 hw_rtc.c
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//cciAWxUP.s:16     .text.HW_RTC_SetConfig:0000000000000000 $t
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//cciAWxUP.s:22     .text.HW_RTC_SetConfig:0000000000000000 HW_RTC_SetConfig
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//cciAWxUP.s:109    .text.HW_RTC_SetConfig:000000000000005c $d
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//cciAWxUP.s:116    .text.HW_RTC_SetAlarmConfig:0000000000000000 $t
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//cciAWxUP.s:122    .text.HW_RTC_SetAlarmConfig:0000000000000000 HW_RTC_SetAlarmConfig
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//cciAWxUP.s:145    .text.HW_RTC_SetAlarmConfig:0000000000000010 $d
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//cciAWxUP.s:150    .text.HW_RTC_GetCalendarValue:0000000000000000 $t
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//cciAWxUP.s:156    .text.HW_RTC_GetCalendarValue:0000000000000000 HW_RTC_GetCalendarValue
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//cciAWxUP.s:291    .text.HW_RTC_GetCalendarValue:000000000000009c $d
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//cciAWxUP.s:300    .text.HW_RTC_setMcuWakeUpTime:0000000000000000 $t
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//cciAWxUP.s:307    .text.HW_RTC_setMcuWakeUpTime:0000000000000000 HW_RTC_setMcuWakeUpTime
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//cciAWxUP.s:420    .text.HW_RTC_setMcuWakeUpTime:0000000000000080 $d
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//cciAWxUP.s:426    .text.HW_RTC_getMcuWakeUpTime:0000000000000000 $t
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//cciAWxUP.s:433    .text.HW_RTC_getMcuWakeUpTime:0000000000000000 HW_RTC_getMcuWakeUpTime
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//cciAWxUP.s:450    .text.HW_RTC_getMcuWakeUpTime:0000000000000008 $d
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//cciAWxUP.s:455    .text.HW_RTC_GetMinimumTimeout:0000000000000000 $t
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//cciAWxUP.s:462    .text.HW_RTC_GetMinimumTimeout:0000000000000000 HW_RTC_GetMinimumTimeout
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//cciAWxUP.s:478    .text.HW_RTC_ms2Tick:0000000000000000 $t
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//cciAWxUP.s:485    .text.HW_RTC_ms2Tick:0000000000000000 HW_RTC_ms2Tick
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//cciAWxUP.s:512    .text.HW_RTC_Tick2ms:0000000000000000 $t
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//cciAWxUP.s:519    .text.HW_RTC_Tick2ms:0000000000000000 HW_RTC_Tick2ms
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//cciAWxUP.s:558    .text.HW_RTC_GetTimerElapsedTime:0000000000000000 $t
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//cciAWxUP.s:565    .text.HW_RTC_GetTimerElapsedTime:0000000000000000 HW_RTC_GetTimerElapsedTime
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//cciAWxUP.s:595    .text.HW_RTC_GetTimerElapsedTime:0000000000000018 $d
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//cciAWxUP.s:600    .text.HW_RTC_GetTimerValue:0000000000000000 $t
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//cciAWxUP.s:607    .text.HW_RTC_GetTimerValue:0000000000000000 HW_RTC_GetTimerValue
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//cciAWxUP.s:633    .text.HW_RTC_StopAlarm:0000000000000000 $t
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//cciAWxUP.s:640    .text.HW_RTC_StopAlarm:0000000000000000 HW_RTC_StopAlarm
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//cciAWxUP.s:677    .text.HW_RTC_StopAlarm:0000000000000028 $d
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//cciAWxUP.s:685    .text.HW_RTC_StartWakeUpAlarm:0000000000000000 $t
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//cciAWxUP.s:691    .text.HW_RTC_StartWakeUpAlarm:0000000000000000 HW_RTC_StartWakeUpAlarm
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//cciAWxUP.s:976    .text.HW_RTC_StartWakeUpAlarm:0000000000000134 $d
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//cciAWxUP.s:988    .text.HW_RTC_SetAlarm:0000000000000000 $t
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//cciAWxUP.s:995    .text.HW_RTC_SetAlarm:0000000000000000 HW_RTC_SetAlarm
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//cciAWxUP.s:1059   .text.HW_RTC_SetAlarm:0000000000000044 $d
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//cciAWxUP.s:1064   .text.HW_RTC_IrqHandler:0000000000000000 $t
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//cciAWxUP.s:1071   .text.HW_RTC_IrqHandler:0000000000000000 HW_RTC_IrqHandler
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//cciAWxUP.s:1124   .text.HW_RTC_IrqHandler:0000000000000038 $d
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//cciAWxUP.s:1131   .text.HW_RTC_DelayMs:0000000000000000 $t
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//cciAWxUP.s:1138   .text.HW_RTC_DelayMs:0000000000000000 HW_RTC_DelayMs
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//cciAWxUP.s:1195   .text.HW_RTC_SetTimerContext:0000000000000000 $t
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//cciAWxUP.s:1202   .text.HW_RTC_SetTimerContext:0000000000000000 HW_RTC_SetTimerContext
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//cciAWxUP.s:1228   .text.HW_RTC_SetTimerContext:0000000000000014 $d
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//cciAWxUP.s:1233   .text.HW_RTC_Init:0000000000000000 $t
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//cciAWxUP.s:1240   .text.HW_RTC_Init:0000000000000000 HW_RTC_Init
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//cciAWxUP.s:1281   .text.HW_RTC_Init:0000000000000024 $d
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//cciAWxUP.s:1286   .text.HW_RTC_GetTimerContext:0000000000000000 $t
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//cciAWxUP.s:1293   .text.HW_RTC_GetTimerContext:0000000000000000 HW_RTC_GetTimerContext
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//cciAWxUP.s:1309   .text.HW_RTC_GetTimerContext:0000000000000008 $d
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//cciAWxUP.s:1314   .rodata:0000000000000000 $d
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//cciAWxUP.s:1318   .rodata:0000000000000000 DaysInMonthLeapYear
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//cciAWxUP.s:1333   .rodata:000000000000000c DaysInMonth
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//cciAWxUP.s:1347   .bss:0000000000000000 $d
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//cciAWxUP.s:1351   .bss:0000000000000000 RtcHandle
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//cciAWxUP.s:1355   .bss:0000000000000024 McuWakeUpTimeInitialized
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//cciAWxUP.s 			page 46
+
+
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//cciAWxUP.s:1360   .bss:0000000000000028 RTC_AlarmStructure
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//cciAWxUP.s:1364   .bss:0000000000000050 McuWakeUpTimeCal
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//cciAWxUP.s:1369   .bss:0000000000000054 RtcTimerContext
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//cciAWxUP.s:1373   .bss:0000000000000070 HW_RTC_Initalized
+
+UNDEFINED SYMBOLS
+HAL_RTC_Init
+HAL_RTC_SetDate
+HAL_RTC_SetTime
+HAL_RTCEx_EnableBypassShadow
+HAL_RTC_DeactivateAlarm
+HAL_RTC_GetTime
+HAL_RTC_GetDate
+HAL_NVIC_GetPendingIRQ
+HAL_RTC_GetAlarm
+__aeabi_uldivmod
+__aeabi_idivmod
+HAL_RTC_SetAlarm_IT
+LPM_SetStopMode
+LPM_GetMode
+HAL_RTC_AlarmAEventCallback

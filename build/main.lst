@@ -1,0 +1,1718 @@
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccTAEDgC.s 			page 1
+
+
+   1              		.cpu cortex-m0plus
+   2              		.eabi_attribute 20, 1
+   3              		.eabi_attribute 21, 1
+   4              		.eabi_attribute 23, 3
+   5              		.eabi_attribute 24, 1
+   6              		.eabi_attribute 25, 1
+   7              		.eabi_attribute 26, 1
+   8              		.eabi_attribute 30, 1
+   9              		.eabi_attribute 34, 0
+  10              		.eabi_attribute 18, 4
+  11              		.file	"main.c"
+  12              		.text
+  13              	.Ltext0:
+  14              		.cfi_sections	.debug_frame
+  15              		.section	.text.OnledEvent,"ax",%progbits
+  16              		.align	1
+  17              		.syntax unified
+  18              		.code	16
+  19              		.thumb_func
+  20              		.fpu softvfp
+  22              	OnledEvent:
+  23              	.LFB46:
+  24              		.file 1 "Src/main.c"
+   1:Src/main.c    **** /*
+   2:Src/main.c    ****  / _____)             _              | |
+   3:Src/main.c    **** ( (____  _____ ____ _| |_ _____  ____| |__
+   4:Src/main.c    ****  \____ \| ___ |    (_   _) ___ |/ ___)  _ \
+   5:Src/main.c    ****  _____) ) ____| | | || |_| ____( (___| | | |
+   6:Src/main.c    **** (______/|_____)_|_|_| \__)_____)\____)_| |_|
+   7:Src/main.c    ****     (C)2013 Semtech
+   8:Src/main.c    **** 
+   9:Src/main.c    **** Description: Ping-Pong implementation
+  10:Src/main.c    **** 
+  11:Src/main.c    **** License: Revised BSD License, see LICENSE.TXT file include in the project
+  12:Src/main.c    **** 
+  13:Src/main.c    **** Maintainer: Miguel Luis and Gregory Cristian
+  14:Src/main.c    **** */
+  15:Src/main.c    **** /******************************************************************************
+  16:Src/main.c    ****   * @file    main.c
+  17:Src/main.c    ****   * @author  MCD Application Team
+  18:Src/main.c    ****   * @version V1.1.5
+  19:Src/main.c    ****   * @date    30-March-2018
+  20:Src/main.c    ****   * @brief   this is the main!
+  21:Src/main.c    ****   ******************************************************************************
+  22:Src/main.c    ****   * @attention
+  23:Src/main.c    ****   *
+  24:Src/main.c    ****   * <h2><center>&copy; Copyright (c) 2017 STMicroelectronics International N.V. 
+  25:Src/main.c    ****   * All rights reserved.</center></h2>
+  26:Src/main.c    ****   *
+  27:Src/main.c    ****   * Redistribution and use in source and binary forms, with or without 
+  28:Src/main.c    ****   * modification, are permitted, provided that the following conditions are met:
+  29:Src/main.c    ****   *
+  30:Src/main.c    ****   * 1. Redistribution of source code must retain the above copyright notice, 
+  31:Src/main.c    ****   *    this list of conditions and the following disclaimer.
+  32:Src/main.c    ****   * 2. Redistributions in binary form must reproduce the above copyright notice,
+  33:Src/main.c    ****   *    this list of conditions and the following disclaimer in the documentation
+  34:Src/main.c    ****   *    and/or other materials provided with the distribution.
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccTAEDgC.s 			page 2
+
+
+  35:Src/main.c    ****   * 3. Neither the name of STMicroelectronics nor the names of other 
+  36:Src/main.c    ****   *    contributors to this software may be used to endorse or promote products 
+  37:Src/main.c    ****   *    derived from this software without specific written permission.
+  38:Src/main.c    ****   * 4. This software, including modifications and/or derivative works of this 
+  39:Src/main.c    ****   *    software, must execute solely and exclusively on microcontroller or
+  40:Src/main.c    ****   *    microprocessor devices manufactured by or for STMicroelectronics.
+  41:Src/main.c    ****   * 5. Redistribution and use of this software other than as permitted under 
+  42:Src/main.c    ****   *    this license is void and will automatically terminate your rights under 
+  43:Src/main.c    ****   *    this license. 
+  44:Src/main.c    ****   *
+  45:Src/main.c    ****   * THIS SOFTWARE IS PROVIDED BY STMICROELECTRONICS AND CONTRIBUTORS "AS IS" 
+  46:Src/main.c    ****   * AND ANY EXPRESS, IMPLIED OR STATUTORY WARRANTIES, INCLUDING, BUT NOT 
+  47:Src/main.c    ****   * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A 
+  48:Src/main.c    ****   * PARTICULAR PURPOSE AND NON-INFRINGEMENT OF THIRD PARTY INTELLECTUAL PROPERTY
+  49:Src/main.c    ****   * RIGHTS ARE DISCLAIMED TO THE FULLEST EXTENT PERMITTED BY LAW. IN NO EVENT 
+  50:Src/main.c    ****   * SHALL STMICROELECTRONICS OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+  51:Src/main.c    ****   * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+  52:Src/main.c    ****   * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, 
+  53:Src/main.c    ****   * OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF 
+  54:Src/main.c    ****   * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING 
+  55:Src/main.c    ****   * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+  56:Src/main.c    ****   * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+  57:Src/main.c    ****   *
+  58:Src/main.c    ****   ******************************************************************************
+  59:Src/main.c    ****   */
+  60:Src/main.c    **** 
+  61:Src/main.c    **** /* Includes ------------------------------------------------------------------*/
+  62:Src/main.c    **** #include <string.h>
+  63:Src/main.c    **** #include "hw.h"
+  64:Src/main.c    **** #include "radio.h"
+  65:Src/main.c    **** #include "timeServer.h"
+  66:Src/main.c    **** #include "delay.h"
+  67:Src/main.c    **** #include "low_power_manager.h"
+  68:Src/main.c    **** #include "vcom.h"
+  69:Src/main.c    **** 
+  70:Src/main.c    **** 
+  71:Src/main.c    **** #if defined( USE_BAND_868 )
+  72:Src/main.c    **** 
+  73:Src/main.c    **** #define RF_FREQUENCY                                868000000 // Hz
+  74:Src/main.c    **** 
+  75:Src/main.c    **** #elif defined( USE_BAND_915 )
+  76:Src/main.c    **** 
+  77:Src/main.c    **** #define RF_FREQUENCY                                915000000 // Hz
+  78:Src/main.c    **** 
+  79:Src/main.c    **** #else
+  80:Src/main.c    ****     #error "Please define a frequency band in the compiler options."
+  81:Src/main.c    **** #endif
+  82:Src/main.c    **** 
+  83:Src/main.c    **** #define TX_OUTPUT_POWER                             14        // dBm
+  84:Src/main.c    **** 
+  85:Src/main.c    **** #if defined( USE_MODEM_LORA )
+  86:Src/main.c    **** 
+  87:Src/main.c    **** #define LORA_BANDWIDTH                              0         // [0: 125 kHz,
+  88:Src/main.c    ****                                                               //  1: 250 kHz,
+  89:Src/main.c    ****                                                               //  2: 500 kHz,
+  90:Src/main.c    ****                                                               //  3: Reserved]
+  91:Src/main.c    **** #define LORA_SPREADING_FACTOR                       7         // [SF7..SF12]
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccTAEDgC.s 			page 3
+
+
+  92:Src/main.c    **** #define LORA_CODINGRATE                             1         // [1: 4/5,
+  93:Src/main.c    ****                                                               //  2: 4/6,
+  94:Src/main.c    ****                                                               //  3: 4/7,
+  95:Src/main.c    ****                                                               //  4: 4/8]
+  96:Src/main.c    **** #define LORA_PREAMBLE_LENGTH                        8         // Same for Tx and Rx
+  97:Src/main.c    **** #define LORA_SYMBOL_TIMEOUT                         5         // Symbols
+  98:Src/main.c    **** #define LORA_FIX_LENGTH_PAYLOAD_ON                  false
+  99:Src/main.c    **** #define LORA_IQ_INVERSION_ON                        false
+ 100:Src/main.c    **** 
+ 101:Src/main.c    **** #elif defined( USE_MODEM_FSK )
+ 102:Src/main.c    **** 
+ 103:Src/main.c    **** #define FSK_FDEV                                    25e3      // Hz
+ 104:Src/main.c    **** #define FSK_DATARATE                                50e3      // bps
+ 105:Src/main.c    **** #define FSK_BANDWIDTH                               50e3      // Hz
+ 106:Src/main.c    **** #define FSK_AFC_BANDWIDTH                           83.333e3  // Hz
+ 107:Src/main.c    **** #define FSK_PREAMBLE_LENGTH                         5         // Same for Tx and Rx
+ 108:Src/main.c    **** #define FSK_FIX_LENGTH_PAYLOAD_ON                   false
+ 109:Src/main.c    **** 
+ 110:Src/main.c    **** #else
+ 111:Src/main.c    ****     #error "Please define a modem in the compiler options."
+ 112:Src/main.c    **** #endif
+ 113:Src/main.c    **** 
+ 114:Src/main.c    **** typedef enum
+ 115:Src/main.c    **** {
+ 116:Src/main.c    ****     LOWPOWER,
+ 117:Src/main.c    ****     RX,
+ 118:Src/main.c    ****     RX_TIMEOUT,
+ 119:Src/main.c    ****     RX_ERROR,
+ 120:Src/main.c    ****     TX,
+ 121:Src/main.c    ****     TX_TIMEOUT,
+ 122:Src/main.c    **** }States_t;
+ 123:Src/main.c    **** 
+ 124:Src/main.c    **** #define RX_TIMEOUT_VALUE                            1000
+ 125:Src/main.c    **** #define BUFFER_SIZE                                 64 // Define the payload size here
+ 126:Src/main.c    **** #define LED_PERIOD_MS               200
+ 127:Src/main.c    **** 
+ 128:Src/main.c    **** #define LEDS_OFF   do{ \
+ 129:Src/main.c    ****                    LED_Off( LED_BLUE ) ;   \
+ 130:Src/main.c    ****                    LED_Off( LED_RED ) ;    \
+ 131:Src/main.c    ****                    LED_Off( LED_GREEN1 ) ; \
+ 132:Src/main.c    ****                    LED_Off( LED_GREEN2 ) ; \
+ 133:Src/main.c    ****                    } while(0) ;
+ 134:Src/main.c    **** 
+ 135:Src/main.c    **** const uint8_t PingMsg[] = "PING";
+ 136:Src/main.c    **** const uint8_t PongMsg[] = "PONG";
+ 137:Src/main.c    **** 
+ 138:Src/main.c    **** uint16_t BufferSize = BUFFER_SIZE;
+ 139:Src/main.c    **** uint8_t Buffer[BUFFER_SIZE];
+ 140:Src/main.c    **** 
+ 141:Src/main.c    **** States_t State = LOWPOWER;
+ 142:Src/main.c    **** 
+ 143:Src/main.c    **** int8_t RssiValue = 0;
+ 144:Src/main.c    **** int8_t SnrValue = 0;
+ 145:Src/main.c    **** 
+ 146:Src/main.c    ****  /* Led Timers objects*/
+ 147:Src/main.c    **** static  TimerEvent_t timerLed;
+ 148:Src/main.c    **** 
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccTAEDgC.s 			page 4
+
+
+ 149:Src/main.c    **** /* Private function prototypes -----------------------------------------------*/
+ 150:Src/main.c    **** /*!
+ 151:Src/main.c    ****  * Radio events function pointer
+ 152:Src/main.c    ****  */
+ 153:Src/main.c    **** static RadioEvents_t RadioEvents;
+ 154:Src/main.c    **** 
+ 155:Src/main.c    **** /*!
+ 156:Src/main.c    ****  * \brief Function to be executed on Radio Tx Done event
+ 157:Src/main.c    ****  */
+ 158:Src/main.c    **** void OnTxDone( void );
+ 159:Src/main.c    **** 
+ 160:Src/main.c    **** /*!
+ 161:Src/main.c    ****  * \brief Function to be executed on Radio Rx Done event
+ 162:Src/main.c    ****  */
+ 163:Src/main.c    **** void OnRxDone( uint8_t *payload, uint16_t size, int16_t rssi, int8_t snr );
+ 164:Src/main.c    **** 
+ 165:Src/main.c    **** /*!
+ 166:Src/main.c    ****  * \brief Function executed on Radio Tx Timeout event
+ 167:Src/main.c    ****  */
+ 168:Src/main.c    **** void OnTxTimeout( void );
+ 169:Src/main.c    **** 
+ 170:Src/main.c    **** /*!
+ 171:Src/main.c    ****  * \brief Function executed on Radio Rx Timeout event
+ 172:Src/main.c    ****  */
+ 173:Src/main.c    **** void OnRxTimeout( void );
+ 174:Src/main.c    **** 
+ 175:Src/main.c    **** /*!
+ 176:Src/main.c    ****  * \brief Function executed on Radio Rx Error event
+ 177:Src/main.c    ****  */
+ 178:Src/main.c    **** void OnRxError( void );
+ 179:Src/main.c    **** 
+ 180:Src/main.c    **** /*!
+ 181:Src/main.c    ****  * \brief Function executed on when led timer elapses
+ 182:Src/main.c    ****  */
+ 183:Src/main.c    **** static void OnledEvent( void );
+ 184:Src/main.c    **** /**
+ 185:Src/main.c    ****  * Main application entry point.
+ 186:Src/main.c    ****  */
+ 187:Src/main.c    **** int main( void )
+ 188:Src/main.c    **** {
+ 189:Src/main.c    ****   bool isMaster = true;
+ 190:Src/main.c    ****   uint8_t i;
+ 191:Src/main.c    **** 
+ 192:Src/main.c    ****   HAL_Init( );
+ 193:Src/main.c    ****   
+ 194:Src/main.c    ****   SystemClock_Config( );
+ 195:Src/main.c    ****   
+ 196:Src/main.c    ****   DBG_Init( );
+ 197:Src/main.c    **** 
+ 198:Src/main.c    ****   HW_Init( );  
+ 199:Src/main.c    ****   
+ 200:Src/main.c    ****   /*Disbale Stand-by mode*/
+ 201:Src/main.c    ****   LPM_SetOffMode(LPM_APPLI_Id , LPM_Disable );
+ 202:Src/main.c    ****   
+ 203:Src/main.c    ****   /* Led Timers*/
+ 204:Src/main.c    ****   TimerInit(&timerLed, OnledEvent);   
+ 205:Src/main.c    ****   TimerSetValue( &timerLed, LED_PERIOD_MS);
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccTAEDgC.s 			page 5
+
+
+ 206:Src/main.c    **** 
+ 207:Src/main.c    ****   TimerStart(&timerLed );
+ 208:Src/main.c    **** 
+ 209:Src/main.c    ****   // Radio initialization
+ 210:Src/main.c    ****   RadioEvents.TxDone = OnTxDone;
+ 211:Src/main.c    ****   RadioEvents.RxDone = OnRxDone;
+ 212:Src/main.c    ****   RadioEvents.TxTimeout = OnTxTimeout;
+ 213:Src/main.c    ****   RadioEvents.RxTimeout = OnRxTimeout;
+ 214:Src/main.c    ****   RadioEvents.RxError = OnRxError;
+ 215:Src/main.c    **** 
+ 216:Src/main.c    ****   Radio.Init( &RadioEvents );
+ 217:Src/main.c    **** 
+ 218:Src/main.c    ****   Radio.SetChannel( RF_FREQUENCY );
+ 219:Src/main.c    **** 
+ 220:Src/main.c    **** #if defined( USE_MODEM_LORA )
+ 221:Src/main.c    **** 
+ 222:Src/main.c    ****   Radio.SetTxConfig( MODEM_LORA, TX_OUTPUT_POWER, 0, LORA_BANDWIDTH,
+ 223:Src/main.c    ****                                  LORA_SPREADING_FACTOR, LORA_CODINGRATE,
+ 224:Src/main.c    ****                                    LORA_PREAMBLE_LENGTH, LORA_FIX_LENGTH_PAYLOAD_ON,
+ 225:Src/main.c    ****                                    true, 0, 0, LORA_IQ_INVERSION_ON, 3000000 );
+ 226:Src/main.c    ****     
+ 227:Src/main.c    ****   Radio.SetRxConfig( MODEM_LORA, LORA_BANDWIDTH, LORA_SPREADING_FACTOR,
+ 228:Src/main.c    ****                                    LORA_CODINGRATE, 0, LORA_PREAMBLE_LENGTH,
+ 229:Src/main.c    ****                                    LORA_SYMBOL_TIMEOUT, LORA_FIX_LENGTH_PAYLOAD_ON,
+ 230:Src/main.c    ****                                    0, true, 0, 0, LORA_IQ_INVERSION_ON, true );
+ 231:Src/main.c    **** 
+ 232:Src/main.c    **** #elif defined( USE_MODEM_FSK )
+ 233:Src/main.c    **** 
+ 234:Src/main.c    ****   Radio.SetTxConfig( MODEM_FSK, TX_OUTPUT_POWER, FSK_FDEV, 0,
+ 235:Src/main.c    ****                                   FSK_DATARATE, 0,
+ 236:Src/main.c    ****                                   FSK_PREAMBLE_LENGTH, FSK_FIX_LENGTH_PAYLOAD_ON,
+ 237:Src/main.c    ****                                   true, 0, 0, 0, 3000000 );
+ 238:Src/main.c    ****     
+ 239:Src/main.c    ****   Radio.SetRxConfig( MODEM_FSK, FSK_BANDWIDTH, FSK_DATARATE,
+ 240:Src/main.c    ****                                   0, FSK_AFC_BANDWIDTH, FSK_PREAMBLE_LENGTH,
+ 241:Src/main.c    ****                                   0, FSK_FIX_LENGTH_PAYLOAD_ON, 0, true,
+ 242:Src/main.c    ****                                   0, 0,false, true );
+ 243:Src/main.c    **** 
+ 244:Src/main.c    **** #else
+ 245:Src/main.c    ****     #error "Please define a frequency band in the compiler options."
+ 246:Src/main.c    **** #endif
+ 247:Src/main.c    ****                                   
+ 248:Src/main.c    ****   Radio.Rx( RX_TIMEOUT_VALUE );
+ 249:Src/main.c    ****                                   
+ 250:Src/main.c    ****   while( 1 )
+ 251:Src/main.c    ****   {
+ 252:Src/main.c    ****     switch( State )
+ 253:Src/main.c    ****     {
+ 254:Src/main.c    ****     case RX:
+ 255:Src/main.c    ****       if( isMaster == true )
+ 256:Src/main.c    ****       {
+ 257:Src/main.c    ****         if( BufferSize > 0 )
+ 258:Src/main.c    ****         {
+ 259:Src/main.c    ****           if( strncmp( ( const char* )Buffer, ( const char* )PongMsg, 4 ) == 0 )
+ 260:Src/main.c    ****           {
+ 261:Src/main.c    ****             TimerStop(&timerLed );
+ 262:Src/main.c    ****             LED_Off( LED_BLUE);
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccTAEDgC.s 			page 6
+
+
+ 263:Src/main.c    ****             LED_Off( LED_GREEN ) ; 
+ 264:Src/main.c    ****             LED_Off( LED_RED1 ) ;;
+ 265:Src/main.c    ****             // Indicates on a LED that the received frame is a PONG
+ 266:Src/main.c    ****             LED_Toggle( LED_RED2 ) ;
+ 267:Src/main.c    **** 
+ 268:Src/main.c    **** 
+ 269:Src/main.c    ****             // Send the next PING frame      
+ 270:Src/main.c    ****             Buffer[0] = 'P';
+ 271:Src/main.c    ****             Buffer[1] = 'I';
+ 272:Src/main.c    ****             Buffer[2] = 'N';
+ 273:Src/main.c    ****             Buffer[3] = 'G';
+ 274:Src/main.c    ****             // We fill the buffer with numbers for the payload 
+ 275:Src/main.c    ****             for( i = 4; i < BufferSize; i++ )
+ 276:Src/main.c    ****             {
+ 277:Src/main.c    ****               Buffer[i] = i - 4;
+ 278:Src/main.c    ****             }
+ 279:Src/main.c    ****             PRINTF("...PING\n\r");
+ 280:Src/main.c    **** 
+ 281:Src/main.c    ****             DelayMs( 1 ); 
+ 282:Src/main.c    ****             Radio.Send( Buffer, BufferSize );
+ 283:Src/main.c    ****             }
+ 284:Src/main.c    ****             else if( strncmp( ( const char* )Buffer, ( const char* )PingMsg, 4 ) == 0 )
+ 285:Src/main.c    ****             { // A master already exists then become a slave
+ 286:Src/main.c    ****               isMaster = false;
+ 287:Src/main.c    ****               //GpioWrite( &Led2, 1 ); // Set LED off
+ 288:Src/main.c    ****               Radio.Rx( RX_TIMEOUT_VALUE );
+ 289:Src/main.c    ****             }
+ 290:Src/main.c    ****             else // valid reception but neither a PING or a PONG message
+ 291:Src/main.c    ****             {    // Set device as master ans start again
+ 292:Src/main.c    ****               isMaster = true;
+ 293:Src/main.c    ****               Radio.Rx( RX_TIMEOUT_VALUE );
+ 294:Src/main.c    ****             }
+ 295:Src/main.c    ****           }
+ 296:Src/main.c    ****         }
+ 297:Src/main.c    ****         else
+ 298:Src/main.c    ****         {
+ 299:Src/main.c    ****           if( BufferSize > 0 )
+ 300:Src/main.c    ****           {
+ 301:Src/main.c    ****             if( strncmp( ( const char* )Buffer, ( const char* )PingMsg, 4 ) == 0 )
+ 302:Src/main.c    ****             {
+ 303:Src/main.c    ****               // Indicates on a LED that the received frame is a PING
+ 304:Src/main.c    ****               TimerStop(&timerLed );
+ 305:Src/main.c    ****               LED_Off( LED_RED1);
+ 306:Src/main.c    ****               LED_Off( LED_RED2 ) ; 
+ 307:Src/main.c    ****               LED_Off( LED_GREEN ) ;
+ 308:Src/main.c    ****               LED_Toggle( LED_BLUE );
+ 309:Src/main.c    **** 
+ 310:Src/main.c    ****               // Send the reply to the PONG string
+ 311:Src/main.c    ****               Buffer[0] = 'P';
+ 312:Src/main.c    ****               Buffer[1] = 'O';
+ 313:Src/main.c    ****               Buffer[2] = 'N';
+ 314:Src/main.c    ****               Buffer[3] = 'G';
+ 315:Src/main.c    ****               // We fill the buffer with numbers for the payload 
+ 316:Src/main.c    ****               for( i = 4; i < BufferSize; i++ )
+ 317:Src/main.c    ****               {
+ 318:Src/main.c    ****                 Buffer[i] = i - 4;
+ 319:Src/main.c    ****               }
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccTAEDgC.s 			page 7
+
+
+ 320:Src/main.c    ****               DelayMs( 1 );
+ 321:Src/main.c    **** 
+ 322:Src/main.c    ****               Radio.Send( Buffer, BufferSize );
+ 323:Src/main.c    ****               PRINTF("...PONG\n\r");
+ 324:Src/main.c    ****             }
+ 325:Src/main.c    ****             else // valid reception but not a PING as expected
+ 326:Src/main.c    ****             {    // Set device as master and start again
+ 327:Src/main.c    ****               isMaster = true;
+ 328:Src/main.c    ****               Radio.Rx( RX_TIMEOUT_VALUE );
+ 329:Src/main.c    ****             }
+ 330:Src/main.c    ****          }
+ 331:Src/main.c    ****       }
+ 332:Src/main.c    ****       State = LOWPOWER;
+ 333:Src/main.c    ****       break;
+ 334:Src/main.c    ****     case TX:
+ 335:Src/main.c    ****       // Indicates on a LED that we have sent a PING [Master]
+ 336:Src/main.c    ****       // Indicates on a LED that we have sent a PONG [Slave]
+ 337:Src/main.c    ****       //GpioWrite( &Led2, GpioRead( &Led2 ) ^ 1 );
+ 338:Src/main.c    ****       Radio.Rx( RX_TIMEOUT_VALUE );
+ 339:Src/main.c    ****       State = LOWPOWER;
+ 340:Src/main.c    ****       break;
+ 341:Src/main.c    ****     case RX_TIMEOUT:
+ 342:Src/main.c    ****     case RX_ERROR:
+ 343:Src/main.c    ****       if( isMaster == true )
+ 344:Src/main.c    ****       {
+ 345:Src/main.c    ****         // Send the next PING frame
+ 346:Src/main.c    ****         Buffer[0] = 'P';
+ 347:Src/main.c    ****         Buffer[1] = 'I';
+ 348:Src/main.c    ****         Buffer[2] = 'N';
+ 349:Src/main.c    ****         Buffer[3] = 'G';
+ 350:Src/main.c    ****         for( i = 4; i < BufferSize; i++ )
+ 351:Src/main.c    ****         {
+ 352:Src/main.c    ****           Buffer[i] = i - 4;
+ 353:Src/main.c    ****         }
+ 354:Src/main.c    ****         DelayMs( 1 ); 
+ 355:Src/main.c    ****         Radio.Send( Buffer, BufferSize );
+ 356:Src/main.c    ****       }
+ 357:Src/main.c    ****       else
+ 358:Src/main.c    ****       {
+ 359:Src/main.c    ****         Radio.Rx( RX_TIMEOUT_VALUE );
+ 360:Src/main.c    ****       }
+ 361:Src/main.c    ****       State = LOWPOWER;
+ 362:Src/main.c    ****       break;
+ 363:Src/main.c    ****     case TX_TIMEOUT:
+ 364:Src/main.c    ****       Radio.Rx( RX_TIMEOUT_VALUE );
+ 365:Src/main.c    ****       State = LOWPOWER;
+ 366:Src/main.c    ****       break;
+ 367:Src/main.c    ****     case LOWPOWER:
+ 368:Src/main.c    ****       default:
+ 369:Src/main.c    ****             // Set low power
+ 370:Src/main.c    ****       break;
+ 371:Src/main.c    ****     }
+ 372:Src/main.c    ****     
+ 373:Src/main.c    ****     DISABLE_IRQ( );
+ 374:Src/main.c    ****     /* if an interupt has occured after __disable_irq, it is kept pending 
+ 375:Src/main.c    ****      * and cortex will not enter low power anyway  */
+ 376:Src/main.c    ****     if (State == LOWPOWER)
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccTAEDgC.s 			page 8
+
+
+ 377:Src/main.c    ****     {
+ 378:Src/main.c    **** #ifndef LOW_POWER_DISABLE
+ 379:Src/main.c    ****       LPM_EnterLowPower( );
+ 380:Src/main.c    **** #endif
+ 381:Src/main.c    ****     }
+ 382:Src/main.c    ****     ENABLE_IRQ( );
+ 383:Src/main.c    ****        
+ 384:Src/main.c    ****   }
+ 385:Src/main.c    **** }
+ 386:Src/main.c    **** 
+ 387:Src/main.c    **** void OnTxDone( void )
+ 388:Src/main.c    **** {
+ 389:Src/main.c    ****     Radio.Sleep( );
+ 390:Src/main.c    ****     State = TX;
+ 391:Src/main.c    ****     PRINTF("OnTxDone\n\r");
+ 392:Src/main.c    **** }
+ 393:Src/main.c    **** 
+ 394:Src/main.c    **** void OnRxDone( uint8_t *payload, uint16_t size, int16_t rssi, int8_t snr )
+ 395:Src/main.c    **** {
+ 396:Src/main.c    ****     Radio.Sleep( );
+ 397:Src/main.c    ****     BufferSize = size;
+ 398:Src/main.c    ****     memcpy( Buffer, payload, BufferSize );
+ 399:Src/main.c    ****     RssiValue = rssi;
+ 400:Src/main.c    ****     SnrValue = snr;
+ 401:Src/main.c    ****     State = RX;
+ 402:Src/main.c    ****   
+ 403:Src/main.c    ****     PRINTF("OnRxDone\n\r");
+ 404:Src/main.c    ****     PRINTF("RssiValue=%d dBm, SnrValue=%d\n\r", rssi, snr);
+ 405:Src/main.c    **** }
+ 406:Src/main.c    **** 
+ 407:Src/main.c    **** void OnTxTimeout( void )
+ 408:Src/main.c    **** {
+ 409:Src/main.c    ****     Radio.Sleep( );
+ 410:Src/main.c    ****     State = TX_TIMEOUT;
+ 411:Src/main.c    ****   
+ 412:Src/main.c    ****     PRINTF("OnTxTimeout\n\r");
+ 413:Src/main.c    **** }
+ 414:Src/main.c    **** 
+ 415:Src/main.c    **** void OnRxTimeout( void )
+ 416:Src/main.c    **** {
+ 417:Src/main.c    ****     Radio.Sleep( );
+ 418:Src/main.c    ****     State = RX_TIMEOUT;
+ 419:Src/main.c    ****     PRINTF("OnRxTimeout\n\r");
+ 420:Src/main.c    **** }
+ 421:Src/main.c    **** 
+ 422:Src/main.c    **** void OnRxError( void )
+ 423:Src/main.c    **** {
+ 424:Src/main.c    ****     Radio.Sleep( );
+ 425:Src/main.c    ****     State = RX_ERROR;
+ 426:Src/main.c    ****     PRINTF("OnRxError\n\r");
+ 427:Src/main.c    **** }
+ 428:Src/main.c    **** 
+ 429:Src/main.c    **** static void OnledEvent( void )
+ 430:Src/main.c    **** {
+  25              		.loc 1 430 0
+  26              		.cfi_startproc
+  27              		@ args = 0, pretend = 0, frame = 0
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccTAEDgC.s 			page 9
+
+
+  28              		@ frame_needed = 0, uses_anonymous_args = 0
+  29 0000 10B5     		push	{r4, lr}
+  30              	.LCFI0:
+  31              		.cfi_def_cfa_offset 8
+  32              		.cfi_offset 4, -8
+  33              		.cfi_offset 14, -4
+ 431:Src/main.c    ****   //LED_Toggle( LED_BLUE ) ; 
+ 432:Src/main.c    ****   LED_Toggle( LED_RED1 ) ; 
+  34              		.loc 1 432 0
+  35 0002 0120     		movs	r0, #1
+  36 0004 FFF7FEFF 		bl	BSP_LED_Toggle
+  37              	.LVL0:
+ 433:Src/main.c    ****   LED_Toggle( LED_RED2 ) ; 
+  38              		.loc 1 433 0
+  39 0008 0320     		movs	r0, #3
+  40 000a FFF7FEFF 		bl	BSP_LED_Toggle
+  41              	.LVL1:
+ 434:Src/main.c    ****   LED_Toggle( LED_GREEN ) ;   
+  42              		.loc 1 434 0
+  43 000e 0020     		movs	r0, #0
+  44 0010 FFF7FEFF 		bl	BSP_LED_Toggle
+  45              	.LVL2:
+ 435:Src/main.c    **** 
+ 436:Src/main.c    ****   TimerStart(&timerLed );
+  46              		.loc 1 436 0
+  47 0014 0148     		ldr	r0, .L2
+  48 0016 FFF7FEFF 		bl	TimerStart
+  49              	.LVL3:
+ 437:Src/main.c    **** }
+  50              		.loc 1 437 0
+  51              		@ sp needed
+  52 001a 10BD     		pop	{r4, pc}
+  53              	.L3:
+  54              		.align	2
+  55              	.L2:
+  56 001c 00000000 		.word	.LANCHOR0
+  57              		.cfi_endproc
+  58              	.LFE46:
+  60              		.section	.text.OnTxDone,"ax",%progbits
+  61              		.align	1
+  62              		.global	OnTxDone
+  63              		.syntax unified
+  64              		.code	16
+  65              		.thumb_func
+  66              		.fpu softvfp
+  68              	OnTxDone:
+  69              	.LFB41:
+ 388:Src/main.c    ****     Radio.Sleep( );
+  70              		.loc 1 388 0
+  71              		.cfi_startproc
+  72              		@ args = 0, pretend = 0, frame = 0
+  73              		@ frame_needed = 0, uses_anonymous_args = 0
+  74 0000 10B5     		push	{r4, lr}
+  75              	.LCFI1:
+  76              		.cfi_def_cfa_offset 8
+  77              		.cfi_offset 4, -8
+  78              		.cfi_offset 14, -4
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccTAEDgC.s 			page 10
+
+
+ 389:Src/main.c    ****     State = TX;
+  79              		.loc 1 389 0
+  80 0002 054B     		ldr	r3, .L5
+  81 0004 5B6B     		ldr	r3, [r3, #52]
+  82 0006 9847     		blx	r3
+  83              	.LVL4:
+ 390:Src/main.c    ****     PRINTF("OnTxDone\n\r");
+  84              		.loc 1 390 0
+  85 0008 044B     		ldr	r3, .L5+4
+  86 000a 0422     		movs	r2, #4
+  87 000c 1A75     		strb	r2, [r3, #20]
+ 391:Src/main.c    **** }
+  88              		.loc 1 391 0
+  89 000e 0448     		ldr	r0, .L5+8
+  90 0010 FFF7FEFF 		bl	vcom_Send
+  91              	.LVL5:
+ 392:Src/main.c    **** 
+  92              		.loc 1 392 0
+  93              		@ sp needed
+  94 0014 10BD     		pop	{r4, pc}
+  95              	.L6:
+  96 0016 C046     		.align	2
+  97              	.L5:
+  98 0018 00000000 		.word	Radio
+  99 001c 00000000 		.word	.LANCHOR0
+ 100 0020 00000000 		.word	.LC3
+ 101              		.cfi_endproc
+ 102              	.LFE41:
+ 104              		.section	.text.OnTxTimeout,"ax",%progbits
+ 105              		.align	1
+ 106              		.global	OnTxTimeout
+ 107              		.syntax unified
+ 108              		.code	16
+ 109              		.thumb_func
+ 110              		.fpu softvfp
+ 112              	OnTxTimeout:
+ 113              	.LFB43:
+ 408:Src/main.c    ****     Radio.Sleep( );
+ 114              		.loc 1 408 0
+ 115              		.cfi_startproc
+ 116              		@ args = 0, pretend = 0, frame = 0
+ 117              		@ frame_needed = 0, uses_anonymous_args = 0
+ 118 0000 10B5     		push	{r4, lr}
+ 119              	.LCFI2:
+ 120              		.cfi_def_cfa_offset 8
+ 121              		.cfi_offset 4, -8
+ 122              		.cfi_offset 14, -4
+ 409:Src/main.c    ****     State = TX_TIMEOUT;
+ 123              		.loc 1 409 0
+ 124 0002 054B     		ldr	r3, .L8
+ 125 0004 5B6B     		ldr	r3, [r3, #52]
+ 126 0006 9847     		blx	r3
+ 127              	.LVL6:
+ 410:Src/main.c    ****   
+ 128              		.loc 1 410 0
+ 129 0008 044B     		ldr	r3, .L8+4
+ 130 000a 0522     		movs	r2, #5
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccTAEDgC.s 			page 11
+
+
+ 131 000c 1A75     		strb	r2, [r3, #20]
+ 412:Src/main.c    **** }
+ 132              		.loc 1 412 0
+ 133 000e 0448     		ldr	r0, .L8+8
+ 134 0010 FFF7FEFF 		bl	vcom_Send
+ 135              	.LVL7:
+ 413:Src/main.c    **** 
+ 136              		.loc 1 413 0
+ 137              		@ sp needed
+ 138 0014 10BD     		pop	{r4, pc}
+ 139              	.L9:
+ 140 0016 C046     		.align	2
+ 141              	.L8:
+ 142 0018 00000000 		.word	Radio
+ 143 001c 00000000 		.word	.LANCHOR0
+ 144 0020 0C000000 		.word	.LC7
+ 145              		.cfi_endproc
+ 146              	.LFE43:
+ 148              		.section	.text.OnRxTimeout,"ax",%progbits
+ 149              		.align	1
+ 150              		.global	OnRxTimeout
+ 151              		.syntax unified
+ 152              		.code	16
+ 153              		.thumb_func
+ 154              		.fpu softvfp
+ 156              	OnRxTimeout:
+ 157              	.LFB44:
+ 416:Src/main.c    ****     Radio.Sleep( );
+ 158              		.loc 1 416 0
+ 159              		.cfi_startproc
+ 160              		@ args = 0, pretend = 0, frame = 0
+ 161              		@ frame_needed = 0, uses_anonymous_args = 0
+ 162 0000 10B5     		push	{r4, lr}
+ 163              	.LCFI3:
+ 164              		.cfi_def_cfa_offset 8
+ 165              		.cfi_offset 4, -8
+ 166              		.cfi_offset 14, -4
+ 417:Src/main.c    ****     State = RX_TIMEOUT;
+ 167              		.loc 1 417 0
+ 168 0002 054B     		ldr	r3, .L11
+ 169 0004 5B6B     		ldr	r3, [r3, #52]
+ 170 0006 9847     		blx	r3
+ 171              	.LVL8:
+ 418:Src/main.c    ****     PRINTF("OnRxTimeout\n\r");
+ 172              		.loc 1 418 0
+ 173 0008 044B     		ldr	r3, .L11+4
+ 174 000a 0222     		movs	r2, #2
+ 175 000c 1A75     		strb	r2, [r3, #20]
+ 419:Src/main.c    **** }
+ 176              		.loc 1 419 0
+ 177 000e 0448     		ldr	r0, .L11+8
+ 178 0010 FFF7FEFF 		bl	vcom_Send
+ 179              	.LVL9:
+ 420:Src/main.c    **** 
+ 180              		.loc 1 420 0
+ 181              		@ sp needed
+ 182 0014 10BD     		pop	{r4, pc}
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccTAEDgC.s 			page 12
+
+
+ 183              	.L12:
+ 184 0016 C046     		.align	2
+ 185              	.L11:
+ 186 0018 00000000 		.word	Radio
+ 187 001c 00000000 		.word	.LANCHOR0
+ 188 0020 1C000000 		.word	.LC11
+ 189              		.cfi_endproc
+ 190              	.LFE44:
+ 192              		.section	.text.OnRxError,"ax",%progbits
+ 193              		.align	1
+ 194              		.global	OnRxError
+ 195              		.syntax unified
+ 196              		.code	16
+ 197              		.thumb_func
+ 198              		.fpu softvfp
+ 200              	OnRxError:
+ 201              	.LFB45:
+ 423:Src/main.c    ****     Radio.Sleep( );
+ 202              		.loc 1 423 0
+ 203              		.cfi_startproc
+ 204              		@ args = 0, pretend = 0, frame = 0
+ 205              		@ frame_needed = 0, uses_anonymous_args = 0
+ 206 0000 10B5     		push	{r4, lr}
+ 207              	.LCFI4:
+ 208              		.cfi_def_cfa_offset 8
+ 209              		.cfi_offset 4, -8
+ 210              		.cfi_offset 14, -4
+ 424:Src/main.c    ****     State = RX_ERROR;
+ 211              		.loc 1 424 0
+ 212 0002 054B     		ldr	r3, .L14
+ 213 0004 5B6B     		ldr	r3, [r3, #52]
+ 214 0006 9847     		blx	r3
+ 215              	.LVL10:
+ 425:Src/main.c    ****     PRINTF("OnRxError\n\r");
+ 216              		.loc 1 425 0
+ 217 0008 044B     		ldr	r3, .L14+4
+ 218 000a 0322     		movs	r2, #3
+ 219 000c 1A75     		strb	r2, [r3, #20]
+ 426:Src/main.c    **** }
+ 220              		.loc 1 426 0
+ 221 000e 0448     		ldr	r0, .L14+8
+ 222 0010 FFF7FEFF 		bl	vcom_Send
+ 223              	.LVL11:
+ 427:Src/main.c    **** 
+ 224              		.loc 1 427 0
+ 225              		@ sp needed
+ 226 0014 10BD     		pop	{r4, pc}
+ 227              	.L15:
+ 228 0016 C046     		.align	2
+ 229              	.L14:
+ 230 0018 00000000 		.word	Radio
+ 231 001c 00000000 		.word	.LANCHOR0
+ 232 0020 2C000000 		.word	.LC15
+ 233              		.cfi_endproc
+ 234              	.LFE45:
+ 236              		.section	.text.OnRxDone,"ax",%progbits
+ 237              		.align	1
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccTAEDgC.s 			page 13
+
+
+ 238              		.global	OnRxDone
+ 239              		.syntax unified
+ 240              		.code	16
+ 241              		.thumb_func
+ 242              		.fpu softvfp
+ 244              	OnRxDone:
+ 245              	.LFB42:
+ 395:Src/main.c    ****     Radio.Sleep( );
+ 246              		.loc 1 395 0
+ 247              		.cfi_startproc
+ 248              		@ args = 0, pretend = 0, frame = 0
+ 249              		@ frame_needed = 0, uses_anonymous_args = 0
+ 250              	.LVL12:
+ 251 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+ 252              	.LCFI5:
+ 253              		.cfi_def_cfa_offset 24
+ 254              		.cfi_offset 3, -24
+ 255              		.cfi_offset 4, -20
+ 256              		.cfi_offset 5, -16
+ 257              		.cfi_offset 6, -12
+ 258              		.cfi_offset 7, -8
+ 259              		.cfi_offset 14, -4
+ 260 0002 0700     		movs	r7, r0
+ 261 0004 0E00     		movs	r6, r1
+ 262 0006 1400     		movs	r4, r2
+ 263 0008 1D00     		movs	r5, r3
+ 396:Src/main.c    ****     BufferSize = size;
+ 264              		.loc 1 396 0
+ 265 000a 0C4B     		ldr	r3, .L17
+ 266              	.LVL13:
+ 267 000c 5B6B     		ldr	r3, [r3, #52]
+ 268 000e 9847     		blx	r3
+ 269              	.LVL14:
+ 397:Src/main.c    ****     memcpy( Buffer, payload, BufferSize );
+ 270              		.loc 1 397 0
+ 271 0010 0B4B     		ldr	r3, .L17+4
+ 272 0012 1E80     		strh	r6, [r3]
+ 398:Src/main.c    ****     RssiValue = rssi;
+ 273              		.loc 1 398 0
+ 274 0014 3200     		movs	r2, r6
+ 275 0016 3900     		movs	r1, r7
+ 276 0018 0A48     		ldr	r0, .L17+8
+ 277 001a FFF7FEFF 		bl	memcpy
+ 278              	.LVL15:
+ 399:Src/main.c    ****     SnrValue = snr;
+ 279              		.loc 1 399 0
+ 280 001e 0A4B     		ldr	r3, .L17+12
+ 281 0020 5C75     		strb	r4, [r3, #21]
+ 400:Src/main.c    ****     State = RX;
+ 282              		.loc 1 400 0
+ 283 0022 9D75     		strb	r5, [r3, #22]
+ 401:Src/main.c    ****   
+ 284              		.loc 1 401 0
+ 285 0024 0122     		movs	r2, #1
+ 286 0026 1A75     		strb	r2, [r3, #20]
+ 403:Src/main.c    ****     PRINTF("RssiValue=%d dBm, SnrValue=%d\n\r", rssi, snr);
+ 287              		.loc 1 403 0
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccTAEDgC.s 			page 14
+
+
+ 288 0028 0848     		ldr	r0, .L17+16
+ 289 002a FFF7FEFF 		bl	vcom_Send
+ 290              	.LVL16:
+ 404:Src/main.c    **** }
+ 291              		.loc 1 404 0
+ 292 002e 2A00     		movs	r2, r5
+ 293 0030 2100     		movs	r1, r4
+ 294 0032 0748     		ldr	r0, .L17+20
+ 295 0034 FFF7FEFF 		bl	vcom_Send
+ 296              	.LVL17:
+ 405:Src/main.c    **** 
+ 297              		.loc 1 405 0
+ 298              		@ sp needed
+ 299              	.LVL18:
+ 300 0038 F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 301              	.L18:
+ 302 003a C046     		.align	2
+ 303              	.L17:
+ 304 003c 00000000 		.word	Radio
+ 305 0040 00000000 		.word	.LANCHOR1
+ 306 0044 00000000 		.word	Buffer
+ 307 0048 00000000 		.word	.LANCHOR0
+ 308 004c 38000000 		.word	.LC21
+ 309 0050 44000000 		.word	.LC23
+ 310              		.cfi_endproc
+ 311              	.LFE42:
+ 313              		.section	.text.main,"ax",%progbits
+ 314              		.align	1
+ 315              		.global	main
+ 316              		.syntax unified
+ 317              		.code	16
+ 318              		.thumb_func
+ 319              		.fpu softvfp
+ 321              	main:
+ 322              	.LFB40:
+ 188:Src/main.c    ****   bool isMaster = true;
+ 323              		.loc 1 188 0
+ 324              		.cfi_startproc
+ 325              		@ args = 0, pretend = 0, frame = 0
+ 326              		@ frame_needed = 0, uses_anonymous_args = 0
+ 327 0000 F0B5     		push	{r4, r5, r6, r7, lr}
+ 328              	.LCFI6:
+ 329              		.cfi_def_cfa_offset 20
+ 330              		.cfi_offset 4, -20
+ 331              		.cfi_offset 5, -16
+ 332              		.cfi_offset 6, -12
+ 333              		.cfi_offset 7, -8
+ 334              		.cfi_offset 14, -4
+ 335 0002 C646     		mov	lr, r8
+ 336 0004 00B5     		push	{lr}
+ 337              	.LCFI7:
+ 338              		.cfi_def_cfa_offset 24
+ 339              		.cfi_offset 8, -24
+ 340 0006 8AB0     		sub	sp, sp, #40
+ 341              	.LCFI8:
+ 342              		.cfi_def_cfa_offset 64
+ 343              	.LVL19:
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccTAEDgC.s 			page 15
+
+
+ 192:Src/main.c    ****   
+ 344              		.loc 1 192 0
+ 345 0008 FFF7FEFF 		bl	HAL_Init
+ 346              	.LVL20:
+ 194:Src/main.c    ****   
+ 347              		.loc 1 194 0
+ 348 000c FFF7FEFF 		bl	SystemClock_Config
+ 349              	.LVL21:
+ 196:Src/main.c    **** 
+ 350              		.loc 1 196 0
+ 351 0010 FFF7FEFF 		bl	DBG_Init
+ 352              	.LVL22:
+ 198:Src/main.c    ****   
+ 353              		.loc 1 198 0
+ 354 0014 FFF7FEFF 		bl	HW_Init
+ 355              	.LVL23:
+ 201:Src/main.c    ****   
+ 356              		.loc 1 201 0
+ 357 0018 0121     		movs	r1, #1
+ 358 001a 0120     		movs	r0, #1
+ 359 001c FFF7FEFF 		bl	LPM_SetOffMode
+ 360              	.LVL24:
+ 204:Src/main.c    ****   TimerSetValue( &timerLed, LED_PERIOD_MS);
+ 361              		.loc 1 204 0
+ 362 0020 984C     		ldr	r4, .L46
+ 363 0022 9949     		ldr	r1, .L46+4
+ 364 0024 2000     		movs	r0, r4
+ 365 0026 FFF7FEFF 		bl	TimerInit
+ 366              	.LVL25:
+ 205:Src/main.c    **** 
+ 367              		.loc 1 205 0
+ 368 002a C821     		movs	r1, #200
+ 369 002c 2000     		movs	r0, r4
+ 370 002e FFF7FEFF 		bl	TimerSetValue
+ 371              	.LVL26:
+ 207:Src/main.c    **** 
+ 372              		.loc 1 207 0
+ 373 0032 2000     		movs	r0, r4
+ 374 0034 FFF7FEFF 		bl	TimerStart
+ 375              	.LVL27:
+ 210:Src/main.c    ****   RadioEvents.RxDone = OnRxDone;
+ 376              		.loc 1 210 0
+ 377 0038 944B     		ldr	r3, .L46+8
+ 378 003a A361     		str	r3, [r4, #24]
+ 211:Src/main.c    ****   RadioEvents.TxTimeout = OnTxTimeout;
+ 379              		.loc 1 211 0
+ 380 003c 944B     		ldr	r3, .L46+12
+ 381 003e 2362     		str	r3, [r4, #32]
+ 212:Src/main.c    ****   RadioEvents.RxTimeout = OnRxTimeout;
+ 382              		.loc 1 212 0
+ 383 0040 944B     		ldr	r3, .L46+16
+ 384 0042 E361     		str	r3, [r4, #28]
+ 213:Src/main.c    ****   RadioEvents.RxError = OnRxError;
+ 385              		.loc 1 213 0
+ 386 0044 944B     		ldr	r3, .L46+20
+ 387 0046 6362     		str	r3, [r4, #36]
+ 214:Src/main.c    **** 
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccTAEDgC.s 			page 16
+
+
+ 388              		.loc 1 214 0
+ 389 0048 944B     		ldr	r3, .L46+24
+ 390 004a A362     		str	r3, [r4, #40]
+ 216:Src/main.c    **** 
+ 391              		.loc 1 216 0
+ 392 004c 944D     		ldr	r5, .L46+28
+ 393 004e 2000     		movs	r0, r4
+ 394 0050 1830     		adds	r0, r0, #24
+ 395 0052 AB68     		ldr	r3, [r5, #8]
+ 396 0054 9847     		blx	r3
+ 397              	.LVL28:
+ 218:Src/main.c    **** 
+ 398              		.loc 1 218 0
+ 399 0056 9348     		ldr	r0, .L46+32
+ 400 0058 6B69     		ldr	r3, [r5, #20]
+ 401 005a 9847     		blx	r3
+ 402              	.LVL29:
+ 222:Src/main.c    ****                                  LORA_SPREADING_FACTOR, LORA_CODINGRATE,
+ 403              		.loc 1 222 0
+ 404 005c 924B     		ldr	r3, .L46+36
+ 405 005e 0893     		str	r3, [sp, #32]
+ 406 0060 0024     		movs	r4, #0
+ 407 0062 0794     		str	r4, [sp, #28]
+ 408 0064 0694     		str	r4, [sp, #24]
+ 409 0066 0594     		str	r4, [sp, #20]
+ 410 0068 0126     		movs	r6, #1
+ 411 006a 0496     		str	r6, [sp, #16]
+ 412 006c 0394     		str	r4, [sp, #12]
+ 413 006e 0823     		movs	r3, #8
+ 414 0070 9846     		mov	r8, r3
+ 415 0072 0293     		str	r3, [sp, #8]
+ 416 0074 0196     		str	r6, [sp, #4]
+ 417 0076 013B     		subs	r3, r3, #1
+ 418 0078 0093     		str	r3, [sp]
+ 419 007a 0023     		movs	r3, #0
+ 420 007c 0022     		movs	r2, #0
+ 421 007e 0E21     		movs	r1, #14
+ 422 0080 0120     		movs	r0, #1
+ 423 0082 6F6A     		ldr	r7, [r5, #36]
+ 424 0084 B847     		blx	r7
+ 425              	.LVL30:
+ 227:Src/main.c    ****                                    LORA_CODINGRATE, 0, LORA_PREAMBLE_LENGTH,
+ 426              		.loc 1 227 0
+ 427 0086 0996     		str	r6, [sp, #36]
+ 428 0088 0894     		str	r4, [sp, #32]
+ 429 008a 0794     		str	r4, [sp, #28]
+ 430 008c 0694     		str	r4, [sp, #24]
+ 431 008e 0596     		str	r6, [sp, #20]
+ 432 0090 0494     		str	r4, [sp, #16]
+ 433 0092 0394     		str	r4, [sp, #12]
+ 434 0094 0523     		movs	r3, #5
+ 435 0096 0293     		str	r3, [sp, #8]
+ 436 0098 4346     		mov	r3, r8
+ 437 009a 0193     		str	r3, [sp, #4]
+ 438 009c 0094     		str	r4, [sp]
+ 439 009e 073B     		subs	r3, r3, #7
+ 440 00a0 0722     		movs	r2, #7
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccTAEDgC.s 			page 17
+
+
+ 441 00a2 0021     		movs	r1, #0
+ 442 00a4 0120     		movs	r0, #1
+ 443 00a6 2C6A     		ldr	r4, [r5, #32]
+ 444 00a8 A047     		blx	r4
+ 445              	.LVL31:
+ 248:Src/main.c    ****                                   
+ 446              		.loc 1 248 0
+ 447 00aa EB6B     		ldr	r3, [r5, #60]
+ 448 00ac FA20     		movs	r0, #250
+ 449 00ae 8000     		lsls	r0, r0, #2
+ 450 00b0 9847     		blx	r3
+ 451              	.LVL32:
+ 189:Src/main.c    ****   uint8_t i;
+ 452              		.loc 1 189 0
+ 453 00b2 0124     		movs	r4, #1
+ 454 00b4 6DE0     		b	.L40
+ 455              	.LVL33:
+ 456              	.L21:
+ 255:Src/main.c    ****       {
+ 457              		.loc 1 255 0
+ 458 00b6 002C     		cmp	r4, #0
+ 459 00b8 50D0     		beq	.L26
+ 257:Src/main.c    ****         {
+ 460              		.loc 1 257 0
+ 461 00ba 7C4B     		ldr	r3, .L46+40
+ 462 00bc 1B88     		ldrh	r3, [r3]
+ 463 00be 002B     		cmp	r3, #0
+ 464 00c0 5ED0     		beq	.L27
+ 259:Src/main.c    ****           {
+ 465              		.loc 1 259 0
+ 466 00c2 0422     		movs	r2, #4
+ 467 00c4 7A49     		ldr	r1, .L46+44
+ 468 00c6 7B48     		ldr	r0, .L46+48
+ 469 00c8 FFF7FEFF 		bl	strncmp
+ 470              	.LVL34:
+ 471 00cc 0028     		cmp	r0, #0
+ 472 00ce 0ED0     		beq	.L41
+ 284:Src/main.c    ****             { // A master already exists then become a slave
+ 473              		.loc 1 284 0
+ 474 00d0 7749     		ldr	r1, .L46+44
+ 475 00d2 0422     		movs	r2, #4
+ 476 00d4 0831     		adds	r1, r1, #8
+ 477 00d6 7748     		ldr	r0, .L46+48
+ 478 00d8 FFF7FEFF 		bl	strncmp
+ 479              	.LVL35:
+ 480 00dc 0028     		cmp	r0, #0
+ 481 00de 37D1     		bne	.L31
+ 482              	.LVL36:
+ 288:Src/main.c    ****             }
+ 483              		.loc 1 288 0
+ 484 00e0 6F4B     		ldr	r3, .L46+28
+ 485 00e2 DB6B     		ldr	r3, [r3, #60]
+ 486 00e4 FA30     		adds	r0, r0, #250
+ 487 00e6 8000     		lsls	r0, r0, #2
+ 488 00e8 9847     		blx	r3
+ 489              	.LVL37:
+ 286:Src/main.c    ****               //GpioWrite( &Led2, 1 ); // Set LED off
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccTAEDgC.s 			page 18
+
+
+ 490              		.loc 1 286 0
+ 491 00ea 0024     		movs	r4, #0
+ 492 00ec 48E0     		b	.L27
+ 493              	.LVL38:
+ 494              	.L41:
+ 261:Src/main.c    ****             LED_Off( LED_BLUE);
+ 495              		.loc 1 261 0
+ 496 00ee 6548     		ldr	r0, .L46
+ 497 00f0 FFF7FEFF 		bl	TimerStop
+ 498              	.LVL39:
+ 262:Src/main.c    ****             LED_Off( LED_GREEN ) ; 
+ 499              		.loc 1 262 0
+ 500 00f4 0220     		movs	r0, #2
+ 501 00f6 FFF7FEFF 		bl	BSP_LED_Off
+ 502              	.LVL40:
+ 263:Src/main.c    ****             LED_Off( LED_RED1 ) ;;
+ 503              		.loc 1 263 0
+ 504 00fa 0020     		movs	r0, #0
+ 505 00fc FFF7FEFF 		bl	BSP_LED_Off
+ 506              	.LVL41:
+ 264:Src/main.c    ****             // Indicates on a LED that the received frame is a PONG
+ 507              		.loc 1 264 0
+ 508 0100 0120     		movs	r0, #1
+ 509 0102 FFF7FEFF 		bl	BSP_LED_Off
+ 510              	.LVL42:
+ 266:Src/main.c    **** 
+ 511              		.loc 1 266 0
+ 512 0106 0320     		movs	r0, #3
+ 513 0108 FFF7FEFF 		bl	BSP_LED_Toggle
+ 514              	.LVL43:
+ 270:Src/main.c    ****             Buffer[1] = 'I';
+ 515              		.loc 1 270 0
+ 516 010c 694B     		ldr	r3, .L46+48
+ 517 010e 5022     		movs	r2, #80
+ 518 0110 1A70     		strb	r2, [r3]
+ 271:Src/main.c    ****             Buffer[2] = 'N';
+ 519              		.loc 1 271 0
+ 520 0112 073A     		subs	r2, r2, #7
+ 521 0114 5A70     		strb	r2, [r3, #1]
+ 272:Src/main.c    ****             Buffer[3] = 'G';
+ 522              		.loc 1 272 0
+ 523 0116 0532     		adds	r2, r2, #5
+ 524 0118 9A70     		strb	r2, [r3, #2]
+ 273:Src/main.c    ****             // We fill the buffer with numbers for the payload 
+ 525              		.loc 1 273 0
+ 526 011a 073A     		subs	r2, r2, #7
+ 527 011c DA70     		strb	r2, [r3, #3]
+ 528              	.LVL44:
+ 275:Src/main.c    ****             {
+ 529              		.loc 1 275 0
+ 530 011e 0423     		movs	r3, #4
+ 531              	.LVL45:
+ 532              	.L29:
+ 275:Src/main.c    ****             {
+ 533              		.loc 1 275 0 is_stmt 0 discriminator 1
+ 534 0120 9AB2     		uxth	r2, r3
+ 535 0122 6249     		ldr	r1, .L46+40
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccTAEDgC.s 			page 19
+
+
+ 536 0124 0988     		ldrh	r1, [r1]
+ 537 0126 8A42     		cmp	r2, r1
+ 538 0128 05D2     		bcs	.L42
+ 277:Src/main.c    ****             }
+ 539              		.loc 1 277 0 is_stmt 1 discriminator 3
+ 540 012a 191F     		subs	r1, r3, #4
+ 541 012c 614A     		ldr	r2, .L46+48
+ 542 012e D154     		strb	r1, [r2, r3]
+ 275:Src/main.c    ****             {
+ 543              		.loc 1 275 0 discriminator 3
+ 544 0130 0133     		adds	r3, r3, #1
+ 545              	.LVL46:
+ 546 0132 DBB2     		uxtb	r3, r3
+ 547              	.LVL47:
+ 548 0134 F4E7     		b	.L29
+ 549              	.L42:
+ 279:Src/main.c    **** 
+ 550              		.loc 1 279 0
+ 551 0136 6048     		ldr	r0, .L46+52
+ 552 0138 FFF7FEFF 		bl	vcom_Send
+ 553              	.LVL48:
+ 281:Src/main.c    ****             Radio.Send( Buffer, BufferSize );
+ 554              		.loc 1 281 0
+ 555 013c 0120     		movs	r0, #1
+ 556 013e FFF7FEFF 		bl	DelayMs
+ 557              	.LVL49:
+ 282:Src/main.c    ****             }
+ 558              		.loc 1 282 0
+ 559 0142 574B     		ldr	r3, .L46+28
+ 560 0144 1B6B     		ldr	r3, [r3, #48]
+ 561 0146 594A     		ldr	r2, .L46+40
+ 562 0148 1178     		ldrb	r1, [r2]
+ 563 014a 5A48     		ldr	r0, .L46+48
+ 564 014c 9847     		blx	r3
+ 565              	.LVL50:
+ 566 014e 17E0     		b	.L27
+ 567              	.L31:
+ 568              	.LVL51:
+ 293:Src/main.c    ****             }
+ 569              		.loc 1 293 0
+ 570 0150 534B     		ldr	r3, .L46+28
+ 571 0152 DB6B     		ldr	r3, [r3, #60]
+ 572 0154 FA20     		movs	r0, #250
+ 573 0156 8000     		lsls	r0, r0, #2
+ 574 0158 9847     		blx	r3
+ 575              	.LVL52:
+ 576 015a 11E0     		b	.L27
+ 577              	.LVL53:
+ 578              	.L26:
+ 299:Src/main.c    ****           {
+ 579              		.loc 1 299 0
+ 580 015c 534B     		ldr	r3, .L46+40
+ 581 015e 1B88     		ldrh	r3, [r3]
+ 582 0160 002B     		cmp	r3, #0
+ 583 0162 0DD0     		beq	.L27
+ 301:Src/main.c    ****             {
+ 584              		.loc 1 301 0
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccTAEDgC.s 			page 20
+
+
+ 585 0164 5249     		ldr	r1, .L46+44
+ 586 0166 0422     		movs	r2, #4
+ 587 0168 0831     		adds	r1, r1, #8
+ 588 016a 5248     		ldr	r0, .L46+48
+ 589 016c FFF7FEFF 		bl	strncmp
+ 590              	.LVL54:
+ 591 0170 0028     		cmp	r0, #0
+ 592 0172 16D0     		beq	.L43
+ 593              	.LVL55:
+ 328:Src/main.c    ****             }
+ 594              		.loc 1 328 0
+ 595 0174 4A4B     		ldr	r3, .L46+28
+ 596 0176 DB6B     		ldr	r3, [r3, #60]
+ 597 0178 FA20     		movs	r0, #250
+ 598 017a 8000     		lsls	r0, r0, #2
+ 599 017c 9847     		blx	r3
+ 600              	.LVL56:
+ 327:Src/main.c    ****               Radio.Rx( RX_TIMEOUT_VALUE );
+ 601              		.loc 1 327 0
+ 602 017e 0124     		movs	r4, #1
+ 603              	.LVL57:
+ 604              	.L27:
+ 332:Src/main.c    ****       break;
+ 605              		.loc 1 332 0
+ 606 0180 404B     		ldr	r3, .L46
+ 607 0182 0022     		movs	r2, #0
+ 608 0184 1A75     		strb	r2, [r3, #20]
+ 609              	.L20:
+ 610              	.LBB6:
+ 611              	.LBB7:
+ 612              		.file 2 "Drivers/CMSIS/Include/cmsis_gcc.h"
+   1:Drivers/CMSIS/Include/cmsis_gcc.h **** /**************************************************************************//**
+   2:Drivers/CMSIS/Include/cmsis_gcc.h ****  * @file     cmsis_gcc.h
+   3:Drivers/CMSIS/Include/cmsis_gcc.h ****  * @brief    CMSIS Cortex-M Core Function/Instruction Header File
+   4:Drivers/CMSIS/Include/cmsis_gcc.h ****  * @version  V4.30
+   5:Drivers/CMSIS/Include/cmsis_gcc.h ****  * @date     20. October 2015
+   6:Drivers/CMSIS/Include/cmsis_gcc.h ****  ******************************************************************************/
+   7:Drivers/CMSIS/Include/cmsis_gcc.h **** /* Copyright (c) 2009 - 2015 ARM LIMITED
+   8:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+   9:Drivers/CMSIS/Include/cmsis_gcc.h ****    All rights reserved.
+  10:Drivers/CMSIS/Include/cmsis_gcc.h ****    Redistribution and use in source and binary forms, with or without
+  11:Drivers/CMSIS/Include/cmsis_gcc.h ****    modification, are permitted provided that the following conditions are met:
+  12:Drivers/CMSIS/Include/cmsis_gcc.h ****    - Redistributions of source code must retain the above copyright
+  13:Drivers/CMSIS/Include/cmsis_gcc.h ****      notice, this list of conditions and the following disclaimer.
+  14:Drivers/CMSIS/Include/cmsis_gcc.h ****    - Redistributions in binary form must reproduce the above copyright
+  15:Drivers/CMSIS/Include/cmsis_gcc.h ****      notice, this list of conditions and the following disclaimer in the
+  16:Drivers/CMSIS/Include/cmsis_gcc.h ****      documentation and/or other materials provided with the distribution.
+  17:Drivers/CMSIS/Include/cmsis_gcc.h ****    - Neither the name of ARM nor the names of its contributors may be used
+  18:Drivers/CMSIS/Include/cmsis_gcc.h ****      to endorse or promote products derived from this software without
+  19:Drivers/CMSIS/Include/cmsis_gcc.h ****      specific prior written permission.
+  20:Drivers/CMSIS/Include/cmsis_gcc.h ****    *
+  21:Drivers/CMSIS/Include/cmsis_gcc.h ****    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  22:Drivers/CMSIS/Include/cmsis_gcc.h ****    AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+  23:Drivers/CMSIS/Include/cmsis_gcc.h ****    IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+  24:Drivers/CMSIS/Include/cmsis_gcc.h ****    ARE DISCLAIMED. IN NO EVENT SHALL COPYRIGHT HOLDERS AND CONTRIBUTORS BE
+  25:Drivers/CMSIS/Include/cmsis_gcc.h ****    LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+  26:Drivers/CMSIS/Include/cmsis_gcc.h ****    CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccTAEDgC.s 			page 21
+
+
+  27:Drivers/CMSIS/Include/cmsis_gcc.h ****    SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+  28:Drivers/CMSIS/Include/cmsis_gcc.h ****    INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+  29:Drivers/CMSIS/Include/cmsis_gcc.h ****    CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+  30:Drivers/CMSIS/Include/cmsis_gcc.h ****    ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+  31:Drivers/CMSIS/Include/cmsis_gcc.h ****    POSSIBILITY OF SUCH DAMAGE.
+  32:Drivers/CMSIS/Include/cmsis_gcc.h ****    ---------------------------------------------------------------------------*/
+  33:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+  34:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+  35:Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef __CMSIS_GCC_H
+  36:Drivers/CMSIS/Include/cmsis_gcc.h **** #define __CMSIS_GCC_H
+  37:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+  38:Drivers/CMSIS/Include/cmsis_gcc.h **** /* ignore some GCC warnings */
+  39:Drivers/CMSIS/Include/cmsis_gcc.h **** #if defined ( __GNUC__ )
+  40:Drivers/CMSIS/Include/cmsis_gcc.h **** #pragma GCC diagnostic push
+  41:Drivers/CMSIS/Include/cmsis_gcc.h **** #pragma GCC diagnostic ignored "-Wsign-conversion"
+  42:Drivers/CMSIS/Include/cmsis_gcc.h **** #pragma GCC diagnostic ignored "-Wconversion"
+  43:Drivers/CMSIS/Include/cmsis_gcc.h **** #pragma GCC diagnostic ignored "-Wunused-parameter"
+  44:Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
+  45:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+  46:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+  47:Drivers/CMSIS/Include/cmsis_gcc.h **** /* ###########################  Core Function Access  ########################### */
+  48:Drivers/CMSIS/Include/cmsis_gcc.h **** /** \ingroup  CMSIS_Core_FunctionInterface
+  49:Drivers/CMSIS/Include/cmsis_gcc.h ****     \defgroup CMSIS_Core_RegAccFunctions CMSIS Core Register Access Functions
+  50:Drivers/CMSIS/Include/cmsis_gcc.h ****   @{
+  51:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
+  52:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+  53:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
+  54:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Enable IRQ Interrupts
+  55:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Enables IRQ interrupts by clearing the I-bit in the CPSR.
+  56:Drivers/CMSIS/Include/cmsis_gcc.h ****            Can only be executed in Privileged modes.
+  57:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
+  58:Drivers/CMSIS/Include/cmsis_gcc.h **** __attribute__( ( always_inline ) ) __STATIC_INLINE void __enable_irq(void)
+  59:Drivers/CMSIS/Include/cmsis_gcc.h **** {
+  60:Drivers/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("cpsie i" : : : "memory");
+  61:Drivers/CMSIS/Include/cmsis_gcc.h **** }
+  62:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+  63:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+  64:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
+  65:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Disable IRQ Interrupts
+  66:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Disables IRQ interrupts by setting the I-bit in the CPSR.
+  67:Drivers/CMSIS/Include/cmsis_gcc.h ****   Can only be executed in Privileged modes.
+  68:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
+  69:Drivers/CMSIS/Include/cmsis_gcc.h **** __attribute__( ( always_inline ) ) __STATIC_INLINE void __disable_irq(void)
+  70:Drivers/CMSIS/Include/cmsis_gcc.h **** {
+  71:Drivers/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("cpsid i" : : : "memory");
+ 613              		.loc 2 71 0
+ 614              		.syntax divided
+ 615              	@ 71 "Drivers/CMSIS/Include/cmsis_gcc.h" 1
+ 616 0186 72B6     		cpsid i
+ 617              	@ 0 "" 2
+ 618              		.thumb
+ 619              		.syntax unified
+ 620              	.LBE7:
+ 621              	.LBE6:
+ 376:Src/main.c    ****     {
+ 622              		.loc 1 376 0
+ 623 0188 3E4B     		ldr	r3, .L46
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccTAEDgC.s 			page 22
+
+
+ 624 018a 1B7D     		ldrb	r3, [r3, #20]
+ 625 018c 002B     		cmp	r3, #0
+ 626 018e 75D0     		beq	.L44
+ 627              	.L39:
+ 628              	.LBB8:
+ 629              	.LBB9:
+  60:Drivers/CMSIS/Include/cmsis_gcc.h **** }
+ 630              		.loc 2 60 0
+ 631              		.syntax divided
+ 632              	@ 60 "Drivers/CMSIS/Include/cmsis_gcc.h" 1
+ 633 0190 62B6     		cpsie i
+ 634              	@ 0 "" 2
+ 635              	.LVL58:
+ 636              		.thumb
+ 637              		.syntax unified
+ 638              	.L40:
+ 639              	.LBE9:
+ 640              	.LBE8:
+ 252:Src/main.c    ****     {
+ 641              		.loc 1 252 0
+ 642 0192 3C4B     		ldr	r3, .L46
+ 643 0194 1A7D     		ldrb	r2, [r3, #20]
+ 644 0196 052A     		cmp	r2, #5
+ 645 0198 F5D8     		bhi	.L20
+ 646 019a 9300     		lsls	r3, r2, #2
+ 647 019c 474A     		ldr	r2, .L46+56
+ 648 019e D358     		ldr	r3, [r2, r3]
+ 649 01a0 9F46     		mov	pc, r3
+ 650              		.section	.rodata
+ 651              		.align	2
+ 652              	.L22:
+ 653 0000 86010000 		.word	.L20
+ 654 0004 B6000000 		.word	.L21
+ 655 0008 16020000 		.word	.L23
+ 656 000c 16020000 		.word	.L23
+ 657 0010 04020000 		.word	.L24
+ 658 0014 6A020000 		.word	.L25
+ 659              		.section	.text.main
+ 660              	.L43:
+ 304:Src/main.c    ****               LED_Off( LED_RED1);
+ 661              		.loc 1 304 0
+ 662 01a2 3848     		ldr	r0, .L46
+ 663 01a4 FFF7FEFF 		bl	TimerStop
+ 664              	.LVL59:
+ 305:Src/main.c    ****               LED_Off( LED_RED2 ) ; 
+ 665              		.loc 1 305 0
+ 666 01a8 0120     		movs	r0, #1
+ 667 01aa FFF7FEFF 		bl	BSP_LED_Off
+ 668              	.LVL60:
+ 306:Src/main.c    ****               LED_Off( LED_GREEN ) ;
+ 669              		.loc 1 306 0
+ 670 01ae 0320     		movs	r0, #3
+ 671 01b0 FFF7FEFF 		bl	BSP_LED_Off
+ 672              	.LVL61:
+ 307:Src/main.c    ****               LED_Toggle( LED_BLUE );
+ 673              		.loc 1 307 0
+ 674 01b4 0020     		movs	r0, #0
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccTAEDgC.s 			page 23
+
+
+ 675 01b6 FFF7FEFF 		bl	BSP_LED_Off
+ 676              	.LVL62:
+ 308:Src/main.c    **** 
+ 677              		.loc 1 308 0
+ 678 01ba 0220     		movs	r0, #2
+ 679 01bc FFF7FEFF 		bl	BSP_LED_Toggle
+ 680              	.LVL63:
+ 311:Src/main.c    ****               Buffer[1] = 'O';
+ 681              		.loc 1 311 0
+ 682 01c0 3C4B     		ldr	r3, .L46+48
+ 683 01c2 5022     		movs	r2, #80
+ 684 01c4 1A70     		strb	r2, [r3]
+ 312:Src/main.c    ****               Buffer[2] = 'N';
+ 685              		.loc 1 312 0
+ 686 01c6 013A     		subs	r2, r2, #1
+ 687 01c8 5A70     		strb	r2, [r3, #1]
+ 313:Src/main.c    ****               Buffer[3] = 'G';
+ 688              		.loc 1 313 0
+ 689 01ca 013A     		subs	r2, r2, #1
+ 690 01cc 9A70     		strb	r2, [r3, #2]
+ 314:Src/main.c    ****               // We fill the buffer with numbers for the payload 
+ 691              		.loc 1 314 0
+ 692 01ce 073A     		subs	r2, r2, #7
+ 693 01d0 DA70     		strb	r2, [r3, #3]
+ 694              	.LVL64:
+ 316:Src/main.c    ****               {
+ 695              		.loc 1 316 0
+ 696 01d2 0423     		movs	r3, #4
+ 697 01d4 04E0     		b	.L33
+ 698              	.LVL65:
+ 699              	.L34:
+ 318:Src/main.c    ****               }
+ 700              		.loc 1 318 0 discriminator 3
+ 701 01d6 191F     		subs	r1, r3, #4
+ 702 01d8 364A     		ldr	r2, .L46+48
+ 703 01da D154     		strb	r1, [r2, r3]
+ 316:Src/main.c    ****               {
+ 704              		.loc 1 316 0 discriminator 3
+ 705 01dc 0133     		adds	r3, r3, #1
+ 706              	.LVL66:
+ 707 01de DBB2     		uxtb	r3, r3
+ 708              	.LVL67:
+ 709              	.L33:
+ 316:Src/main.c    ****               {
+ 710              		.loc 1 316 0 is_stmt 0 discriminator 1
+ 711 01e0 9AB2     		uxth	r2, r3
+ 712 01e2 3249     		ldr	r1, .L46+40
+ 713 01e4 0988     		ldrh	r1, [r1]
+ 714 01e6 8A42     		cmp	r2, r1
+ 715 01e8 F5D3     		bcc	.L34
+ 320:Src/main.c    **** 
+ 716              		.loc 1 320 0 is_stmt 1
+ 717 01ea 0120     		movs	r0, #1
+ 718 01ec FFF7FEFF 		bl	DelayMs
+ 719              	.LVL68:
+ 322:Src/main.c    ****               PRINTF("...PONG\n\r");
+ 720              		.loc 1 322 0
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccTAEDgC.s 			page 24
+
+
+ 721 01f0 2B4B     		ldr	r3, .L46+28
+ 722 01f2 1B6B     		ldr	r3, [r3, #48]
+ 723 01f4 2D4A     		ldr	r2, .L46+40
+ 724 01f6 1178     		ldrb	r1, [r2]
+ 725 01f8 2E48     		ldr	r0, .L46+48
+ 726 01fa 9847     		blx	r3
+ 727              	.LVL69:
+ 323:Src/main.c    ****             }
+ 728              		.loc 1 323 0
+ 729 01fc 3048     		ldr	r0, .L46+60
+ 730 01fe FFF7FEFF 		bl	vcom_Send
+ 731              	.LVL70:
+ 732 0202 BDE7     		b	.L27
+ 733              	.L24:
+ 338:Src/main.c    ****       State = LOWPOWER;
+ 734              		.loc 1 338 0
+ 735 0204 264B     		ldr	r3, .L46+28
+ 736 0206 DB6B     		ldr	r3, [r3, #60]
+ 737 0208 FA20     		movs	r0, #250
+ 738 020a 8000     		lsls	r0, r0, #2
+ 739 020c 9847     		blx	r3
+ 740              	.LVL71:
+ 339:Src/main.c    ****       break;
+ 741              		.loc 1 339 0
+ 742 020e 1D4B     		ldr	r3, .L46
+ 743 0210 0022     		movs	r2, #0
+ 744 0212 1A75     		strb	r2, [r3, #20]
+ 340:Src/main.c    ****     case RX_TIMEOUT:
+ 745              		.loc 1 340 0
+ 746 0214 B7E7     		b	.L20
+ 747              	.L23:
+ 343:Src/main.c    ****       {
+ 748              		.loc 1 343 0
+ 749 0216 002C     		cmp	r4, #0
+ 750 0218 08D1     		bne	.L45
+ 359:Src/main.c    ****       }
+ 751              		.loc 1 359 0
+ 752 021a 214B     		ldr	r3, .L46+28
+ 753 021c DB6B     		ldr	r3, [r3, #60]
+ 754 021e FA20     		movs	r0, #250
+ 755 0220 8000     		lsls	r0, r0, #2
+ 756 0222 9847     		blx	r3
+ 757              	.LVL72:
+ 758              	.L38:
+ 361:Src/main.c    ****       break;
+ 759              		.loc 1 361 0
+ 760 0224 174B     		ldr	r3, .L46
+ 761 0226 0022     		movs	r2, #0
+ 762 0228 1A75     		strb	r2, [r3, #20]
+ 362:Src/main.c    ****     case TX_TIMEOUT:
+ 763              		.loc 1 362 0
+ 764 022a ACE7     		b	.L20
+ 765              	.L45:
+ 346:Src/main.c    ****         Buffer[1] = 'I';
+ 766              		.loc 1 346 0
+ 767 022c 214B     		ldr	r3, .L46+48
+ 768 022e 5022     		movs	r2, #80
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccTAEDgC.s 			page 25
+
+
+ 769 0230 1A70     		strb	r2, [r3]
+ 347:Src/main.c    ****         Buffer[2] = 'N';
+ 770              		.loc 1 347 0
+ 771 0232 073A     		subs	r2, r2, #7
+ 772 0234 5A70     		strb	r2, [r3, #1]
+ 348:Src/main.c    ****         Buffer[3] = 'G';
+ 773              		.loc 1 348 0
+ 774 0236 0532     		adds	r2, r2, #5
+ 775 0238 9A70     		strb	r2, [r3, #2]
+ 349:Src/main.c    ****         for( i = 4; i < BufferSize; i++ )
+ 776              		.loc 1 349 0
+ 777 023a 073A     		subs	r2, r2, #7
+ 778 023c DA70     		strb	r2, [r3, #3]
+ 779              	.LVL73:
+ 350:Src/main.c    ****         {
+ 780              		.loc 1 350 0
+ 781 023e 0423     		movs	r3, #4
+ 782 0240 04E0     		b	.L36
+ 783              	.LVL74:
+ 784              	.L37:
+ 352:Src/main.c    ****         }
+ 785              		.loc 1 352 0 discriminator 3
+ 786 0242 191F     		subs	r1, r3, #4
+ 787 0244 1B4A     		ldr	r2, .L46+48
+ 788 0246 D154     		strb	r1, [r2, r3]
+ 350:Src/main.c    ****         {
+ 789              		.loc 1 350 0 discriminator 3
+ 790 0248 0133     		adds	r3, r3, #1
+ 791              	.LVL75:
+ 792 024a DBB2     		uxtb	r3, r3
+ 793              	.LVL76:
+ 794              	.L36:
+ 350:Src/main.c    ****         {
+ 795              		.loc 1 350 0 is_stmt 0 discriminator 1
+ 796 024c 9AB2     		uxth	r2, r3
+ 797 024e 1749     		ldr	r1, .L46+40
+ 798 0250 0988     		ldrh	r1, [r1]
+ 799 0252 8A42     		cmp	r2, r1
+ 800 0254 F5D3     		bcc	.L37
+ 354:Src/main.c    ****         Radio.Send( Buffer, BufferSize );
+ 801              		.loc 1 354 0 is_stmt 1
+ 802 0256 0120     		movs	r0, #1
+ 803 0258 FFF7FEFF 		bl	DelayMs
+ 804              	.LVL77:
+ 355:Src/main.c    ****       }
+ 805              		.loc 1 355 0
+ 806 025c 104B     		ldr	r3, .L46+28
+ 807 025e 1B6B     		ldr	r3, [r3, #48]
+ 808 0260 124A     		ldr	r2, .L46+40
+ 809 0262 1178     		ldrb	r1, [r2]
+ 810 0264 1348     		ldr	r0, .L46+48
+ 811 0266 9847     		blx	r3
+ 812              	.LVL78:
+ 813 0268 DCE7     		b	.L38
+ 814              	.L25:
+ 364:Src/main.c    ****       State = LOWPOWER;
+ 815              		.loc 1 364 0
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccTAEDgC.s 			page 26
+
+
+ 816 026a 0D4B     		ldr	r3, .L46+28
+ 817 026c DB6B     		ldr	r3, [r3, #60]
+ 818 026e FA20     		movs	r0, #250
+ 819 0270 8000     		lsls	r0, r0, #2
+ 820 0272 9847     		blx	r3
+ 821              	.LVL79:
+ 365:Src/main.c    ****       break;
+ 822              		.loc 1 365 0
+ 823 0274 034B     		ldr	r3, .L46
+ 824 0276 0022     		movs	r2, #0
+ 825 0278 1A75     		strb	r2, [r3, #20]
+ 366:Src/main.c    ****     case LOWPOWER:
+ 826              		.loc 1 366 0
+ 827 027a 84E7     		b	.L20
+ 828              	.L44:
+ 379:Src/main.c    **** #endif
+ 829              		.loc 1 379 0
+ 830 027c FFF7FEFF 		bl	LPM_EnterLowPower
+ 831              	.LVL80:
+ 832 0280 86E7     		b	.L39
+ 833              	.L47:
+ 834 0282 C046     		.align	2
+ 835              	.L46:
+ 836 0284 00000000 		.word	.LANCHOR0
+ 837 0288 00000000 		.word	OnledEvent
+ 838 028c 00000000 		.word	OnTxDone
+ 839 0290 00000000 		.word	OnRxDone
+ 840 0294 00000000 		.word	OnTxTimeout
+ 841 0298 00000000 		.word	OnRxTimeout
+ 842 029c 00000000 		.word	OnRxError
+ 843 02a0 00000000 		.word	Radio
+ 844 02a4 00A1BC33 		.word	868000000
+ 845 02a8 C0C62D00 		.word	3000000
+ 846 02ac 00000000 		.word	.LANCHOR1
+ 847 02b0 18000000 		.word	.LANCHOR2
+ 848 02b4 00000000 		.word	Buffer
+ 849 02b8 64000000 		.word	.LC37
+ 850 02bc 00000000 		.word	.L22
+ 851 02c0 70000000 		.word	.LC39
+ 852              		.cfi_endproc
+ 853              	.LFE40:
+ 855              		.global	SnrValue
+ 856              		.global	RssiValue
+ 857              		.global	State
+ 858              		.comm	Buffer,64,4
+ 859              		.global	BufferSize
+ 860              		.global	PongMsg
+ 861              		.global	PingMsg
+ 862              		.data
+ 863              		.align	1
+ 864              		.set	.LANCHOR1,. + 0
+ 867              	BufferSize:
+ 868 0000 4000     		.short	64
+ 869              		.bss
+ 870              		.align	2
+ 871              		.set	.LANCHOR0,. + 0
+ 874              	timerLed:
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccTAEDgC.s 			page 27
+
+
+ 875 0000 00000000 		.space	20
+ 875      00000000 
+ 875      00000000 
+ 875      00000000 
+ 875      00000000 
+ 878              	State:
+ 879 0014 00       		.space	1
+ 882              	RssiValue:
+ 883 0015 00       		.space	1
+ 886              	SnrValue:
+ 887 0016 00       		.space	1
+ 888 0017 00       		.space	1
+ 891              	RadioEvents:
+ 892 0018 00000000 		.space	28
+ 892      00000000 
+ 892      00000000 
+ 892      00000000 
+ 892      00000000 
+ 893              		.section	.rodata
+ 894              		.align	2
+ 895              		.set	.LANCHOR2,. + 0
+ 898              	PongMsg:
+ 899 0018 504F4E47 		.ascii	"PONG\000"
+ 899      00
+ 900 001d 000000   		.space	3
+ 903              	PingMsg:
+ 904 0020 50494E47 		.ascii	"PING\000"
+ 904      00
+ 905              		.section	.rodata.str1.4,"aMS",%progbits,1
+ 906              		.align	2
+ 907              	.LC3:
+ 908 0000 4F6E5478 		.ascii	"OnTxDone\012\015\000"
+ 908      446F6E65 
+ 908      0A0D00
+ 909 000b 00       		.space	1
+ 910              	.LC7:
+ 911 000c 4F6E5478 		.ascii	"OnTxTimeout\012\015\000"
+ 911      54696D65 
+ 911      6F75740A 
+ 911      0D00
+ 912 001a 0000     		.space	2
+ 913              	.LC11:
+ 914 001c 4F6E5278 		.ascii	"OnRxTimeout\012\015\000"
+ 914      54696D65 
+ 914      6F75740A 
+ 914      0D00
+ 915 002a 0000     		.space	2
+ 916              	.LC15:
+ 917 002c 4F6E5278 		.ascii	"OnRxError\012\015\000"
+ 917      4572726F 
+ 917      720A0D00 
+ 918              	.LC21:
+ 919 0038 4F6E5278 		.ascii	"OnRxDone\012\015\000"
+ 919      446F6E65 
+ 919      0A0D00
+ 920 0043 00       		.space	1
+ 921              	.LC23:
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccTAEDgC.s 			page 28
+
+
+ 922 0044 52737369 		.ascii	"RssiValue=%d dBm, SnrValue=%d\012\015\000"
+ 922      56616C75 
+ 922      653D2564 
+ 922      2064426D 
+ 922      2C20536E 
+ 923              	.LC37:
+ 924 0064 2E2E2E50 		.ascii	"...PING\012\015\000"
+ 924      494E470A 
+ 924      0D00
+ 925 006e 0000     		.space	2
+ 926              	.LC39:
+ 927 0070 2E2E2E50 		.ascii	"...PONG\012\015\000"
+ 927      4F4E470A 
+ 927      0D00
+ 928              		.text
+ 929              	.Letext0:
+ 930              		.file 3 "/opt/gcc-arm-none-eabi-7-2017-q4-major/arm-none-eabi/include/machine/_default_types.h"
+ 931              		.file 4 "/opt/gcc-arm-none-eabi-7-2017-q4-major/arm-none-eabi/include/sys/lock.h"
+ 932              		.file 5 "/opt/gcc-arm-none-eabi-7-2017-q4-major/arm-none-eabi/include/sys/_types.h"
+ 933              		.file 6 "/opt/gcc-arm-none-eabi-7-2017-q4-major/lib/gcc/arm-none-eabi/7.2.1/include/stddef.h"
+ 934              		.file 7 "/opt/gcc-arm-none-eabi-7-2017-q4-major/arm-none-eabi/include/sys/reent.h"
+ 935              		.file 8 "/opt/gcc-arm-none-eabi-7-2017-q4-major/arm-none-eabi/include/math.h"
+ 936              		.file 9 "/opt/gcc-arm-none-eabi-7-2017-q4-major/arm-none-eabi/include/sys/_stdint.h"
+ 937              		.file 10 "Drivers/CMSIS/Device/ST/STM32L0xx/Include/system_stm32l0xx.h"
+ 938              		.file 11 "/opt/gcc-arm-none-eabi-7-2017-q4-major/arm-none-eabi/include/stdlib.h"
+ 939              		.file 12 "Drivers/BSP/B-L072Z-LRWAN1/b-l072z-lrwan1.h"
+ 940              		.file 13 "Middlewares/Third_Party/Lora/Phy/radio.h"
+ 941              		.file 14 "Middlewares/Third_Party/Lora/Utilities/timeServer.h"
+ 942              		.file 15 "Inc/utilities_conf.h"
+ 943              		.file 16 "Middlewares/Third_Party/Lora/Utilities/low_power_manager.h"
+ 944              		.file 17 "Inc/vcom.h"
+ 945              		.file 18 "Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_hal.h"
+ 946              		.file 19 "Inc/hw_msp.h"
+ 947              		.file 20 "Inc/debug.h"
+ 948              		.file 21 "/opt/gcc-arm-none-eabi-7-2017-q4-major/arm-none-eabi/include/string.h"
+ 949              		.file 22 "Middlewares/Third_Party/Lora/Utilities/delay.h"
+ 950              		.file 23 "<built-in>"
+ARM GAS  /var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccTAEDgC.s 			page 29
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 main.c
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccTAEDgC.s:16     .text.OnledEvent:0000000000000000 $t
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccTAEDgC.s:22     .text.OnledEvent:0000000000000000 OnledEvent
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccTAEDgC.s:56     .text.OnledEvent:000000000000001c $d
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccTAEDgC.s:61     .text.OnTxDone:0000000000000000 $t
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccTAEDgC.s:68     .text.OnTxDone:0000000000000000 OnTxDone
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccTAEDgC.s:98     .text.OnTxDone:0000000000000018 $d
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccTAEDgC.s:105    .text.OnTxTimeout:0000000000000000 $t
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccTAEDgC.s:112    .text.OnTxTimeout:0000000000000000 OnTxTimeout
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccTAEDgC.s:142    .text.OnTxTimeout:0000000000000018 $d
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccTAEDgC.s:149    .text.OnRxTimeout:0000000000000000 $t
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccTAEDgC.s:156    .text.OnRxTimeout:0000000000000000 OnRxTimeout
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccTAEDgC.s:186    .text.OnRxTimeout:0000000000000018 $d
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccTAEDgC.s:193    .text.OnRxError:0000000000000000 $t
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccTAEDgC.s:200    .text.OnRxError:0000000000000000 OnRxError
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccTAEDgC.s:230    .text.OnRxError:0000000000000018 $d
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccTAEDgC.s:237    .text.OnRxDone:0000000000000000 $t
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccTAEDgC.s:244    .text.OnRxDone:0000000000000000 OnRxDone
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccTAEDgC.s:304    .text.OnRxDone:000000000000003c $d
+                            *COM*:0000000000000040 Buffer
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccTAEDgC.s:314    .text.main:0000000000000000 $t
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccTAEDgC.s:321    .text.main:0000000000000000 main
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccTAEDgC.s:651    .rodata:0000000000000000 $d
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccTAEDgC.s:836    .text.main:0000000000000284 $d
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccTAEDgC.s:886    .bss:0000000000000016 SnrValue
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccTAEDgC.s:882    .bss:0000000000000015 RssiValue
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccTAEDgC.s:878    .bss:0000000000000014 State
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccTAEDgC.s:867    .data:0000000000000000 BufferSize
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccTAEDgC.s:898    .rodata:0000000000000018 PongMsg
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccTAEDgC.s:903    .rodata:0000000000000020 PingMsg
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccTAEDgC.s:863    .data:0000000000000000 $d
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccTAEDgC.s:870    .bss:0000000000000000 $d
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccTAEDgC.s:874    .bss:0000000000000000 timerLed
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccTAEDgC.s:891    .bss:0000000000000018 RadioEvents
+/var/folders/2m/zqg86yyd4hbf56w83tkxjpvr0000gn/T//ccTAEDgC.s:906    .rodata.str1.4:0000000000000000 $d
+
+UNDEFINED SYMBOLS
+BSP_LED_Toggle
+TimerStart
+vcom_Send
+Radio
+memcpy
+HAL_Init
+SystemClock_Config
+DBG_Init
+HW_Init
+LPM_SetOffMode
+TimerInit
+TimerSetValue
+strncmp
+TimerStop
+BSP_LED_Off
+DelayMs
+LPM_EnterLowPower
